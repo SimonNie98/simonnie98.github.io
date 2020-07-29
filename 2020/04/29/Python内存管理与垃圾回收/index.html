@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>
+    Python内存管理与垃圾回收 | Simon&#39;s Blog
+  </title>
+  <meta name="description" content="I am the storm.">
+  
+  <meta name="keywords" content="
+  Python,内存管理,垃圾回收
+  ">
+  
+  <meta name="author" content="Simon Nie">
+
+  <meta http-equiv="Cache-Control" content="no-transform"/>
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="theme-color" content="#1e2327">
+  <link rel="apple-touch-icon" href="https://github.githubassets.com/apple-touch-icon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://github.githubassets.com/apple-touch-icon-180x180.png">
+
+  <link rel="icon" type="image/x-icon" href="https://github.githubassets.com/favicon.ico">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+
+  
+
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/vue/1.0.25-csp/vue.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body id="replica-app">
+
+<nav class="navbar-wrapper">
+  <div class="navbar">
+    <div class="container clearfix">
+      <a href="/" class="navbar-logo"><i class="fa fa-github"></i></a>
+
+      <div class="navbar-search float-left desktop-only">
+        <div class="navbar-search-form">
+          <label for="gsc-i-id1">Google Search</label>
+          <div id="google-search">
+            <gcse:search></gcse:search>
+          </div>
+        </div>
+      </div>
+
+      <ul class="navbar-nav float-left">
+        
+        <li><a href="/archives">Archives</a></li>
+        
+        
+        <li><a href="/categories">Categories</a></li>
+        
+        
+        <li><a href="/tags">Tags</a></li>
+        
+        
+        <li class="desktop-only"><a href="/atom.xml" target="_blank">RSS</a></li>
+        
+      </ul>
+
+      <ul class="navbar-nav user-nav float-right desktop-only">
+        <li class="user-nav-notification">
+          <a><span class="user-nav-unread"></span><i class="fa fa-bell"></i></a>
+        </li>
+        <li>
+          <a><i class="fa fa-plus"></i> <i class="fa fa-caret-down"></i></a>
+        </li>
+        <li class="user-nav-logo">
+          <a><img src="/images/avatar.jpg"> <i class="fa fa-caret-down"></i></i></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="main-container">
+  <header class="header-wrapper desktop-only">
+  <div class="container header-site-detail">
+    <ul class="header-toolbar">
+      <li class="clearfix">
+        <a href="/archives" class="header-toolbar-left"><i
+                  class="fa fa-file-text"></i> Posts </a>
+        <a href="/archives"
+           class="header-toolbar-right"> 23 </a>
+      </li>
+      <li>
+        <a href="/tags" class="header-toolbar-left"><i
+                  class="fa fa-tags"></i> Tags </a>
+        <a href="/tags"
+           class="header-toolbar-right"> 101 </a>
+      </li>
+      <li>
+        <a href="/categories" class="header-toolbar-left"><i
+                  class="fa fa-folder-open"></i> Categories </a>
+        <a href="/categories"
+           class="header-toolbar-right"> 9 </a>
+      </li>
+    </ul>
+    <h2 class="header-title">
+      <i class="fa fa-book text-muted"></i>
+      <a href="/">Simon&#39;s Blog</a>
+      
+      
+    </h2>
+  </div>
+
+  <div class="container">
+    <div class="header-tab-wrapper clearfix">
+      <span class="header-tab header-tab-selected"><i class="fa fa-thumbs-o-up"></i> Like</span>
+      <span class="header-tab"><i class="fa fa-share-alt"></i> Share</span>
+      <span class="header-tab"><i class="fa fa-comments-o"></i> Discussion</span>
+      <span class="header-tab"><i class="fa fa-bookmark-o"></i> Bookmark </span>
+      <span class="header-tab"><i class="fa fa-smile-o"></i> Smile <i class="fa fa-caret-down"></i></span>
+    </div>
+  </div>
+</header>
+
+
+<div class="post-container container">
+  <h3>
+    <i class="fa fa-user-o"></i>
+    Simon Nie
+
+    <span class="post-date float-right" title="{{moment(1588130533000).format('MMM DD, YYYY, h:mm:ss A')}}">
+      <i class="fa fa-pencil-square-o"></i>
+      {{moment(1588130533000).fromNow()}}
+    </span>
+  </h3>
+
+  <article class="post-content">
+    <h1>Python内存管理与垃圾回收</h1>
+    <p>Python的内存管理与垃圾回收是基于C源码的。</p>
+<ul>
+<li>引用计数器</li>
+<li>标记清除</li>
+<li>分代回收</li>
+<li>缓存机制</li>
+</ul>
+<h2 id="Table-of-Contents"><a href="#Table-of-Contents" class="headerlink" title="Table of Contents"></a>Table of Contents</h2><ul>
+<li><a href="#1-引用计数器">1. 引用计数器</a><ul>
+<li><a href="#11-环状双向链表-refchain">1.1 环状双向链表 refchain</a></li>
+<li><a href="#12-类型封装结构体">1.2 类型封装结构体</a></li>
+<li><a href="#13-引用计数器">1.3 引用计数器</a></li>
+<li><a href="#14-循环引用问题">1.4 循环引用问题</a></li>
+</ul>
+</li>
+<li><a href="#2-标记清除">2. 标记清除</a></li>
+<li><a href="#3-分代回收">3. 分代回收</a></li>
+<li><a href="#4-小结">4. 小结</a></li>
+<li><a href="#5-缓存">5. 缓存</a><ul>
+<li><a href="#51-池">5.1 池</a></li>
+<li><a href="#52-free_list">5.2 free_list</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="1-引用计数器"><a href="#1-引用计数器" class="headerlink" title="1. 引用计数器"></a>1. 引用计数器</h2><h3 id="1-1-环状双向链表-refchain"><a href="#1-1-环状双向链表-refchain" class="headerlink" title="1.1 环状双向链表 refchain"></a>1.1 环状双向链表 refchain</h3><p>在Python程序中创建的任何对象都会被放在同一个refchain中。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">name = <span class="string">"a"</span></span><br><span class="line">age = <span class="number">18</span></span><br><span class="line">birthday = <span class="string">"2020-02-02"</span></span><br></pre></td></tr></table></figure>
+
+<p>对于refchain的struct，会有一个共有的属性和一些非共有的属性。共有属性：pre, next, type, ref_cnt<br>ref_cnt标记引用个数，当创建两个内容相同的（浅拷贝）对象时， 只会将引用个数+1<br>非共有属性：value，items(元素个数等)。</p>
+<h3 id="1-2-类型封装结构体"><a href="#1-2-类型封装结构体" class="headerlink" title="1.2 类型封装结构体"></a>1.2 类型封装结构体</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> PyObject_HEAD       PyObject ob_base;</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> PyObject_VAR_HEAD      PyVarObject ob_base;</span></span><br><span class="line"><span class="comment">// 宏定义，包含 上一个、下一个，用于构造双向链表用。(放到refchain链表中时，要用到)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _PyObject_HEAD_EXTRA            \</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> _<span class="title">object</span> *_<span class="title">ob_next</span>;</span>           \</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> _<span class="title">object</span> *_<span class="title">ob_prev</span>;</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">object</span> &#123;</span></span><br><span class="line">    _PyObject_HEAD_EXTRA <span class="comment">// 用于构造双向链表</span></span><br><span class="line">    Py_ssize_t ob_refcnt;  <span class="comment">// 引用计数器</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> _<span class="title">typeobject</span> *<span class="title">ob_type</span>;</span>    <span class="comment">// 数据类型</span></span><br><span class="line">&#125; PyObject;</span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">    PyObject ob_base;   <span class="comment">// PyObject对象</span></span><br><span class="line">    Py_ssize_t ob_size; <span class="comment">/* Number of items in variable part，即：元素个数 */</span></span><br><span class="line">&#125; PyVarObject;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，共有属性<code>_ob_next, _ob_prev, ob_refcnt, ob_type</code>，非共有属性<code>ob_size</code>。</p>
+<h3 id="1-3-引用计数器"><a href="#1-3-引用计数器" class="headerlink" title="1.3 引用计数器"></a>1.3 引用计数器</h3><p>当python程序运行时，会根据数据类型的不同找到其对应的结构体，根据结构体中的字段来进行创建相关数据，然后将对象添加到refchain双向链表中。</p>
+<p>在C源码中有两个关键的结构体：PyObject, PyVarObject。</p>
+<p>每个对象中有引用计数器<code>ob_refcnt</code>，值默认为1。</p>
+<ul>
+<li><p>当有其他变量引用对象时，引用计数器就会发生变化。</p>
+</li>
+<li><p>当删除某个对象时，其引用计数器也发生变化。</p>
+</li>
+<li><p>当一个对象的引用计数器为0时，意味着这个对象可以被回收了。</p>
+<p>回收分为两步：</p>
+<ul>
+<li>将对象从refchain链表移除</li>
+<li>将对象销毁，内存释放</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-4-循环引用问题"><a href="#1-4-循环引用问题" class="headerlink" title="1.4 循环引用问题"></a>1.4 循环引用问题</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">v1 = [<span class="number">1</span>, <span class="number">2</span>]<span class="comment">#v1 refcont+1</span></span><br><span class="line">v2 = [<span class="number">3</span>, <span class="number">4</span>]<span class="comment">#v2 refcont+1</span></span><br><span class="line">v1.append(v2)<span class="comment">#v2 refcnt+1</span></span><br><span class="line">v2.append(v1)<span class="comment">#v1 refcnt+1</span></span><br><span class="line"><span class="keyword">del</span> v1<span class="comment">#v1 refcnt-1</span></span><br><span class="line"><span class="keyword">del</span> v2<span class="comment">#v2 refcnt-1</span></span><br></pre></td></tr></table></figure>
+
+<p>本来删除了以后，v1和v2按照逻辑应该被回收了，可这个时候这两个对象的引用计数器都不是0，无法被回收。</p>
+<p>这就是循环引用的交叉感染问题。</p>
+<h2 id="2-标记清除"><a href="#2-标记清除" class="headerlink" title="2. 标记清除"></a>2. 标记清除</h2><p>为了解决计数器的循环引用问题，引入标记清除机制。</p>
+<p>实现：在python的底层再维护一个双向链表，专门用来单独存放可能存在循环引用的对象(list/tuple/dict/set)。</p>
+<p>在某种情况下，扫描一遍该链表，如果发现存在循环引用的对象，就将循环引用的对象的引用计数器各自-1，如果变成0就垃圾回收。</p>
+<p>不足：</p>
+<ul>
+<li>什么时候触发扫描存放可能有循环引用的对象的链表？</li>
+<li>扫描的代价</li>
+</ul>
+<h2 id="3-分代回收"><a href="#3-分代回收" class="headerlink" title="3. 分代回收"></a>3. 分代回收</h2><p>将可能存在循环引用的对象维护成3个链表（0代，1代，2代），每一代都是双向链表。</p>
+<ul>
+<li>0代: 当0代链表的对象数量达到700个，扫描一次，将不存在循环引用的对象放到1代中。</li>
+<li>1代: 当0代扫描10次，1代扫描1次。将不存在循环引用的对象放到2代中。</li>
+<li>2代: 当1代扫描10次，2代扫描1次。</li>
+</ul>
+<h2 id="4-小结"><a href="#4-小结" class="headerlink" title="4. 小结"></a>4. 小结</h2><p>在python中维护了一个refchain的双向链表，这个链表中存储程序创建的所有对象，每种类型的对象都有一个引用计数器，引用个数进行变化。最后当引用计数器为0时则会进行垃圾回收（移除、销毁）。</p>
+<p>但是，对于可能存在循环引用的对象，python引入了标记清处和分代回收，在其内部分为4个链表：</p>
+<ul>
+<li>refchain</li>
+<li>0代 700次</li>
+<li>1代 10次</li>
+<li>2代 10次</li>
+</ul>
+<p>当达到各自的阈值时，触发扫描和标记清除的动作。</p>
+<h2 id="5-缓存"><a href="#5-缓存" class="headerlink" title="5. 缓存"></a>5. 缓存</h2><p>缓存机制是为了减少常用类型的对象反复申请和归还内存的开销，在python中缓存机制分为两部分：</p>
+<h3 id="5-1-池"><a href="#5-1-池" class="headerlink" title="5.1 池"></a>5.1 池</h3><p>为了避免重复创建和销毁，维护了一个对象池。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 启动解释器的时候，python内部创建了一个int池，范围从-5到256，python认为这个是常用对象,并且不会被回收。</span></span><br><span class="line">v1 = <span class="number">7</span></span><br><span class="line">v2 = <span class="number">9</span></span><br><span class="line">v3 = <span class="number">9</span></span><br><span class="line">print(id(v1), id(v3))</span><br><span class="line"><span class="comment"># 但如果是超过上述范围，则会重新创建对象。</span></span><br><span class="line">v5 = <span class="number">999</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="5-2-free-list"><a href="#5-2-free-list" class="headerlink" title="5.2 free_list"></a>5.2 free_list</h3><p>当一个对象的引用计数器为0时，按理应该回收垃圾，但这里python不直接回收，而是将其从refchain中移除，添加到free_list中，之后如果再去创建对象时，不在重新开辟内存，而是直接使用free_list中的同类型的对象。</p>
+<ul>
+<li><p>float类型，维护的free_list链表最多可缓存100个float对象。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">v1 = <span class="number">3.14</span>    <span class="comment"># 开辟内存来存储float对象，并将对象添加到refchain链表。  </span></span><br><span class="line">print( id(v1) ) <span class="comment"># 内存地址：4436033488  </span></span><br><span class="line"><span class="keyword">del</span> v1    <span class="comment"># 引用计数器-1，如果为0则在rechain链表中移除，不销毁对象，而是将对象添加到float的free_list.  </span></span><br><span class="line">v2 = <span class="number">9.999</span>    <span class="comment"># 优先去free_list中获取对象，并重置为9.999，如果free_list为空才重新开辟内存。  </span></span><br><span class="line">print( id(v2) ) <span class="comment"># 内存地址：4436033488 </span></span><br><span class="line"><span class="comment"># 注意：引用计数器为0时，会先判断free_list中缓存个数是否满了，未满则将对象缓存，已满则直接将对象销毁。</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>int类型，不是基于free_list，而是维护一个small_ints链表保存常见数据（小数据池）</strong>，小数据池范围：<code>-5 &lt;= value &lt; 257</code>。即：重复使用这个范围的整数时，不会重新开辟内存。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">v1 = <span class="number">38</span>    <span class="comment"># 去小数据池small_ints中获取38整数对象，将对象添加到refchain并让引用计数器+1。  </span></span><br><span class="line">print( id(v1))  <span class="comment">#内存地址：4514343712  </span></span><br><span class="line">v2 = <span class="number">38</span> <span class="comment"># 去小数据池small_ints中获取38整数对象，将refchain中的对象的引用计数器+1。  </span></span><br><span class="line">print( id(v2) ) <span class="comment">#内存地址：4514343712  </span></span><br><span class="line"><span class="comment"># 注意：在解释器启动时候-5~256就已经被加入到small_ints链表中且引用计数器初始化为1，代码中使用的值时直接去small_ints中拿来用并将引用计数器+1即可。另外，small_ints中的数据引用计数器永远不会为0（初始化时就设置为1了），所以也不会被销毁。</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>str类型，维护<code>unicode_latin1[256]</code>链表，内部将所有的<code>ascii字符</code>缓存起来，以后使用时就不再反复创建。字符串驻留机制。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">v1 = <span class="string">"A"</span>  print( id(v1) ) <span class="comment"># 输出：4517720496  </span></span><br><span class="line"><span class="keyword">del</span> v1  </span><br><span class="line">v2 = <span class="string">"A"</span>  </span><br><span class="line">print( id(v1) ) <span class="comment"># 输出：4517720496 </span></span><br><span class="line"><span class="comment"># 除此之外，Python内部还对字符串做了驻留机制，针对那么只含有字母、数字、下划线的字符串（见源码Objects/codeobject.c），如果内存中已存在则不会重新在创建而是使用原来的地址里（不会像free_list那样一直在内存存活，只有内存中有才能被重复利用）。  </span></span><br><span class="line">v1 = <span class="string">"simon"</span>  </span><br><span class="line">v2 = <span class="string">"simon"</span>  </span><br><span class="line">print(id(v1) == id(v2)) <span class="comment"># 输出：True</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>list类型，维护的free_list数组最多可缓存80个list对象。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">v1 = [<span class="number">11</span>,<span class="number">22</span>,<span class="number">33</span>]  </span><br><span class="line">print( id(v1) ) <span class="comment"># 输出：4517628816  </span></span><br><span class="line"><span class="keyword">del</span> v1  </span><br><span class="line">v2 = [<span class="string">"x"</span>,<span class="string">"simon"</span>]  </span><br><span class="line">print( id(v2) ) <span class="comment"># 输出：4517628816</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>tuple类型，维护一个free_list数组且数组容量20，数组中元素可以是链表且每个链表最多可以容纳2000个元组对象。元组的free_list数组在存储数据时，是按照元组可以容纳的个数为索引找到free_list数组中对应的链表，并添加到链表中。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">v1 = (<span class="number">1</span>,<span class="number">2</span>)  </span><br><span class="line">print( id(v1) )  </span><br><span class="line"><span class="keyword">del</span> v1  <span class="comment"># 因元组的数量为2，所以会把这个对象缓存到free_list[2]的链表中。  </span></span><br><span class="line">v2 = (<span class="string">"simon"</span>,<span class="string">"Alex"</span>)  <span class="comment"># 不会重新开辟内存，而是去free_list[2]对应的链表中拿到一个对象来使用。  </span></span><br><span class="line">print( id(v2) )</span><br><span class="line"><span class="comment"># 元组的free_list根据索引来</span></span><br><span class="line"><span class="comment"># free_list = [0, 1, 2, 3, 4 ... 19]</span></span><br><span class="line"><span class="comment"># 对应下标放的是长度为下标值的元组链表，例如free_list[0]专门放空元组组成的链表，</span></span><br><span class="line"><span class="comment"># free_list[1]专门放有一个元素的元组，组成链表。</span></span><br><span class="line"><span class="comment"># 以此类推。</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>dict类型，维护的free_list数组最多可缓存80个dict对象。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">v1 = &#123;<span class="string">"k1"</span>:<span class="number">123</span>&#125;  </span><br><span class="line">print( id(v1) )  <span class="comment"># 输出：4515998128  </span></span><br><span class="line"><span class="keyword">del</span> v1</span><br><span class="line">v2 = &#123;<span class="string">"name"</span>:<span class="string">"simon"</span>,<span class="string">"age"</span>:<span class="number">18</span>,<span class="string">"gender"</span>:<span class="string">"男"</span>&#125;  </span><br><span class="line">print( id(v1) ) <span class="comment"># 输出：4515998128</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+
+  </article>
+</div>
+
+
+    
+
+
+
+
+</div>
+
+<div class="footer-wrapper container">
+  <footer class="footer clearfix">
+    <div class="clearfix">
+    <a href="http://simonnie98.github.io" class="footer-logo">
+      <i class="fa fa-github"></i>
+    </a>
+    <ul class="footer-social-link">
+      <li>© 2019 Simon Nie</li>
+      <li><a href="http://simonnie98.github.io">Home</a></li>
+      
+      <li><a href="https://github.com/SimonNie98" target="_blank" rel="noopener">Github</a></li>
+      
+    </ul>
+    <div class="footer-theme-info">
+      Theme <a href="//github.com/sabrinaluo/hexo-theme-replica" target="_blank" rel="noopener">Replica</a>
+      by <a href="//github.com/sabrinaluo" target="_blank" rel="noopener">Hiitea</a> ❤ Powered by Hexo
+    </div>
+    </div>
+    
+  </footer>
+</div>
+
+
+<script>
+  (function() {
+    var cx = '001135385136731589458:hwqr0dnpaxv';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+      '//cse.google.com/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+
+
+
+<script src="/js/main.js"></script>
+
+</body>
+</html>

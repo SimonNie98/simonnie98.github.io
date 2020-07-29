@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>
+    洛谷5-深度优先搜索(3) | Simon&#39;s Blog
+  </title>
+  <meta name="description" content="I am the storm.">
+  
+  <meta name="keywords" content="
+  DFS,二叉树,前序遍历,迷宫问题,剪枝,洛谷 P1605,洛谷 P1040,洛谷 P1092
+  ">
+  
+  <meta name="author" content="Simon Nie">
+
+  <meta http-equiv="Cache-Control" content="no-transform"/>
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="theme-color" content="#1e2327">
+  <link rel="apple-touch-icon" href="https://github.githubassets.com/apple-touch-icon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://github.githubassets.com/apple-touch-icon-180x180.png">
+
+  <link rel="icon" type="image/x-icon" href="https://github.githubassets.com/favicon.ico">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+
+  
+
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/vue/1.0.25-csp/vue.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body id="replica-app">
+
+<nav class="navbar-wrapper">
+  <div class="navbar">
+    <div class="container clearfix">
+      <a href="/" class="navbar-logo"><i class="fa fa-github"></i></a>
+
+      <div class="navbar-search float-left desktop-only">
+        <div class="navbar-search-form">
+          <label for="gsc-i-id1">Google Search</label>
+          <div id="google-search">
+            <gcse:search></gcse:search>
+          </div>
+        </div>
+      </div>
+
+      <ul class="navbar-nav float-left">
+        
+        <li><a href="/archives">Archives</a></li>
+        
+        
+        <li><a href="/categories">Categories</a></li>
+        
+        
+        <li><a href="/tags">Tags</a></li>
+        
+        
+        <li class="desktop-only"><a href="/atom.xml" target="_blank">RSS</a></li>
+        
+      </ul>
+
+      <ul class="navbar-nav user-nav float-right desktop-only">
+        <li class="user-nav-notification">
+          <a><span class="user-nav-unread"></span><i class="fa fa-bell"></i></a>
+        </li>
+        <li>
+          <a><i class="fa fa-plus"></i> <i class="fa fa-caret-down"></i></a>
+        </li>
+        <li class="user-nav-logo">
+          <a><img src="/images/avatar.jpg"> <i class="fa fa-caret-down"></i></i></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="main-container">
+  <header class="header-wrapper desktop-only">
+  <div class="container header-site-detail">
+    <ul class="header-toolbar">
+      <li class="clearfix">
+        <a href="/archives" class="header-toolbar-left"><i
+                  class="fa fa-file-text"></i> Posts </a>
+        <a href="/archives"
+           class="header-toolbar-right"> 23 </a>
+      </li>
+      <li>
+        <a href="/tags" class="header-toolbar-left"><i
+                  class="fa fa-tags"></i> Tags </a>
+        <a href="/tags"
+           class="header-toolbar-right"> 101 </a>
+      </li>
+      <li>
+        <a href="/categories" class="header-toolbar-left"><i
+                  class="fa fa-folder-open"></i> Categories </a>
+        <a href="/categories"
+           class="header-toolbar-right"> 9 </a>
+      </li>
+    </ul>
+    <h2 class="header-title">
+      <i class="fa fa-book text-muted"></i>
+      <a href="/">Simon&#39;s Blog</a>
+      
+      
+    </h2>
+  </div>
+
+  <div class="container">
+    <div class="header-tab-wrapper clearfix">
+      <span class="header-tab header-tab-selected"><i class="fa fa-thumbs-o-up"></i> Like</span>
+      <span class="header-tab"><i class="fa fa-share-alt"></i> Share</span>
+      <span class="header-tab"><i class="fa fa-comments-o"></i> Discussion</span>
+      <span class="header-tab"><i class="fa fa-bookmark-o"></i> Bookmark </span>
+      <span class="header-tab"><i class="fa fa-smile-o"></i> Smile <i class="fa fa-caret-down"></i></span>
+    </div>
+  </div>
+</header>
+
+
+<div class="post-container container">
+  <h3>
+    <i class="fa fa-user-o"></i>
+    Simon Nie
+
+    <span class="post-date float-right" title="{{moment(1579782371000).format('MMM DD, YYYY, h:mm:ss A')}}">
+      <i class="fa fa-pencil-square-o"></i>
+      {{moment(1579782371000).fromNow()}}
+    </span>
+  </h3>
+
+  <article class="post-content">
+    <h1>洛谷5-深度优先搜索(3)</h1>
+    <h1 id="Table-of-Contents"><a href="#Table-of-Contents" class="headerlink" title="Table of Contents"></a>Table of Contents</h1><ul>
+<li><a href="#1-p1605-迷宫">1. P1605 迷宫</a><ul>
+<li><a href="#思路">思路：</a></li>
+</ul>
+</li>
+<li><a href="#2-p1040-加分二叉树">2. P1040 加分二叉树</a><ul>
+<li><a href="#思路-1">思路：</a></li>
+<li><a href="#二叉树的前序输出">二叉树的前序输出：</a></li>
+</ul>
+</li>
+<li><a href="#3-p1092-虫食算">3. P1092 虫食算</a><ul>
+<li><a href="#思路-2">思路：</a></li>
+</ul>
+</li>
+</ul>
+<h3 id="1-P1605-迷宫"><a href="#1-P1605-迷宫" class="headerlink" title="1. P1605 迷宫"></a>1. P1605 迷宫</h3><h4 id="思路："><a href="#思路：" class="headerlink" title="思路："></a>思路：</h4><p>这道题是经典的迷宫的题目，只需要dfs暴搜即可。注意状态的修改与还原。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> n, m, t, sx, sy, fx, fy, tmpx, tmpy;</span><br><span class="line"><span class="keyword">int</span> <span class="built_in">stop</span>[<span class="number">26</span>][<span class="number">26</span>], vis[<span class="number">26</span>][<span class="number">26</span>], ans;</span><br><span class="line"><span class="keyword">int</span> dire[<span class="number">4</span>][<span class="number">2</span>] = &#123;&#123;<span class="number">0</span>, <span class="number">1</span>&#125;, &#123;<span class="number">0</span>, <span class="number">-1</span>&#125;, &#123;<span class="number">1</span>, <span class="number">0</span>&#125;, &#123;<span class="number">-1</span>, <span class="number">0</span>&#125;&#125;;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span></span>&#123;</span><br><span class="line"><span class="comment">//    cout&lt;&lt;"x:"&lt;&lt;x&lt;&lt;" "&lt;&lt;y&lt;&lt;endl;</span></span><br><span class="line">    <span class="keyword">if</span>(x == fx &amp;&amp; y == fy)&#123;</span><br><span class="line">        ans++;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i++)&#123;</span><br><span class="line">        <span class="keyword">int</span> xx = x + dire[i][<span class="number">0</span>], yy = y + dire[i][<span class="number">1</span>];</span><br><span class="line">        <span class="keyword">if</span>(xx &lt;= <span class="number">0</span> || xx &gt; n || yy &lt;= <span class="number">0</span> || yy &gt; m)</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        <span class="keyword">if</span>(vis[xx][yy] == <span class="number">0</span> &amp;&amp; <span class="built_in">stop</span>[xx][yy] == <span class="number">0</span>)&#123;</span><br><span class="line">            vis[x][y] = <span class="number">1</span>;</span><br><span class="line">            dfs(xx, yy);</span><br><span class="line">            vis[x][y] = <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d%d%d"</span>, &amp;n, &amp;m, &amp;t);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d%d%d%d"</span>, &amp;sx, &amp;sy, &amp;fx, &amp;fy);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; t; i++)&#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d%d"</span>, &amp;tmpx, &amp;tmpy);</span><br><span class="line">        <span class="built_in">stop</span>[tmpx][tmpy] = <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    dfs(sx, sy);</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;ans&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-P1040-加分二叉树"><a href="#2-P1040-加分二叉树" class="headerlink" title="2. P1040 加分二叉树"></a>2. P1040 加分二叉树</h3><h4 id="思路：-1"><a href="#思路：-1" class="headerlink" title="思路："></a>思路：</h4><p>这道题分为两个子问题：</p>
+<p>（1）对于给定节点权值的中序遍历二叉树，怎样找到符合规定计算方法的得分最高的二叉树，输出这个分值</p>
+<p>（2）输出这个二叉树的对应的前序遍历</p>
+<p>解法：</p>
+<p>采用带记忆的搜索dp，</p>
+<p>变量dp[i][j]表示从i到j的最大值，很显然:</p>
+<p>dp[i][j] = 1,         if i == j</p>
+<p>​             = max(dp[i][k]*dp[k+1][j] + dp[k][k])     for k in [i, j]</p>
+<p>dp[i][i] = score[i]，即每个叶子节点的分数是它本身的分数。</p>
+<p>与此同时，保存一个变量root[i][j]表示从i到j这段子树的根节点。显然root[i][i]=[i]。</p>
+<h4 id="二叉树的前序输出："><a href="#二叉树的前序输出：" class="headerlink" title="二叉树的前序输出："></a>二叉树的前序输出：</h4><p>二叉树的前序输出就是先输出根节点再输出左右节点。代码的递归写法很简单。</p>
+<p>最终代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ll long long</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> n, score[<span class="number">50</span>], root[<span class="number">50</span>][<span class="number">50</span>];</span><br><span class="line">ll ans, dp[<span class="number">50</span>][<span class="number">50</span>];</span><br><span class="line"><span class="comment">// dp[i][j] means the score from i to j;</span></span><br><span class="line"><span class="comment">// root[i][j] means the root of sub-tree from i to j;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">search_tree</span><span class="params">(<span class="keyword">int</span> left, <span class="keyword">int</span> right)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(dp[left][right] &gt; <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span> dp[left][right];</span><br><span class="line">    <span class="keyword">if</span>(left == right)</span><br><span class="line">        <span class="keyword">return</span> score[left];</span><br><span class="line">    <span class="keyword">if</span>(left &gt; right)</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = left; i &lt;= right; i++)&#123;</span><br><span class="line">        ll now = <span class="number">1l</span>l * search_tree(left, i<span class="number">-1</span>) * search_tree(i+<span class="number">1</span>, right) + dp[i][i];</span><br><span class="line">        <span class="keyword">if</span>(now &gt; dp[left][right])&#123;</span><br><span class="line">            dp[left][right] = now;</span><br><span class="line">            root[left][right] = i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> dp[left][right];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">preorder</span><span class="params">(<span class="keyword">int</span> left, <span class="keyword">int</span> right)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(left &gt; right)</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">if</span>(left == right)&#123;</span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;left+<span class="number">1</span>&lt;&lt;<span class="string">" "</span>;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;root[left][right]+<span class="number">1</span>&lt;&lt;<span class="string">" "</span>;</span><br><span class="line">    preorder(left, root[left][right] - <span class="number">1</span>);</span><br><span class="line">    preorder(root[left][right]+<span class="number">1</span>, right);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;n);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++)&#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;score[i]);</span><br><span class="line">        dp[i][i] = score[i];</span><br><span class="line">        root[i][i] = i;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;search_tree(<span class="number">0</span>, n<span class="number">-1</span>)&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    preorder(<span class="number">0</span>, n<span class="number">-1</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-P1092-虫食算"><a href="#3-P1092-虫食算" class="headerlink" title="3. P1092 虫食算"></a>3. P1092 虫食算</h3><h4 id="思路：-2"><a href="#思路：-2" class="headerlink" title="思路："></a>思路：</h4><p>这道题仍然是暴搜，但是会TLE，关键在于剪枝的技巧。</p>
+<p>先上一种只能过80%数据的解法，正解需要用到高斯消元。回头再补。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="keyword">char</span> a[<span class="number">26</span>], b[<span class="number">26</span>], c[<span class="number">26</span>];</span><br><span class="line"><span class="keyword">int</span> ans[<span class="number">26</span>], used[<span class="number">26</span>], record[<span class="number">26</span>];</span><br><span class="line"><span class="keyword">char</span> order[<span class="number">26</span>];</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">ok</span><span class="params">(<span class="keyword">int</span> type)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(type == <span class="number">1</span>)&#123;<span class="comment">// strict check, missing is not allowed.</span></span><br><span class="line">        <span class="keyword">int</span> ad = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = n<span class="number">-1</span>; i &gt;= <span class="number">0</span>; i--)&#123;</span><br><span class="line">            <span class="keyword">if</span>(ans[a[i]-<span class="string">'A'</span>] == <span class="number">-1</span> || ans[b[i] - <span class="string">'A'</span>] == <span class="number">-1</span> || ans[c[i]-<span class="string">'A'</span>] == <span class="number">-1</span>)</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            <span class="keyword">if</span>((ans[a[i]-<span class="string">'A'</span>] + ans[b[i] - <span class="string">'A'</span>] + ad) % n != ans[c[i]-<span class="string">'A'</span>])</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            ad = (ans[a[i]-<span class="string">'A'</span>] + ans[b[i] - <span class="string">'A'</span>] + ad) / n;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(type == <span class="number">0</span>)&#123;<span class="comment">// not-strict check</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = n<span class="number">-1</span>; i &gt;= <span class="number">0</span>; i--)&#123;</span><br><span class="line">            <span class="keyword">if</span>(ans[a[i]-<span class="string">'A'</span>] == <span class="number">-1</span> || ans[b[i] - <span class="string">'A'</span>] == <span class="number">-1</span> || ans[c[i]-<span class="string">'A'</span>] == <span class="number">-1</span>)&#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>((ans[a[i]-<span class="string">'A'</span>] + ans[b[i] - <span class="string">'A'</span>])%n != ans[c[i]-<span class="string">'A'</span>] &amp;&amp; (ans[a[i]-<span class="string">'A'</span>] + ans[b[i] - <span class="string">'A'</span>] + <span class="number">1</span>)%n != ans[c[i]-<span class="string">'A'</span>])</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!ok(<span class="number">1</span>))</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;ans[i]&lt;&lt;<span class="string">" "</span>;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> index)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(index &gt;= n)&#123;</span><br><span class="line">        <span class="built_in">print</span>();</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(used[i] == <span class="number">1</span>)</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        ans[order[index]-<span class="string">'A'</span>] = i;</span><br><span class="line">        <span class="keyword">if</span>(ok(<span class="number">0</span>))&#123;</span><br><span class="line">            used[i] = <span class="number">1</span>;</span><br><span class="line">            dfs(index+<span class="number">1</span>);</span><br><span class="line">            used[i] = <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ans[order[index] - <span class="string">'A'</span>] = <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;n);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%s%s%s"</span>, a, b, c);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = n<span class="number">-1</span>, j = <span class="number">0</span>; i &gt;= <span class="number">0</span>; i--)&#123;</span><br><span class="line">        <span class="keyword">if</span>(!record[a[i]-<span class="string">'A'</span>]) order[j++] = a[i], record[a[i] -<span class="string">'A'</span>] = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span>(!record[b[i]-<span class="string">'A'</span>]) order[j++] = b[i], record[b[i] -<span class="string">'A'</span>] = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span>(!record[c[i]-<span class="string">'A'</span>]) order[j++] = c[i], record[c[i] -<span class="string">'A'</span>] = <span class="number">1</span>;</span><br><span class="line">        <span class="comment">//initialization</span></span><br><span class="line">        ans[a[i] - <span class="string">'A'</span>] = <span class="number">-1</span>;</span><br><span class="line">        ans[b[i] - <span class="string">'A'</span>] = <span class="number">-1</span>;</span><br><span class="line">        ans[c[i] - <span class="string">'A'</span>] = <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    dfs(<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+  </article>
+</div>
+
+
+    
+
+
+
+
+</div>
+
+<div class="footer-wrapper container">
+  <footer class="footer clearfix">
+    <div class="clearfix">
+    <a href="http://simonnie98.github.io" class="footer-logo">
+      <i class="fa fa-github"></i>
+    </a>
+    <ul class="footer-social-link">
+      <li>© 2019 Simon Nie</li>
+      <li><a href="http://simonnie98.github.io">Home</a></li>
+      
+      <li><a href="https://github.com/SimonNie98" target="_blank" rel="noopener">Github</a></li>
+      
+    </ul>
+    <div class="footer-theme-info">
+      Theme <a href="//github.com/sabrinaluo/hexo-theme-replica" target="_blank" rel="noopener">Replica</a>
+      by <a href="//github.com/sabrinaluo" target="_blank" rel="noopener">Hiitea</a> ❤ Powered by Hexo
+    </div>
+    </div>
+    
+  </footer>
+</div>
+
+
+<script>
+  (function() {
+    var cx = '001135385136731589458:hwqr0dnpaxv';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+      '//cse.google.com/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+
+
+
+<script src="/js/main.js"></script>
+
+</body>
+</html>

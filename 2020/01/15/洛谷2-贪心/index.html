@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>
+    洛谷2-贪心 | Simon&#39;s Blog
+  </title>
+  <meta name="description" content="I am the storm.">
+  
+  <meta name="keywords" content="
+  贪心,高精度,洛谷 P1803,洛谷 P1080
+  ">
+  
+  <meta name="author" content="Simon Nie">
+
+  <meta http-equiv="Cache-Control" content="no-transform"/>
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="theme-color" content="#1e2327">
+  <link rel="apple-touch-icon" href="https://github.githubassets.com/apple-touch-icon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://github.githubassets.com/apple-touch-icon-180x180.png">
+
+  <link rel="icon" type="image/x-icon" href="https://github.githubassets.com/favicon.ico">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+
+  
+
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/vue/1.0.25-csp/vue.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body id="replica-app">
+
+<nav class="navbar-wrapper">
+  <div class="navbar">
+    <div class="container clearfix">
+      <a href="/" class="navbar-logo"><i class="fa fa-github"></i></a>
+
+      <div class="navbar-search float-left desktop-only">
+        <div class="navbar-search-form">
+          <label for="gsc-i-id1">Google Search</label>
+          <div id="google-search">
+            <gcse:search></gcse:search>
+          </div>
+        </div>
+      </div>
+
+      <ul class="navbar-nav float-left">
+        
+        <li><a href="/archives">Archives</a></li>
+        
+        
+        <li><a href="/categories">Categories</a></li>
+        
+        
+        <li><a href="/tags">Tags</a></li>
+        
+        
+        <li class="desktop-only"><a href="/atom.xml" target="_blank">RSS</a></li>
+        
+      </ul>
+
+      <ul class="navbar-nav user-nav float-right desktop-only">
+        <li class="user-nav-notification">
+          <a><span class="user-nav-unread"></span><i class="fa fa-bell"></i></a>
+        </li>
+        <li>
+          <a><i class="fa fa-plus"></i> <i class="fa fa-caret-down"></i></a>
+        </li>
+        <li class="user-nav-logo">
+          <a><img src="/images/avatar.jpg"> <i class="fa fa-caret-down"></i></i></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="main-container">
+  <header class="header-wrapper desktop-only">
+  <div class="container header-site-detail">
+    <ul class="header-toolbar">
+      <li class="clearfix">
+        <a href="/archives" class="header-toolbar-left"><i
+                  class="fa fa-file-text"></i> Posts </a>
+        <a href="/archives"
+           class="header-toolbar-right"> 23 </a>
+      </li>
+      <li>
+        <a href="/tags" class="header-toolbar-left"><i
+                  class="fa fa-tags"></i> Tags </a>
+        <a href="/tags"
+           class="header-toolbar-right"> 101 </a>
+      </li>
+      <li>
+        <a href="/categories" class="header-toolbar-left"><i
+                  class="fa fa-folder-open"></i> Categories </a>
+        <a href="/categories"
+           class="header-toolbar-right"> 9 </a>
+      </li>
+    </ul>
+    <h2 class="header-title">
+      <i class="fa fa-book text-muted"></i>
+      <a href="/">Simon&#39;s Blog</a>
+      
+      
+    </h2>
+  </div>
+
+  <div class="container">
+    <div class="header-tab-wrapper clearfix">
+      <span class="header-tab header-tab-selected"><i class="fa fa-thumbs-o-up"></i> Like</span>
+      <span class="header-tab"><i class="fa fa-share-alt"></i> Share</span>
+      <span class="header-tab"><i class="fa fa-comments-o"></i> Discussion</span>
+      <span class="header-tab"><i class="fa fa-bookmark-o"></i> Bookmark </span>
+      <span class="header-tab"><i class="fa fa-smile-o"></i> Smile <i class="fa fa-caret-down"></i></span>
+    </div>
+  </div>
+</header>
+
+
+<div class="post-container container">
+  <h3>
+    <i class="fa fa-user-o"></i>
+    Simon Nie
+
+    <span class="post-date float-right" title="{{moment(1579091770000).format('MMM DD, YYYY, h:mm:ss A')}}">
+      <i class="fa fa-pencil-square-o"></i>
+      {{moment(1579091770000).fromNow()}}
+    </span>
+  </h3>
+
+  <article class="post-content">
+    <h1>洛谷2-贪心</h1>
+    <h1 id="Table-of-Contents"><a href="#Table-of-Contents" class="headerlink" title="Table of Contents"></a>Table of Contents</h1><ul>
+<li><a href="#1-p1803-凌乱的yyy--线段覆盖">1. P1803 凌乱的yyy / 线段覆盖</a><ul>
+<li><a href="#思路">思路：</a></li>
+</ul>
+</li>
+<li><a href="#2-p1080-国王游戏">2. P1080 国王游戏</a><ul>
+<li><a href="#思路-1">思路：</a></li>
+</ul>
+</li>
+</ul>
+<h3 id="1-P1803-凌乱的yyy-线段覆盖"><a href="#1-P1803-凌乱的yyy-线段覆盖" class="headerlink" title="1. P1803 凌乱的yyy / 线段覆盖"></a>1. P1803 凌乱的yyy / 线段覆盖</h3><h4 id="思路："><a href="#思路：" class="headerlink" title="思路："></a>思路：</h4><p>这道题的思路仍然是排序之后扫一遍就可以，这里的核心思想是把n场考试缩减成n-1的子问题，为了使子问题有最优解，就需要确保缩减的时候挑出的第一场考试结束时间尽可能短，所以排序的时候应该以结束时间的早晚进行排序，然后比较：如果某考试的开始时间大于等于上一场选中的考试的结束时间，就可以选择。练手题，两遍AC。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> n, x, y;</span><br><span class="line"><span class="built_in">vector</span>&lt;pair&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; &gt; nums;</span><br><span class="line"><span class="keyword">int</span> tail, cnt;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">cmp</span><span class="params">(pair&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; a, pair&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; b)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a.second == b.second ? a.first &lt; b.first : a.second &lt; b.second;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;n);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++)&#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d%d"</span>, &amp;x, &amp;y);</span><br><span class="line">        nums.push_back(make_pair(x, y));</span><br><span class="line">    &#125;</span><br><span class="line">    sort(nums.<span class="built_in">begin</span>(), nums.<span class="built_in">end</span>(), cmp);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++)&#123;</span><br><span class="line"><span class="comment">//        cout&lt;&lt;nums[i].first&lt;&lt;" "&lt;&lt;nums[i].second&lt;&lt;endl;</span></span><br><span class="line">        <span class="keyword">if</span>(nums[i].first &gt;= tail)&#123;</span><br><span class="line">            tail = nums[i].second;</span><br><span class="line">            cnt++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;cnt&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-P1080-国王游戏"><a href="#2-P1080-国王游戏" class="headerlink" title="2. P1080 国王游戏"></a>2. P1080 国王游戏</h3><h4 id="思路：-1"><a href="#思路：-1" class="headerlink" title="思路："></a>思路：</h4><p>这道题比较难也比较经典，思路非常有趣：</p>
+<blockquote>
+<p>首先可以明确的一点是：在某个大臣前面的人无论怎么排都不会影响该大臣得到的钱（乘法交换律）。只有当A和B的相对位置发生变化的时候，A和B得到的钱数才会互相影响（这里相对位置指的是A在B前或者B在A钱）。那么考虑: $ A(a_i, b_i)$ 和$ B(a_j, b_j)$的位置顺序(国王$ (a_0, b_0)$永远在最前面)：</p>
+<ol>
+<li>A在B的前面，则设A得到的金币为$ \prod_{a_1}^{a_{i-1} }/b_i$，B得到的金币为$  \prod_{a_1}^{a_{i-1} }<em>a_i</em>\prod_{a_{i+1} }^{a_{j-1} }/b_j$， $ans1=max(\prod_{a_1}^{a_{i-1} }/b_i, \ \   \prod_{a_1}^{a_{i-1} }<em>a_i</em>\prod_{a_{i+1}}^{a_{j-1}}/b_j)$；</li>
+<li>A在B的后面，则B得到的金币为$ \prod_{a_1}^{a_{i-1} }/b_j$，A得到的金币为$  \prod_{a_1}^{a_{i-1} }<em>a_j</em>\prod_{a_{i+1}}^{a_{j-1}}/b_i$，$ans2=max(\prod_{a_1}^{a_{i-1} }<em>a_j</em>\prod_{a_{i+1}}^{a_{j-1} }/b_i，\ \ \prod_{a_1}^{a_{i-1} }/b_j)$</li>
+</ol>
+<p>显然，ans1的左项小于ans2的左项，ans1的右项大于ans2的右项，因此实际上比较ans1和ans2的大小就是在比较ans1右项和ans2的左项：</p>
+<p>$if\ ans1.right &lt; ans2.left, then\ a_i/b_j&lt;a_j/b_i,\ then\ a_i<em>b_i&lt;a_j</em>b_j$</p>
+<p>也即，如果ans1 &lt; ans2，那么就有$ a_i<em>b_i&lt;a_j</em>b_j$。且这是充要条件。</p>
+<p>因此，要得到最小的最大值，假设A的a*b值大于B，那么显然ans1要大于ans2，这个时候为了取到ans2(尽可能小的最大值)，就要让A(a*b值大的大臣)排在B(a*b值小)的大臣后面。</p>
+<p>刚才已经说过，每个大臣前面的人怎么排序并不会影响他应得的钱。因此最后的解一定是最优解。</p>
+</blockquote>
+<p>这个思路有了以后，再看这道题，注意数据范围，需要用到高精度：</p>
+<blockquote>
+<p>高精度可以通过struct封装常用的乘法、除法、=、&lt;等运算实现，需要注意的几点：</p>
+<ol>
+<li>一般高精度每一个位的整数大小(base取10000)，再大并不会提高效率，并且1000x10000尚未溢出整数范围，对乘法有好处。</li>
+<li>data[N]的最低位data[0]存该大数的“位数”（除data[0]以外的数组长度）。</li>
+<li>除法的时候需要保证前导零不被输出。</li>
+<li>输出的时候，先输出最高位(data[data[0]])，然后输出其他位，如果base=10000则应在输出的时候输出“%04d”对应中间位输出长度。</li>
+</ol>
+</blockquote>
+<p>最后代码如下:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> N = <span class="number">10000</span>+<span class="number">5</span>;</span><br><span class="line"><span class="keyword">int</span> n, x, y;</span><br><span class="line"><span class="built_in">vector</span>&lt;pair&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; &gt; nums;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">cmp</span><span class="params">(pair&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; a, pair&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; b)</span></span>&#123;</span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">long</span> xx = a.first*a.second, yy = b.second*b.first;</span><br><span class="line">    <span class="keyword">return</span> xx &lt; yy;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">BigInt</span>&#123;</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">int</span> base = <span class="number">10000</span>;</span><br><span class="line">    <span class="keyword">int</span> data[N];<span class="comment">//data[0] was used to record how many digits there is.</span></span><br><span class="line"></span><br><span class="line">    BigInt(<span class="keyword">long</span> <span class="keyword">long</span> num = <span class="number">0</span>)&#123;</span><br><span class="line">        *<span class="keyword">this</span> = num;</span><br><span class="line">    &#125;</span><br><span class="line">    BigInt <span class="keyword">operator</span> = (<span class="keyword">long</span> <span class="keyword">long</span> num)&#123;</span><br><span class="line">        <span class="built_in">memset</span>(data, <span class="number">0</span>, <span class="keyword">sizeof</span>(data));</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; num &gt; <span class="number">0</span>; i++)&#123;</span><br><span class="line">            data[i] = num % base;</span><br><span class="line">            num /= base;</span><br><span class="line">            data[<span class="number">0</span>]++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">multi</span><span class="params">(<span class="keyword">int</span> num)</span></span>&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= data[<span class="number">0</span>]; i++)</span><br><span class="line">            data[i] *= num;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; data[<span class="number">0</span>]; i++)&#123;</span><br><span class="line">            data[i + <span class="number">1</span>] += data[i] / base;</span><br><span class="line">            data[i] %= base;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span>(data[data[<span class="number">0</span>]]&gt;=base)&#123;</span><br><span class="line">            data[data[<span class="number">0</span>] + <span class="number">1</span>] += data[data[<span class="number">0</span>]] / base;</span><br><span class="line">            data[data[<span class="number">0</span>]] %= base;</span><br><span class="line">            data[<span class="number">0</span>]++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">div</span><span class="params">(<span class="keyword">int</span> num)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> q = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = data[<span class="number">0</span>]; i &gt; <span class="number">0</span>; i--) &#123;</span><br><span class="line">            q *= base;</span><br><span class="line">            q += data[i];</span><br><span class="line">            data[i] = q/num;</span><br><span class="line">            <span class="keyword">if</span>(data[<span class="number">0</span>] == <span class="number">0</span> &amp;&amp; data[i] != <span class="number">0</span>) &#123;</span><br><span class="line">                data[<span class="number">0</span>]=i;</span><br><span class="line">            &#125;</span><br><span class="line">            q %= num;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = data[<span class="number">0</span>]; i &gt; <span class="number">0</span>; i--)&#123;</span><br><span class="line">            <span class="keyword">if</span>(data[i] == <span class="number">0</span>)</span><br><span class="line">                data[<span class="number">0</span>]--;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%d"</span>, data[data[<span class="number">0</span>]]);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = data[<span class="number">0</span>]<span class="number">-1</span>; i &gt; <span class="number">0</span>; i--)</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"%04d"</span>, data[i]);</span><br><span class="line">        <span class="built_in">puts</span>(<span class="string">""</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">compare</span><span class="params">(BigInt&amp; b)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(data[<span class="number">0</span>] &gt; b.data[<span class="number">0</span>])</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (data[<span class="number">0</span>] &lt; b.data[<span class="number">0</span>])</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i = data[<span class="number">0</span>]; i &gt; <span class="number">0</span>; i--)&#123;</span><br><span class="line">                <span class="keyword">if</span>(data[i] &gt; b.data[i])</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">if</span> (data[i] &lt; b.data[i])</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    BigInt (BigInt&amp; b)&#123;</span><br><span class="line">        <span class="built_in">memset</span>(data,<span class="number">0</span>,<span class="keyword">sizeof</span>(data));</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = b.data[<span class="number">0</span>];i &gt;=<span class="number">0</span>; i--)</span><br><span class="line">            data[i] = b.data[i];</span><br><span class="line">        <span class="keyword">return</span> ;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">mod</span><span class="params">(<span class="keyword">int</span> num)</span></span>&#123;</span><br><span class="line">        data[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">        data[<span class="number">1</span>] %= num;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= data[<span class="number">0</span>]; i++)</span><br><span class="line">            data[i] = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;ans, accu;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;n);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= n; i++)&#123;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d%d"</span>, &amp;x, &amp;y);</span><br><span class="line">        nums.push_back(make_pair(x,y));</span><br><span class="line">    &#125;</span><br><span class="line">    sort(nums.<span class="built_in">begin</span>()+<span class="number">1</span>, nums.<span class="built_in">end</span>(), cmp);</span><br><span class="line">    accu = nums[<span class="number">0</span>].first;</span><br><span class="line">    ans = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i++)&#123;</span><br><span class="line">        BigInt temp = accu;</span><br><span class="line">        temp.div(nums[i].second);</span><br><span class="line">        <span class="keyword">if</span>(temp.compare(ans))&#123;</span><br><span class="line">            ans = temp;</span><br><span class="line">        &#125;</span><br><span class="line">        accu.multi(nums[i].first);</span><br><span class="line">    &#125;</span><br><span class="line">    ans.<span class="built_in">print</span>();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这道题被高精度卡了好久。。。</p>
+
+  </article>
+</div>
+
+
+    
+
+
+
+
+</div>
+
+<div class="footer-wrapper container">
+  <footer class="footer clearfix">
+    <div class="clearfix">
+    <a href="http://simonnie98.github.io" class="footer-logo">
+      <i class="fa fa-github"></i>
+    </a>
+    <ul class="footer-social-link">
+      <li>© 2019 Simon Nie</li>
+      <li><a href="http://simonnie98.github.io">Home</a></li>
+      
+      <li><a href="https://github.com/SimonNie98" target="_blank" rel="noopener">Github</a></li>
+      
+    </ul>
+    <div class="footer-theme-info">
+      Theme <a href="//github.com/sabrinaluo/hexo-theme-replica" target="_blank" rel="noopener">Replica</a>
+      by <a href="//github.com/sabrinaluo" target="_blank" rel="noopener">Hiitea</a> ❤ Powered by Hexo
+    </div>
+    </div>
+    
+  </footer>
+</div>
+
+
+<script>
+  (function() {
+    var cx = '001135385136731589458:hwqr0dnpaxv';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+      '//cse.google.com/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+
+
+
+<script src="/js/main.js"></script>
+
+</body>
+</html>

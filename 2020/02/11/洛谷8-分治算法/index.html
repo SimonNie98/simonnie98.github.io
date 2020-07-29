@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>
+    洛谷8-分治算法 | Simon&#39;s Blog
+  </title>
+  <meta name="description" content="I am the storm.">
+  
+  <meta name="keywords" content="
+  快速幂,递归,逆序对,快读,归并排序,树状数组,洛谷 P1226,洛谷 P1010,洛谷 P1908
+  ">
+  
+  <meta name="author" content="Simon Nie">
+
+  <meta http-equiv="Cache-Control" content="no-transform"/>
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="theme-color" content="#1e2327">
+  <link rel="apple-touch-icon" href="https://github.githubassets.com/apple-touch-icon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://github.githubassets.com/apple-touch-icon-180x180.png">
+
+  <link rel="icon" type="image/x-icon" href="https://github.githubassets.com/favicon.ico">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+
+  
+
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/vue/1.0.25-csp/vue.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body id="replica-app">
+
+<nav class="navbar-wrapper">
+  <div class="navbar">
+    <div class="container clearfix">
+      <a href="/" class="navbar-logo"><i class="fa fa-github"></i></a>
+
+      <div class="navbar-search float-left desktop-only">
+        <div class="navbar-search-form">
+          <label for="gsc-i-id1">Google Search</label>
+          <div id="google-search">
+            <gcse:search></gcse:search>
+          </div>
+        </div>
+      </div>
+
+      <ul class="navbar-nav float-left">
+        
+        <li><a href="/archives">Archives</a></li>
+        
+        
+        <li><a href="/categories">Categories</a></li>
+        
+        
+        <li><a href="/tags">Tags</a></li>
+        
+        
+        <li class="desktop-only"><a href="/atom.xml" target="_blank">RSS</a></li>
+        
+      </ul>
+
+      <ul class="navbar-nav user-nav float-right desktop-only">
+        <li class="user-nav-notification">
+          <a><span class="user-nav-unread"></span><i class="fa fa-bell"></i></a>
+        </li>
+        <li>
+          <a><i class="fa fa-plus"></i> <i class="fa fa-caret-down"></i></a>
+        </li>
+        <li class="user-nav-logo">
+          <a><img src="/images/avatar.jpg"> <i class="fa fa-caret-down"></i></i></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="main-container">
+  <header class="header-wrapper desktop-only">
+  <div class="container header-site-detail">
+    <ul class="header-toolbar">
+      <li class="clearfix">
+        <a href="/archives" class="header-toolbar-left"><i
+                  class="fa fa-file-text"></i> Posts </a>
+        <a href="/archives"
+           class="header-toolbar-right"> 23 </a>
+      </li>
+      <li>
+        <a href="/tags" class="header-toolbar-left"><i
+                  class="fa fa-tags"></i> Tags </a>
+        <a href="/tags"
+           class="header-toolbar-right"> 101 </a>
+      </li>
+      <li>
+        <a href="/categories" class="header-toolbar-left"><i
+                  class="fa fa-folder-open"></i> Categories </a>
+        <a href="/categories"
+           class="header-toolbar-right"> 9 </a>
+      </li>
+    </ul>
+    <h2 class="header-title">
+      <i class="fa fa-book text-muted"></i>
+      <a href="/">Simon&#39;s Blog</a>
+      
+      
+    </h2>
+  </div>
+
+  <div class="container">
+    <div class="header-tab-wrapper clearfix">
+      <span class="header-tab header-tab-selected"><i class="fa fa-thumbs-o-up"></i> Like</span>
+      <span class="header-tab"><i class="fa fa-share-alt"></i> Share</span>
+      <span class="header-tab"><i class="fa fa-comments-o"></i> Discussion</span>
+      <span class="header-tab"><i class="fa fa-bookmark-o"></i> Bookmark </span>
+      <span class="header-tab"><i class="fa fa-smile-o"></i> Smile <i class="fa fa-caret-down"></i></span>
+    </div>
+  </div>
+</header>
+
+
+<div class="post-container container">
+  <h3>
+    <i class="fa fa-user-o"></i>
+    Simon Nie
+
+    <span class="post-date float-right" title="{{moment(1581407035000).format('MMM DD, YYYY, h:mm:ss A')}}">
+      <i class="fa fa-pencil-square-o"></i>
+      {{moment(1581407035000).fromNow()}}
+    </span>
+  </h3>
+
+  <article class="post-content">
+    <h1>洛谷8-分治算法</h1>
+    <h1 id="Table-of-Contents"><a href="#Table-of-Contents" class="headerlink" title="Table of Contents"></a>Table of Contents</h1><ul>
+<li><a href="#1-p1226-模板快速幂取余运算">1. P1226 【模板】快速幂||取余运算</a><ul>
+<li><a href="#思路">思路：</a></li>
+<li><a href="#复杂度">复杂度：</a></li>
+<li><a href="#代码">代码：</a></li>
+</ul>
+</li>
+<li><a href="#2-p1010-幂次方">2. P1010 幂次方</a><ul>
+<li><a href="#打表版">打表版</a></li>
+<li><a href="#递归版">递归版</a></li>
+</ul>
+</li>
+<li><a href="#3-p1908-逆序对">3. P1908 逆序对</a><ul>
+<li><a href="#快读模板">快读模板：</a></li>
+<li><a href="#归并排序">归并排序：</a></li>
+</ul>
+</li>
+</ul>
+<h3 id="1-P1226-【模板】快速幂-取余运算"><a href="#1-P1226-【模板】快速幂-取余运算" class="headerlink" title="1. P1226 【模板】快速幂||取余运算"></a>1. P1226 【模板】快速幂||取余运算</h3><h4 id="思路："><a href="#思路：" class="headerlink" title="思路："></a>思路：</h4><p>这道题就是经典的快速幂。快速幂的思路是，对于<code>a^b</code>这种，把b写成2进制，然后把<code>a^b</code>分解成$ a^{x_1<em>2^{0} + x_2</em>2^{1} + …+x_n*2^{n-1}}$其中$x_1, x_2,…，x_n为0或者1$。这样一来，就可以通过位运算依次取出二进制表示的每一位，然后不断地相乘即可。</p>
+<p>这道题要注意三点，一是最后的输出形式有要求。二是在计算过程中要不断取余以防止整数溢出。三是对于b=0的情况要特判。</p>
+<h4 id="复杂度："><a href="#复杂度：" class="headerlink" title="复杂度："></a>复杂度：</h4><p>快速幂的复杂度从N降到$log_2N$。</p>
+<h4 id="代码："><a href="#代码：" class="headerlink" title="代码："></a>代码：</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> b, p, k;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">fast_pow</span><span class="params">(<span class="keyword">int</span> b, <span class="keyword">int</span> p, <span class="keyword">int</span> k)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!p) <span class="keyword">return</span> b % k;</span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">long</span> res = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">long</span> x = b;</span><br><span class="line">    <span class="keyword">while</span>(p)&#123;</span><br><span class="line">        <span class="keyword">if</span>(p&amp;<span class="number">1</span>)&#123;</span><br><span class="line">            res = res * x % k;</span><br><span class="line">        &#125;</span><br><span class="line">        x = x * x % k;</span><br><span class="line">        p &gt;&gt;= <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d%d%d"</span>, &amp;b, &amp;p, &amp;k);</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;b&lt;&lt;<span class="string">"^"</span>&lt;&lt;p&lt;&lt;<span class="string">" mod "</span>&lt;&lt;k&lt;&lt;<span class="string">"="</span>&lt;&lt;fast_pow(b, p, k)&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-P1010-幂次方"><a href="#2-P1010-幂次方" class="headerlink" title="2. P1010 幂次方"></a>2. P1010 幂次方</h3><p>这种递归的题目，，，肯定是用打表做啦。。。（开玩笑）</p>
+<p>一看数据最多也就`2^16以下，论打表的可行性。</p>
+<p><code>dict</code>数组中，<code>dict[i]</code>存储的是<code>2^i</code>的表示方式。然后对输入的n按位分解再输出就可以了。</p>
+<h4 id="打表版"><a href="#打表版" class="headerlink" title="打表版"></a>打表版</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="keyword">int</span> nums[<span class="number">16</span>];</span><br><span class="line"><span class="built_in">string</span> dict[<span class="number">16</span>] = &#123;</span><br><span class="line">    <span class="string">"2(0)"</span>,</span><br><span class="line">    <span class="string">"2"</span>,</span><br><span class="line">    <span class="string">"2(2)"</span>,</span><br><span class="line">    <span class="string">"2(2+2(0))"</span>,</span><br><span class="line">    <span class="string">"2(2(2))"</span>,</span><br><span class="line">    <span class="string">"2(2(2)+2(0))"</span>,</span><br><span class="line">    <span class="string">"2(2(2)+2)"</span>,</span><br><span class="line">    <span class="string">"2(2(2)+2+2(0))"</span>,</span><br><span class="line">    <span class="string">"2(2(2+2(0)))"</span>,</span><br><span class="line">    <span class="string">"2(2(2+2(0))+2(0))"</span>,</span><br><span class="line">    <span class="string">"2(2(2+2(0))+2)"</span>,</span><br><span class="line">    <span class="string">"2(2(2+2(0))+2+2(0))"</span>,</span><br><span class="line">    <span class="string">"2(2(2+2(0))+2(2))"</span>,</span><br><span class="line">    <span class="string">"2(2(2+2(0))+2(2)+2(0))"</span>,</span><br><span class="line">    <span class="string">"2(2(2+2(0))+2(2)+2)"</span>,</span><br><span class="line">    <span class="string">"2(2(2+2(0))+2(2)+2+2(0))"</span>,</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">getPow</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> index = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> <span class="built_in">pow</span> = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(n)&#123;</span><br><span class="line">        <span class="keyword">if</span>(n&amp;<span class="number">1</span>)</span><br><span class="line">            nums[index++] = <span class="built_in">pow</span>;</span><br><span class="line">        n &gt;&gt;= <span class="number">1</span>;</span><br><span class="line">        <span class="built_in">pow</span>++;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">getAns</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">string</span> res = <span class="string">""</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">15</span>; i &gt;= <span class="number">0</span>; i--)&#123;</span><br><span class="line">        <span class="keyword">if</span>(nums[i] == <span class="number">-1</span>)</span><br><span class="line">            <span class="keyword">continue</span>;</span><br><span class="line">        <span class="keyword">if</span>(nums[i] &gt; <span class="number">-1</span>)&#123;</span><br><span class="line">            res += dict[nums[i]];</span><br><span class="line">            <span class="keyword">if</span>(i &gt; <span class="number">0</span>)</span><br><span class="line">                res += <span class="string">"+"</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;n);</span><br><span class="line">    <span class="built_in">memset</span>(nums, <span class="number">-1</span>, <span class="keyword">sizeof</span>(nums));</span><br><span class="line">    getPow(n);</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;getAns()&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="递归版"><a href="#递归版" class="headerlink" title="递归版"></a>递归版</h4><p>调用这个函数即可，不多解释。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">recur</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(n == <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"0"</span>;</span><br><span class="line">    <span class="built_in">string</span> res = <span class="string">""</span>;</span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(n)&#123;</span><br><span class="line">        <span class="keyword">if</span>(n&amp;<span class="number">1</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span>(i == <span class="number">1</span>)</span><br><span class="line">                res = <span class="built_in">string</span>(<span class="string">"2"</span>) + (res == <span class="string">""</span> ? <span class="string">""</span> : <span class="string">"+"</span>) + res;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                res = <span class="string">"2("</span> + recur(i) + <span class="string">")"</span> + (res == <span class="string">""</span> ? <span class="string">""</span> : <span class="string">"+"</span>) + res;</span><br><span class="line">        &#125;</span><br><span class="line">        i++;</span><br><span class="line">        n &gt;&gt;= <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-P1908-逆序对"><a href="#3-P1908-逆序对" class="headerlink" title="3. P1908 逆序对"></a>3. P1908 逆序对</h3><p>这道题是想求逆序对的个数，<code>N^2</code>肯定会超时。数据量非常大。</p>
+<p>第一种解法是归并排序(<code>NlogN</code>)，在归并排序的过程中（默认升序），对左区间中的某个元素，如果它大于右边某个元素，那么左边区间剩下的所有元素都大于右边这个元素，答案就可以更新。</p>
+<p>归并完成以后，答案也就出来了。</p>
+<h4 id="快读模板："><a href="#快读模板：" class="headerlink" title="快读模板："></a>快读模板：</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">read</span><span class="params">(<span class="keyword">int</span> &amp;res)</span></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> ch = <span class="string">' '</span>;</span><br><span class="line">    <span class="keyword">int</span> w = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>(ch != <span class="string">'-'</span> &amp;&amp; (ch &lt; <span class="string">'0'</span> || ch &gt; <span class="string">'9'</span>))</span><br><span class="line">        ch = getchar();</span><br><span class="line">    <span class="keyword">if</span>(ch == <span class="string">'-'</span>)</span><br><span class="line">        w = <span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        res = ch - <span class="string">'0'</span>;</span><br><span class="line">    <span class="keyword">for</span>(ch = getchar(); ch &gt;= <span class="string">'0'</span> &amp;&amp; ch &lt;= <span class="string">'9'</span>; ch = getchar())</span><br><span class="line">        res = res * <span class="number">10</span> + ch - <span class="string">'0'</span>;</span><br><span class="line">    res *= w;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="归并排序："><a href="#归并排序：" class="headerlink" title="归并排序："></a>归并排序：</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> n, nums[<span class="number">500001</span>], cp[<span class="number">500001</span>];</span><br><span class="line"><span class="keyword">long</span> <span class="keyword">long</span> ans;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">read</span><span class="params">(<span class="keyword">int</span> &amp;res)</span></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> ch = <span class="string">' '</span>;</span><br><span class="line">    <span class="keyword">int</span> w = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>(ch != <span class="string">'-'</span> &amp;&amp; (ch &lt; <span class="string">'0'</span> || ch &gt; <span class="string">'9'</span>))</span><br><span class="line">        ch = getchar();</span><br><span class="line">    <span class="keyword">if</span>(ch == <span class="string">'-'</span>)</span><br><span class="line">        w = <span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        res = ch - <span class="string">'0'</span>;</span><br><span class="line">    <span class="keyword">for</span>(ch = getchar(); ch &gt;= <span class="string">'0'</span> &amp;&amp; ch &lt;= <span class="string">'9'</span>; ch = getchar())</span><br><span class="line">        res = res * <span class="number">10</span> + ch - <span class="string">'0'</span>;</span><br><span class="line">    res *= w;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">merge_sort</span><span class="params">(<span class="keyword">int</span> left, <span class="keyword">int</span> right)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(left == right)</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">int</span> mid = (left + right)/<span class="number">2</span>;</span><br><span class="line">    merge_sort(left, mid);</span><br><span class="line">    merge_sort(mid+<span class="number">1</span>, right);</span><br><span class="line">    <span class="keyword">int</span> i = left, j = mid+<span class="number">1</span>, k = left;</span><br><span class="line">    <span class="keyword">while</span>(i &lt;= mid &amp;&amp; j &lt;= right)&#123;</span><br><span class="line">        <span class="keyword">if</span>(nums[i] &lt;= nums[j])</span><br><span class="line">            cp[k++] = nums[i++];</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            cp[k++] = nums[j++], ans += mid - i + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span>(i &lt;= mid)</span><br><span class="line">        cp[k++] = nums[i++];</span><br><span class="line">    <span class="keyword">while</span>(j &lt;= right)</span><br><span class="line">        cp[k++] = nums[j++];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> p = left; p &lt;= right; p++)</span><br><span class="line">        nums[p] = cp[p];</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">read</span>(n);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++)</span><br><span class="line">        <span class="built_in">read</span>(nums[i]);</span><br><span class="line">    merge_sort(<span class="number">0</span>, n<span class="number">-1</span>);</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;ans&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>第二种解法是树状数组（改日更新）</p>
+<p>洛谷该章节的第四题有点恶心，不想写。。</p>
+
+  </article>
+</div>
+
+
+    
+
+
+
+
+</div>
+
+<div class="footer-wrapper container">
+  <footer class="footer clearfix">
+    <div class="clearfix">
+    <a href="http://simonnie98.github.io" class="footer-logo">
+      <i class="fa fa-github"></i>
+    </a>
+    <ul class="footer-social-link">
+      <li>© 2019 Simon Nie</li>
+      <li><a href="http://simonnie98.github.io">Home</a></li>
+      
+      <li><a href="https://github.com/SimonNie98" target="_blank" rel="noopener">Github</a></li>
+      
+    </ul>
+    <div class="footer-theme-info">
+      Theme <a href="//github.com/sabrinaluo/hexo-theme-replica" target="_blank" rel="noopener">Replica</a>
+      by <a href="//github.com/sabrinaluo" target="_blank" rel="noopener">Hiitea</a> ❤ Powered by Hexo
+    </div>
+    </div>
+    
+  </footer>
+</div>
+
+
+<script>
+  (function() {
+    var cx = '001135385136731589458:hwqr0dnpaxv';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+      '//cse.google.com/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+
+
+
+<script src="/js/main.js"></script>
+
+</body>
+</html>
