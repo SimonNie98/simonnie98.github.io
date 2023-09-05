@@ -58,11 +58,11 @@ params:
       repo: SimonNie98/simonnie98.github.io
       issueTerm: pathname
       label: Comment
-  googleAnalytics: G-B6PYWWVSHL
+  # googleAnalytics: G-B6PYWWVSHL
   analytics:
   google:
-      # googleAnalytics: G-B6PYWWVSHL
-      SiteVerificationTag: G-B6PYWWVSHL
+      googleAnalytics: G-B6PYWWVSHL
+      SiteVerificationTag: GTM-PHLCBJ4F
     umami:
       enable: false
       website_id: xxx
