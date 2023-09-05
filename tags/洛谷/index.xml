@@ -1903,7 +1903,191 @@
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> cout&lt;span style="color:#f92672">&amp;lt;&amp;lt;&lt;/span>cnt&lt;span style="color:#f92672">&amp;lt;&amp;lt;&lt;/span>endl;
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>;
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>洛谷1-字符串处理+贪心</title><link>https://simonnie98.github.io/blog/%E6%B4%9B%E8%B0%B71-%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86-%E8%B4%AA%E5%BF%83/</link><pubDate>Tue, 14 Jan 2020 20:36:10 +0000</pubDate><guid>https://simonnie98.github.io/blog/%E6%B4%9B%E8%B0%B71-%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86-%E8%B4%AA%E5%BF%83/</guid><description>&lt;h1 id="table-of-contents">Table of Contents&lt;/h1>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>洛谷2-贪心</title><link>https://simonnie98.github.io/blog/%E6%B4%9B%E8%B0%B72-%E8%B4%AA%E5%BF%83/</link><pubDate>Wed, 15 Jan 2020 20:36:10 +0000</pubDate><guid>https://simonnie98.github.io/blog/%E6%B4%9B%E8%B0%B72-%E8%B4%AA%E5%BF%83/</guid><description>&lt;h1 id="table-of-contents">Table of Contents&lt;/h1>
+&lt;ul>
+&lt;li>&lt;a href="#1-p1803-%E5%87%8C%E4%B9%B1%E7%9A%84yyy--%E7%BA%BF%E6%AE%B5%E8%A6%86%E7%9B%96">1. P1803 凌乱的yyy / 线段覆盖&lt;/a>
+&lt;ul>
+&lt;li>&lt;a href="#%E6%80%9D%E8%B7%AF">思路：&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>&lt;a href="#2-p1080-%E5%9B%BD%E7%8E%8B%E6%B8%B8%E6%88%8F">2. P1080 国王游戏&lt;/a>
+&lt;ul>
+&lt;li>&lt;a href="#%E6%80%9D%E8%B7%AF-1">思路：&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="1-p1803-凌乱的yyy--线段覆盖">1. P1803 凌乱的yyy / 线段覆盖&lt;/h3>
+&lt;h4 id="思路">思路：&lt;/h4>
+&lt;p>这道题的思路仍然是排序之后扫一遍就可以，这里的核心思想是把n场考试缩减成n-1的子问题，为了使子问题有最优解，就需要确保缩减的时候挑出的第一场考试结束时间尽可能短，所以排序的时候应该以结束时间的早晚进行排序，然后比较：如果某考试的开始时间大于等于上一场选中的考试的结束时间，就可以选择。练手题，两遍AC。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-c++" data-lang="c++">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#include&lt;/span>&lt;span style="color:#75715e">&amp;lt;bits/stdc++.h&amp;gt;&lt;/span>&lt;span style="color:#75715e">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">using&lt;/span> &lt;span style="color:#66d9ef">namespace&lt;/span> std;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">int&lt;/span> n, x, y;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>vector&lt;span style="color:#f92672">&amp;lt;&lt;/span>pair&lt;span style="color:#f92672">&amp;lt;&lt;/span>&lt;span style="color:#66d9ef">int&lt;/span>, &lt;span style="color:#66d9ef">int&lt;/span>&lt;span style="color:#f92672">&amp;gt;&lt;/span> &lt;span style="color:#f92672">&amp;gt;&lt;/span> nums;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">int&lt;/span> tail, cnt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">bool&lt;/span> &lt;span style="color:#a6e22e">cmp&lt;/span>(pair&lt;span style="color:#f92672">&amp;lt;&lt;/span>&lt;span style="color:#66d9ef">int&lt;/span>, &lt;span style="color:#66d9ef">int&lt;/span>&lt;span style="color:#f92672">&amp;gt;&lt;/span> a, pair&lt;span style="color:#f92672">&amp;lt;&lt;/span>&lt;span style="color:#66d9ef">int&lt;/span>, &lt;span style="color:#66d9ef">int&lt;/span>&lt;span style="color:#f92672">&amp;gt;&lt;/span> b){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> a.second &lt;span style="color:#f92672">==&lt;/span> b.second &lt;span style="color:#f92672">?&lt;/span> a.first &lt;span style="color:#f92672">&amp;lt;&lt;/span> b.first : a.second &lt;span style="color:#f92672">&amp;lt;&lt;/span> b.second;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">int&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>(){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> scanf(&lt;span style="color:#e6db74">&amp;#34;%d&amp;#34;&lt;/span>, &lt;span style="color:#f92672">&amp;amp;&lt;/span>n);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span>(&lt;span style="color:#66d9ef">int&lt;/span> i &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>; i &lt;span style="color:#f92672">&amp;lt;&lt;/span> n; i&lt;span style="color:#f92672">++&lt;/span>){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> scanf(&lt;span style="color:#e6db74">&amp;#34;%d%d&amp;#34;&lt;/span>, &lt;span style="color:#f92672">&amp;amp;&lt;/span>x, &lt;span style="color:#f92672">&amp;amp;&lt;/span>y);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> nums.push_back(make_pair(x, y));
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> sort(nums.begin(), nums.end(), cmp);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span>(&lt;span style="color:#66d9ef">int&lt;/span> i &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>; i &lt;span style="color:#f92672">&amp;lt;&lt;/span> n; i&lt;span style="color:#f92672">++&lt;/span>){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">// cout&amp;lt;&amp;lt;nums[i].first&amp;lt;&amp;lt;&amp;#34; &amp;#34;&amp;lt;&amp;lt;nums[i].second&amp;lt;&amp;lt;endl;
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#66d9ef">if&lt;/span>(nums[i].first &lt;span style="color:#f92672">&amp;gt;=&lt;/span> tail){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> tail &lt;span style="color:#f92672">=&lt;/span> nums[i].second;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> cnt&lt;span style="color:#f92672">++&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> cout&lt;span style="color:#f92672">&amp;lt;&amp;lt;&lt;/span>cnt&lt;span style="color:#f92672">&amp;lt;&amp;lt;&lt;/span>endl;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="2-p1080-国王游戏">2. P1080 国王游戏&lt;/h3>
+&lt;h4 id="思路-1">思路：&lt;/h4>
+&lt;p>这道题比较难也比较经典，思路非常有趣：&lt;/p>
+&lt;blockquote>
+&lt;p>首先可以明确的一点是：在某个大臣前面的人无论怎么排都不会影响该大臣得到的钱（乘法交换律）。只有当A和B的相对位置发生变化的时候，A和B得到的钱数才会互相影响（这里相对位置指的是A在B前或者B在A钱）。那么考虑: $ A(a_i, b_i)$ 和$ B(a_j, b_j)$的位置顺序(国王$ (a_0, b_0)$永远在最前面)：&lt;/p>
+&lt;ol>
+&lt;li>A在B的前面，则设A得到的金币为$ \prod_{a_1}^{a_{i-1} }/b_i$，B得到的金币为$ \prod_{a_1}^{a_{i-1} }&lt;em>a_i&lt;/em>\prod_{a_{i+1} }^{a_{j-1} }/b_j$， $ans1=max(\prod_{a_1}^{a_{i-1} }/b_i, \ \ \prod_{a_1}^{a_{i-1} }&lt;em>a_i&lt;/em>\prod_{a_{i+1}}^{a_{j-1}}/b_j)$；&lt;/li>
+&lt;li>A在B的后面，则B得到的金币为$ \prod_{a_1}^{a_{i-1} }/b_j$，A得到的金币为$ \prod_{a_1}^{a_{i-1} }&lt;em>a_j&lt;/em>\prod_{a_{i+1}}^{a_{j-1}}/b_i$，$ans2=max(\prod_{a_1}^{a_{i-1} }&lt;em>a_j&lt;/em>\prod_{a_{i+1}}^{a_{j-1} }/b_i，\ \ \prod_{a_1}^{a_{i-1} }/b_j)$&lt;/li>
+&lt;/ol>
+&lt;p>显然，ans1的左项小于ans2的左项，ans1的右项大于ans2的右项，因此实际上比较ans1和ans2的大小就是在比较ans1右项和ans2的左项：&lt;/p>
+&lt;p>$if\ ans1.right &amp;lt; ans2.left, then\ a_i/b_j&amp;lt;a_j/b_i,\ then\ a_i&lt;em>b_i&amp;lt;a_j&lt;/em>b_j$&lt;/p>
+&lt;p>也即，如果ans1 &amp;lt; ans2，那么就有$ a_i&lt;em>b_i&amp;lt;a_j&lt;/em>b_j$。且这是充要条件。&lt;/p>
+&lt;p>因此，要得到最小的最大值，假设A的a*b值大于B，那么显然ans1要大于ans2，这个时候为了取到ans2(尽可能小的最大值)，就要让A(a*b值大的大臣)排在B(a*b值小)的大臣后面。&lt;/p>
+&lt;p>刚才已经说过，每个大臣前面的人怎么排序并不会影响他应得的钱。因此最后的解一定是最优解。&lt;/p>
+&lt;/blockquote>
+&lt;p>这个思路有了以后，再看这道题，注意数据范围，需要用到高精度：&lt;/p>
+&lt;blockquote>
+&lt;p>高精度可以通过struct封装常用的乘法、除法、=、&amp;lt;等运算实现，需要注意的几点：&lt;/p>
+&lt;ol>
+&lt;li>一般高精度每一个位的整数大小(base取10000)，再大并不会提高效率，并且1000x10000尚未溢出整数范围，对乘法有好处。&lt;/li>
+&lt;li>data[N]的最低位data[0]存该大数的“位数”（除data[0]以外的数组长度）。&lt;/li>
+&lt;li>除法的时候需要保证前导零不被输出。&lt;/li>
+&lt;li>输出的时候，先输出最高位(data[data[0]])，然后输出其他位，如果base=10000则应在输出的时候输出“%04d”对应中间位输出长度。&lt;/li>
+&lt;/ol>
+&lt;/blockquote>
+&lt;p>最后代码如下:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-c++" data-lang="c++">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#include&lt;/span>&lt;span style="color:#75715e">&amp;lt;bits/stdc++.h&amp;gt;&lt;/span>&lt;span style="color:#75715e">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">using&lt;/span> &lt;span style="color:#66d9ef">namespace&lt;/span> std;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#66d9ef">int&lt;/span> N &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">10000&lt;/span>&lt;span style="color:#f92672">+&lt;/span>&lt;span style="color:#ae81ff">5&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">int&lt;/span> n, x, y;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>vector&lt;span style="color:#f92672">&amp;lt;&lt;/span>pair&lt;span style="color:#f92672">&amp;lt;&lt;/span>&lt;span style="color:#66d9ef">int&lt;/span>, &lt;span style="color:#66d9ef">int&lt;/span>&lt;span style="color:#f92672">&amp;gt;&lt;/span> &lt;span style="color:#f92672">&amp;gt;&lt;/span> nums;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">bool&lt;/span> &lt;span style="color:#a6e22e">cmp&lt;/span>(pair&lt;span style="color:#f92672">&amp;lt;&lt;/span>&lt;span style="color:#66d9ef">int&lt;/span>, &lt;span style="color:#66d9ef">int&lt;/span>&lt;span style="color:#f92672">&amp;gt;&lt;/span> a, pair&lt;span style="color:#f92672">&amp;lt;&lt;/span>&lt;span style="color:#66d9ef">int&lt;/span>, &lt;span style="color:#66d9ef">int&lt;/span>&lt;span style="color:#f92672">&amp;gt;&lt;/span> b){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">long&lt;/span> &lt;span style="color:#66d9ef">long&lt;/span> xx &lt;span style="color:#f92672">=&lt;/span> a.first&lt;span style="color:#f92672">*&lt;/span>a.second, yy &lt;span style="color:#f92672">=&lt;/span> b.second&lt;span style="color:#f92672">*&lt;/span>b.first;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> xx &lt;span style="color:#f92672">&amp;lt;&lt;/span> yy;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">struct&lt;/span> &lt;span style="color:#a6e22e">BigInt&lt;/span>{
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">static&lt;/span> &lt;span style="color:#66d9ef">const&lt;/span> &lt;span style="color:#66d9ef">int&lt;/span> base &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">10000&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">int&lt;/span> data[N];&lt;span style="color:#75715e">//data[0] was used to record how many digits there is.
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> BigInt(&lt;span style="color:#66d9ef">long&lt;/span> &lt;span style="color:#66d9ef">long&lt;/span> num &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#f92672">*&lt;/span>&lt;span style="color:#66d9ef">this&lt;/span> &lt;span style="color:#f92672">=&lt;/span> num;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> BigInt &lt;span style="color:#66d9ef">operator&lt;/span> &lt;span style="color:#f92672">=&lt;/span> (&lt;span style="color:#66d9ef">long&lt;/span> &lt;span style="color:#66d9ef">long&lt;/span> num){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> memset(data, &lt;span style="color:#ae81ff">0&lt;/span>, &lt;span style="color:#66d9ef">sizeof&lt;/span>(data));
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span>(&lt;span style="color:#66d9ef">int&lt;/span> i &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>; num &lt;span style="color:#f92672">&amp;gt;&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>; i&lt;span style="color:#f92672">++&lt;/span>){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> data[i] &lt;span style="color:#f92672">=&lt;/span> num &lt;span style="color:#f92672">%&lt;/span> base;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> num &lt;span style="color:#f92672">/=&lt;/span> base;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> data[&lt;span style="color:#ae81ff">0&lt;/span>]&lt;span style="color:#f92672">++&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">multi&lt;/span>(&lt;span style="color:#66d9ef">int&lt;/span> num){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span>(&lt;span style="color:#66d9ef">int&lt;/span> i &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>; i &lt;span style="color:#f92672">&amp;lt;=&lt;/span> data[&lt;span style="color:#ae81ff">0&lt;/span>]; i&lt;span style="color:#f92672">++&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> data[i] &lt;span style="color:#f92672">*=&lt;/span> num;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span>(&lt;span style="color:#66d9ef">int&lt;/span> i &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>; i &lt;span style="color:#f92672">&amp;lt;&lt;/span> data[&lt;span style="color:#ae81ff">0&lt;/span>]; i&lt;span style="color:#f92672">++&lt;/span>){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> data[i &lt;span style="color:#f92672">+&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>] &lt;span style="color:#f92672">+=&lt;/span> data[i] &lt;span style="color:#f92672">/&lt;/span> base;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> data[i] &lt;span style="color:#f92672">%=&lt;/span> base;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">while&lt;/span>(data[data[&lt;span style="color:#ae81ff">0&lt;/span>]]&lt;span style="color:#f92672">&amp;gt;=&lt;/span>base){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> data[data[&lt;span style="color:#ae81ff">0&lt;/span>] &lt;span style="color:#f92672">+&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>] &lt;span style="color:#f92672">+=&lt;/span> data[data[&lt;span style="color:#ae81ff">0&lt;/span>]] &lt;span style="color:#f92672">/&lt;/span> base;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> data[data[&lt;span style="color:#ae81ff">0&lt;/span>]] &lt;span style="color:#f92672">%=&lt;/span> base;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> data[&lt;span style="color:#ae81ff">0&lt;/span>]&lt;span style="color:#f92672">++&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">div&lt;/span>(&lt;span style="color:#66d9ef">int&lt;/span> num){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">int&lt;/span> q &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span>(&lt;span style="color:#66d9ef">int&lt;/span> i &lt;span style="color:#f92672">=&lt;/span> data[&lt;span style="color:#ae81ff">0&lt;/span>]; i &lt;span style="color:#f92672">&amp;gt;&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>; i&lt;span style="color:#f92672">--&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> q &lt;span style="color:#f92672">*=&lt;/span> base;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> q &lt;span style="color:#f92672">+=&lt;/span> data[i];
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> data[i] &lt;span style="color:#f92672">=&lt;/span> q&lt;span style="color:#f92672">/&lt;/span>num;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span>(data[&lt;span style="color:#ae81ff">0&lt;/span>] &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span> &lt;span style="color:#f92672">&amp;amp;&amp;amp;&lt;/span> data[i] &lt;span style="color:#f92672">!=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> data[&lt;span style="color:#ae81ff">0&lt;/span>]&lt;span style="color:#f92672">=&lt;/span>i;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> q &lt;span style="color:#f92672">%=&lt;/span> num;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span>(&lt;span style="color:#66d9ef">int&lt;/span> i &lt;span style="color:#f92672">=&lt;/span> data[&lt;span style="color:#ae81ff">0&lt;/span>]; i &lt;span style="color:#f92672">&amp;gt;&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>; i&lt;span style="color:#f92672">--&lt;/span>){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span>(data[i] &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> data[&lt;span style="color:#ae81ff">0&lt;/span>]&lt;span style="color:#f92672">--&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">else&lt;/span> &lt;span style="color:#66d9ef">break&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">print&lt;/span>(){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> printf(&lt;span style="color:#e6db74">&amp;#34;%d&amp;#34;&lt;/span>, data[data[&lt;span style="color:#ae81ff">0&lt;/span>]]);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span>(&lt;span style="color:#66d9ef">int&lt;/span> i &lt;span style="color:#f92672">=&lt;/span> data[&lt;span style="color:#ae81ff">0&lt;/span>]&lt;span style="color:#f92672">-&lt;/span>&lt;span style="color:#ae81ff">1&lt;/span>; i &lt;span style="color:#f92672">&amp;gt;&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>; i&lt;span style="color:#f92672">--&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> printf(&lt;span style="color:#e6db74">&amp;#34;%04d&amp;#34;&lt;/span>, data[i]);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> puts(&lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">bool&lt;/span> &lt;span style="color:#a6e22e">compare&lt;/span>(BigInt&lt;span style="color:#f92672">&amp;amp;&lt;/span> b){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span>(data[&lt;span style="color:#ae81ff">0&lt;/span>] &lt;span style="color:#f92672">&amp;gt;&lt;/span> b.data[&lt;span style="color:#ae81ff">0&lt;/span>])
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> true;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">else&lt;/span> &lt;span style="color:#66d9ef">if&lt;/span> (data[&lt;span style="color:#ae81ff">0&lt;/span>] &lt;span style="color:#f92672">&amp;lt;&lt;/span> b.data[&lt;span style="color:#ae81ff">0&lt;/span>])
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> false;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">else&lt;/span>{
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span>(&lt;span style="color:#66d9ef">int&lt;/span> i &lt;span style="color:#f92672">=&lt;/span> data[&lt;span style="color:#ae81ff">0&lt;/span>]; i &lt;span style="color:#f92672">&amp;gt;&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>; i&lt;span style="color:#f92672">--&lt;/span>){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span>(data[i] &lt;span style="color:#f92672">&amp;gt;&lt;/span> b.data[i])
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> true;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">else&lt;/span> &lt;span style="color:#66d9ef">if&lt;/span> (data[i] &lt;span style="color:#f92672">&amp;lt;&lt;/span> b.data[i])
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> false;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> true;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> BigInt (BigInt&lt;span style="color:#f92672">&amp;amp;&lt;/span> b){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> memset(data,&lt;span style="color:#ae81ff">0&lt;/span>,&lt;span style="color:#66d9ef">sizeof&lt;/span>(data));
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span>(&lt;span style="color:#66d9ef">int&lt;/span> i &lt;span style="color:#f92672">=&lt;/span> b.data[&lt;span style="color:#ae81ff">0&lt;/span>];i &lt;span style="color:#f92672">&amp;gt;=&lt;/span>&lt;span style="color:#ae81ff">0&lt;/span>; i&lt;span style="color:#f92672">--&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> data[i] &lt;span style="color:#f92672">=&lt;/span> b.data[i];
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> ;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">mod&lt;/span>(&lt;span style="color:#66d9ef">int&lt;/span> num){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> data[&lt;span style="color:#ae81ff">0&lt;/span>] &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> data[&lt;span style="color:#ae81ff">1&lt;/span>] &lt;span style="color:#f92672">%=&lt;/span> num;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span>(&lt;span style="color:#66d9ef">int&lt;/span> i &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">2&lt;/span>; i &lt;span style="color:#f92672">&amp;lt;=&lt;/span> data[&lt;span style="color:#ae81ff">0&lt;/span>]; i&lt;span style="color:#f92672">++&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> data[i] &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}ans, accu;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">int&lt;/span> &lt;span style="color:#a6e22e">main&lt;/span>(){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> scanf(&lt;span style="color:#e6db74">&amp;#34;%d&amp;#34;&lt;/span>, &lt;span style="color:#f92672">&amp;amp;&lt;/span>n);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span>(&lt;span style="color:#66d9ef">int&lt;/span> i &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>; i &lt;span style="color:#f92672">&amp;lt;=&lt;/span> n; i&lt;span style="color:#f92672">++&lt;/span>){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> scanf(&lt;span style="color:#e6db74">&amp;#34;%d%d&amp;#34;&lt;/span>, &lt;span style="color:#f92672">&amp;amp;&lt;/span>x, &lt;span style="color:#f92672">&amp;amp;&lt;/span>y);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> nums.push_back(make_pair(x,y));
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> sort(nums.begin()&lt;span style="color:#f92672">+&lt;/span>&lt;span style="color:#ae81ff">1&lt;/span>, nums.end(), cmp);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> accu &lt;span style="color:#f92672">=&lt;/span> nums[&lt;span style="color:#ae81ff">0&lt;/span>].first;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ans &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span>(&lt;span style="color:#66d9ef">int&lt;/span> i &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>; i &lt;span style="color:#f92672">&amp;lt;=&lt;/span> n; i&lt;span style="color:#f92672">++&lt;/span>){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> BigInt temp &lt;span style="color:#f92672">=&lt;/span> accu;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> temp.div(nums[i].second);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span>(temp.compare(ans)){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ans &lt;span style="color:#f92672">=&lt;/span> temp;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> accu.multi(nums[i].first);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ans.print();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>这道题被高精度卡了好久。。。&lt;/p></description></item><item><title>洛谷1-字符串处理+贪心</title><link>https://simonnie98.github.io/blog/%E6%B4%9B%E8%B0%B71-%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86-%E8%B4%AA%E5%BF%83/</link><pubDate>Tue, 14 Jan 2020 20:36:10 +0000</pubDate><guid>https://simonnie98.github.io/blog/%E6%B4%9B%E8%B0%B71-%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86-%E8%B4%AA%E5%BF%83/</guid><description>&lt;h1 id="table-of-contents">Table of Contents&lt;/h1>
 &lt;ul>
 &lt;li>&lt;a href="#1-p1071-%E6%BD%9C%E4%BC%8F%E8%80%85">1. P1071 潜伏者&lt;/a>
 &lt;ul>
