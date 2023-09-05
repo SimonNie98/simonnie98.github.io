@@ -60,8 +60,7 @@ params:
       label: Comment
   # googleAnalytics: G-B6PYWWVSHL
   analytics:
-  google:
-      googleAnalytics: G-B6PYWWVSHL
+    google:
       SiteVerificationTag: GTM-PHLCBJ4F
     umami:
       enable: false
@@ -123,3 +122,4 @@ languages:
 taxonomies:
   series: series
   tag: tags
+googleAnalytics: G-B6PYWWVSHL
