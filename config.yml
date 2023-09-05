@@ -1,5 +1,5 @@
 baseURL: 'https://simonnie98.github.io'
-title: LADDER
+title: Simon's Blog
 theme: ladder
 license: MIT
 licenselink: 'https://github.com/guangzhengli/hugo-theme-ladder/blob/master/LICENSE'
@@ -12,7 +12,7 @@ params:
   brand: HOME
   avatarURL: /images/avatar.png
   author: Hugo Ladder
-  authorDescription: A clean, fast hugo theme focused on Reading
+  authorDescription: Always focus.
   info: Build a free and beautiful blog site to record your thoughts and increase your influence
   favicon: /images/avatar.png
   options:
