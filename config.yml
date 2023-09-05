@@ -59,9 +59,9 @@ params:
       issueTerm: pathname
       label: Comment
   analytics:
-  googleAnalytics: G-B6PYWWVSHL
-    # google:
-    #   SiteVerificationTag: 
+  google:
+      googleAnalytics: G-B6PYWWVSHL
+      SiteVerificationTag: G-B6PYWWVSHL
     umami:
       enable: false
       website_id: xxx
