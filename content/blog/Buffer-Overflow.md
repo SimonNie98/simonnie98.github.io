@@ -2,8 +2,8 @@
 title: Buffer-Overflow 
 date: 2020-01-24 23:30:46 
 
-tags: []
-series: []
+tags: [Security]
+series: [blog]
 featured: true
 ---
 

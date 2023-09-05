@@ -1,8 +1,8 @@
 ---
 title: Shellshock
 date: 2020-02-25 11:34:56
-tags: []
-series: []
+tags: [Security]
+series: [blog]
 featured: true
 ---
 

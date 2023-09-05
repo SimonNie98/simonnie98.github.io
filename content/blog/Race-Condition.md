@@ -1,8 +1,8 @@
 ---
 title: Race-Condition
 date: 2020-01-25 00:09:51
-tags: []
-series: []
+tags: [Security]
+series: [blog]
 featured: true
 ---
 

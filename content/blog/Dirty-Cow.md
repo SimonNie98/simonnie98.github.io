@@ -1,8 +1,8 @@
 ---
 title: Dirty-Cow
 date: 2020-01-29 22:50:43
-tags: []
-series: []
+tags: [Security]
+series: [blog]
 featured: true
 ---
 

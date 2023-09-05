@@ -1,8 +1,8 @@
 ---
 title: Format-String
 date: 2020-01-25 00:16:14
-tags: []
-series: []
+tags: [Security]
+series: [blog]
 featured: true
 ---
 
