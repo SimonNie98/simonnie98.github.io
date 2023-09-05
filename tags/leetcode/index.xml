@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>leetcode on Simon's Blog</title><link>https://simonnie98.github.io/tags/leetcode/</link><description>Recent content in leetcode on Simon's Blog</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sun, 29 Mar 2020 23:08:30 +0000</lastBuildDate><atom:link href="https://simonnie98.github.io/tags/leetcode/index.xml" rel="self" type="application/rss+xml"/><item><title>leetcode1</title><link>https://simonnie98.github.io/blog/leetcode1/</link><pubDate>Sun, 29 Mar 2020 23:08:30 +0000</pubDate><guid>https://simonnie98.github.io/blog/leetcode1/</guid><description>&lt;h1 id="table-of-contents">Table of Contents&lt;/h1>
+&lt;ul>
+&lt;li>&lt;a href="#820-%E5%8D%95%E8%AF%8D%E7%9A%84%E5%8E%8B%E7%BC%A9%E7%BC%96%E7%A0%81">820. 单词的压缩编码&lt;/a>
+&lt;ul>
+&lt;li>&lt;a href="#%E6%80%9D%E8%B7%AF1%E5%AD%97%E5%85%B8%E6%A0%91">思路1－字典树：&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#%E6%80%9D%E8%B7%AF2">思路2:&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>&lt;a href="#208-%E5%AE%9E%E7%8E%B0-trie-%E5%89%8D%E7%BC%80%E6%A0%91">208. 实现 Trie (前缀树)&lt;/a>
+&lt;ul>
+&lt;li>&lt;a href="#%E6%80%9D%E8%B7%AF">思路：&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>&lt;a href="#1162-%E5%9C%B0%E5%9B%BE%E5%88%86%E6%9E%90">1162. 地图分析&lt;/a>
+&lt;ul>
+&lt;li>&lt;a href="#%E6%80%9D%E8%B7%AF-1">思路：&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#%E5%A4%9A%E6%BA%90dijkstra">多源Dijkstra&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#%E5%A4%9A%E6%BA%90bfs">多源BFS&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>&lt;a href="#5370-%E8%AE%BE%E8%AE%A1%E5%9C%B0%E9%93%81%E7%B3%BB%E7%BB%9F">5370. 设计地铁系统&lt;/a>
+&lt;ul>
+&lt;li>&lt;a href="#%E6%80%9D%E8%B7%AF-2">思路：&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>&lt;a href="#5369-%E7%BB%9F%E8%AE%A1%E4%BD%9C%E6%88%98%E5%8D%95%E4%BD%8D%E6%95%B0">5369. 统计作战单位数&lt;/a>
+&lt;ul>
+&lt;li>&lt;a href="#%E6%80%9D%E8%B7%AF-3">思路:&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>&lt;a href="#5368-%E6%89%BE%E5%87%BA%E5%B9%B8%E8%BF%90%E6%95%B0">5368. 找出幸运数&lt;/a>
+&lt;ul>
+&lt;li>&lt;a href="#%E6%80%9D%E8%B7%AF-4">思路：&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="820-单词的压缩编码">820. 单词的压缩编码&lt;/h3>
+&lt;p>给定一个单词列表，将这个列表编码成一个索引字符串S与一个索引列表A，求最短的编码长度。&lt;/p>
+&lt;h4 id="思路1字典树">思路1－字典树：&lt;/h4>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-c++" data-lang="c++">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">struct&lt;/span> &lt;span style="color:#a6e22e">Node&lt;/span>{
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Node &lt;span style="color:#f92672">*&lt;/span>next[&lt;span style="color:#ae81ff">26&lt;/span>];
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">bool&lt;/span> flag;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Node(){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span>(&lt;span style="color:#66d9ef">int&lt;/span> i &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>; i &lt;span style="color:#f92672">&amp;lt;&lt;/span> &lt;span style="color:#ae81ff">26&lt;/span>; i&lt;span style="color:#f92672">++&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> next[i] &lt;span style="color:#f92672">=&lt;/span> NULL;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> flag &lt;span style="color:#f92672">=&lt;/span> false;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>};
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">Insert&lt;/span>(string str, &lt;span style="color:#66d9ef">int&lt;/span> pos, Node&lt;span style="color:#f92672">*&lt;/span> root){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span>(pos &lt;span style="color:#f92672">&amp;lt;&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> root&lt;span style="color:#f92672">-&amp;gt;&lt;/span>flag &lt;span style="color:#f92672">=&lt;/span> true;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">int&lt;/span> ind &lt;span style="color:#f92672">=&lt;/span> str[pos] &lt;span style="color:#f92672">-&lt;/span> &lt;span style="color:#e6db74">&amp;#39;a&amp;#39;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span>(root&lt;span style="color:#f92672">-&amp;gt;&lt;/span>next[ind] &lt;span style="color:#f92672">==&lt;/span> NULL)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> root&lt;span style="color:#f92672">-&amp;gt;&lt;/span>next[ind] &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> Node();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Insert(str, pos&lt;span style="color:#f92672">-&lt;/span>&lt;span style="color:#ae81ff">1&lt;/span>, root&lt;span style="color:#f92672">-&amp;gt;&lt;/span>next[ind]);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">int&lt;/span> &lt;span style="color:#a6e22e">Count&lt;/span>(Node&lt;span style="color:#f92672">*&lt;/span> root, &lt;span style="color:#66d9ef">int&lt;/span> cnt){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">int&lt;/span> leaf &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>, sum &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span>(&lt;span style="color:#66d9ef">int&lt;/span> i &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>; i &lt;span style="color:#f92672">&amp;lt;&lt;/span> &lt;span style="color:#ae81ff">26&lt;/span>; i&lt;span style="color:#f92672">++&lt;/span>){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span>(root&lt;span style="color:#f92672">-&amp;gt;&lt;/span>next[i] &lt;span style="color:#f92672">!=&lt;/span> NULL){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> leaf &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> sum &lt;span style="color:#f92672">+=&lt;/span> Count(root&lt;span style="color:#f92672">-&amp;gt;&lt;/span>next[i], cnt&lt;span style="color:#f92672">+&lt;/span>&lt;span style="color:#ae81ff">1&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span>(leaf)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> cnt&lt;span style="color:#f92672">+&lt;/span>&lt;span style="color:#ae81ff">1&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> sum;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>最后解答：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-c++" data-lang="c++">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">Solution&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">public&lt;/span>&lt;span style="color:#f92672">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">struct&lt;/span> &lt;span style="color:#a6e22e">Node&lt;/span>{
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Node &lt;span style="color:#f92672">*&lt;/span>next[&lt;span style="color:#ae81ff">26&lt;/span>];
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">bool&lt;/span> flag;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Node(){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span>(&lt;span style="color:#66d9ef">int&lt;/span> i &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>; i &lt;span style="color:#f92672">&amp;lt;&lt;/span> &lt;span style="color:#ae81ff">26&lt;/span>; i&lt;span style="color:#f92672">++&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> next[i] &lt;span style="color:#f92672">=&lt;/span> NULL;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> flag &lt;span style="color:#f92672">=&lt;/span> false;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> };
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">Insert&lt;/span>(string str, &lt;span style="color:#66d9ef">int&lt;/span> pos, Node&lt;span style="color:#f92672">*&lt;/span> root){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span>(pos &lt;span style="color:#f92672">&amp;lt;&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> root&lt;span style="color:#f92672">-&amp;gt;&lt;/span>flag &lt;span style="color:#f92672">=&lt;/span> true;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">int&lt;/span> ind &lt;span style="color:#f92672">=&lt;/span> str[pos] &lt;span style="color:#f92672">-&lt;/span> &lt;span style="color:#e6db74">&amp;#39;a&amp;#39;&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span>(root&lt;span style="color:#f92672">-&amp;gt;&lt;/span>next[ind] &lt;span style="color:#f92672">==&lt;/span> NULL)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> root&lt;span style="color:#f92672">-&amp;gt;&lt;/span>next[ind] &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> Node();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Insert(str, pos&lt;span style="color:#f92672">-&lt;/span>&lt;span style="color:#ae81ff">1&lt;/span>, root&lt;span style="color:#f92672">-&amp;gt;&lt;/span>next[ind]);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">int&lt;/span> &lt;span style="color:#a6e22e">Count&lt;/span>(Node&lt;span style="color:#f92672">*&lt;/span> root, &lt;span style="color:#66d9ef">int&lt;/span> cnt){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">int&lt;/span> leaf &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>, sum &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span>(&lt;span style="color:#66d9ef">int&lt;/span> i &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>; i &lt;span style="color:#f92672">&amp;lt;&lt;/span> &lt;span style="color:#ae81ff">26&lt;/span>; i&lt;span style="color:#f92672">++&lt;/span>){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span>(root&lt;span style="color:#f92672">-&amp;gt;&lt;/span>next[i] &lt;span style="color:#f92672">!=&lt;/span> NULL){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> leaf &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> sum &lt;span style="color:#f92672">+=&lt;/span> Count(root&lt;span style="color:#f92672">-&amp;gt;&lt;/span>next[i], cnt&lt;span style="color:#f92672">+&lt;/span>&lt;span style="color:#ae81ff">1&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span>(leaf)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> cnt&lt;span style="color:#f92672">+&lt;/span>&lt;span style="color:#ae81ff">1&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> sum;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">int&lt;/span> &lt;span style="color:#a6e22e">minimumLengthEncoding&lt;/span>(vector&lt;span style="color:#f92672">&amp;lt;&lt;/span>string&lt;span style="color:#f92672">&amp;gt;&amp;amp;&lt;/span> words) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Node&lt;span style="color:#f92672">*&lt;/span> root &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> Node();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span>(&lt;span style="color:#66d9ef">int&lt;/span> i&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">0&lt;/span>; i &lt;span style="color:#f92672">&amp;lt;&lt;/span> words.size(); i&lt;span style="color:#f92672">++&lt;/span>){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Insert(words[i], words[i].size()&lt;span style="color:#f92672">-&lt;/span>&lt;span style="color:#ae81ff">1&lt;/span>, root);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> Count(root, &lt;span style="color:#ae81ff">0&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>};
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h4 id="思路2">思路2:&lt;/h4>
+&lt;p>将每个字符串反转，然后将字符串排序，只需要检查前一个字符串是否是后一个字符串的子川，是就丢弃前一个字符串；&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-c++" data-lang="c++">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">Solution&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">public&lt;/span>&lt;span style="color:#f92672">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">int&lt;/span> minimumLengthEncoding(vector&lt;span style="color:#f92672">&amp;lt;&lt;/span>string&lt;span style="color:#f92672">&amp;gt;&amp;amp;&lt;/span> words) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">int&lt;/span> n &lt;span style="color:#f92672">=&lt;/span> words.size();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> vector&lt;span style="color:#f92672">&amp;lt;&lt;/span>string&lt;span style="color:#f92672">&amp;gt;&lt;/span> rs;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span>(&lt;span style="color:#66d9ef">int&lt;/span> i &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>; i &lt;span style="color:#f92672">&amp;lt;&lt;/span> n; i&lt;span style="color:#f92672">++&lt;/span>){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> reverse(words[i].begin(), words[i].end());
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> rs.push_back(words[i]);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> sort(rs.begin(), rs.end());
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">int&lt;/span> cnt &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span>(&lt;span style="color:#66d9ef">int&lt;/span> j &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>; j &lt;span style="color:#f92672">&amp;lt;&lt;/span> n&lt;span style="color:#f92672">-&lt;/span>&lt;span style="color:#ae81ff">1&lt;/span>; j&lt;span style="color:#f92672">++&lt;/span>){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span>(rs[j&lt;span style="color:#f92672">+&lt;/span>&lt;span style="color:#ae81ff">1&lt;/span>].find(rs[j]) &lt;span style="color:#f92672">==&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">continue&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> cnt &lt;span style="color:#f92672">+=&lt;/span> rs[j].size() &lt;span style="color:#f92672">+&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> cnt &lt;span style="color:#f92672">+=&lt;/span> rs[n&lt;span style="color:#f92672">-&lt;/span>&lt;span style="color:#ae81ff">1&lt;/span>].size() &lt;span style="color:#f92672">+&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> cnt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>};
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="208-实现-trie-前缀树">208. 实现 Trie (前缀树)&lt;/h3>
+&lt;h4 id="思路">思路：&lt;/h4>
+&lt;p>这道题与前一题类似（就是为了巩固前缀树的知识才写的）。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-c++" data-lang="c++">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">Trie&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">public&lt;/span>&lt;span style="color:#f92672">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">/** Initialize your data structure here. */&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">struct&lt;/span> &lt;span style="color:#a6e22e">Node&lt;/span>{
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">bool&lt;/span> flag;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Node&lt;span style="color:#f92672">*&lt;/span> next[&lt;span style="color:#ae81ff">26&lt;/span>];
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Node(){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span>(&lt;span style="color:#66d9ef">int&lt;/span> i &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>; i &lt;span style="color:#f92672">&amp;lt;&lt;/span> &lt;span style="color:#ae81ff">26&lt;/span>; i&lt;span style="color:#f92672">++&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> next[i] &lt;span style="color:#f92672">=&lt;/span> NULL;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> flag &lt;span style="color:#f92672">=&lt;/span> false;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> };
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Node&lt;span style="color:#f92672">*&lt;/span> root;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Trie() {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> root &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> Node();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">/** Inserts a word into the trie. */&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">insert&lt;/span>(string word) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Node&lt;span style="color:#f92672">*&lt;/span> cur &lt;span style="color:#f92672">=&lt;/span> root;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span>(&lt;span style="color:#66d9ef">int&lt;/span> i &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>; i &lt;span style="color:#f92672">&amp;lt;&lt;/span> word.size(); i&lt;span style="color:#f92672">++&lt;/span>){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span>(cur&lt;span style="color:#f92672">-&amp;gt;&lt;/span>next[word[i]&lt;span style="color:#f92672">-&lt;/span>&lt;span style="color:#e6db74">&amp;#39;a&amp;#39;&lt;/span>] &lt;span style="color:#f92672">==&lt;/span> NULL)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> cur&lt;span style="color:#f92672">-&amp;gt;&lt;/span>next[word[i]&lt;span style="color:#f92672">-&lt;/span>&lt;span style="color:#e6db74">&amp;#39;a&amp;#39;&lt;/span>] &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">new&lt;/span> Node();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> cur &lt;span style="color:#f92672">=&lt;/span> cur&lt;span style="color:#f92672">-&amp;gt;&lt;/span>next[word[i]&lt;span style="color:#f92672">-&lt;/span>&lt;span style="color:#e6db74">&amp;#39;a&amp;#39;&lt;/span>];
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> cur&lt;span style="color:#f92672">-&amp;gt;&lt;/span>flag &lt;span style="color:#f92672">=&lt;/span> true;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">/** Returns if the word is in the trie. */&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">bool&lt;/span> &lt;span style="color:#a6e22e">search&lt;/span>(string word) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Node&lt;span style="color:#f92672">*&lt;/span> cur &lt;span style="color:#f92672">=&lt;/span> root;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span>(&lt;span style="color:#66d9ef">int&lt;/span> i &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>; i &lt;span style="color:#f92672">&amp;lt;&lt;/span> word.size(); i&lt;span style="color:#f92672">++&lt;/span>){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span>(cur&lt;span style="color:#f92672">-&amp;gt;&lt;/span>next[word[i]&lt;span style="color:#f92672">-&lt;/span>&lt;span style="color:#e6db74">&amp;#39;a&amp;#39;&lt;/span>] &lt;span style="color:#f92672">==&lt;/span> NULL)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> false;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> cur &lt;span style="color:#f92672">=&lt;/span> cur&lt;span style="color:#f92672">-&amp;gt;&lt;/span>next[word[i]&lt;span style="color:#f92672">-&lt;/span>&lt;span style="color:#e6db74">&amp;#39;a&amp;#39;&lt;/span>];
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> cur&lt;span style="color:#f92672">-&amp;gt;&lt;/span>flag;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">/** Returns if there is any word in the trie that starts with the given prefix. */&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">bool&lt;/span> &lt;span style="color:#a6e22e">startsWith&lt;/span>(string prefix) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> Node&lt;span style="color:#f92672">*&lt;/span> cur &lt;span style="color:#f92672">=&lt;/span> root;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span>(&lt;span style="color:#66d9ef">int&lt;/span> i &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>; i &lt;span style="color:#f92672">&amp;lt;&lt;/span> prefix.size(); i&lt;span style="color:#f92672">++&lt;/span>){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span>(cur&lt;span style="color:#f92672">-&amp;gt;&lt;/span>next[prefix[i]&lt;span style="color:#f92672">-&lt;/span>&lt;span style="color:#e6db74">&amp;#39;a&amp;#39;&lt;/span>] &lt;span style="color:#f92672">==&lt;/span> NULL)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> false;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> cur &lt;span style="color:#f92672">=&lt;/span> cur&lt;span style="color:#f92672">-&amp;gt;&lt;/span>next[prefix[i]&lt;span style="color:#f92672">-&lt;/span>&lt;span style="color:#e6db74">&amp;#39;a&amp;#39;&lt;/span>];
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> true;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>};
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">/**
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * Your Trie object will be instantiated and called as such:
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * Trie* obj = new Trie();
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * obj-&amp;gt;insert(word);
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * bool param_2 = obj-&amp;gt;search(word);
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * bool param_3 = obj-&amp;gt;startsWith(prefix);
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> */&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="1162-地图分析">1162. 地图分析&lt;/h3>
+&lt;h4 id="思路-1">思路：&lt;/h4>
+&lt;p>要找出离陆地区域最远的海洋区域，这道题有4种做法，详见&lt;a href="https://leetcode-cn.com/problems/as-far-from-land-as-possible/solution/di-tu-fen-xi-by-leetcode-solution/">官方题解&lt;/a>&lt;/p>
+&lt;p>这里只写了多源Dijkstra和多源BFS两种：&lt;/p>
+&lt;h4 id="多源dijkstra">多源Dijkstra&lt;/h4>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-c++" data-lang="c++">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">static&lt;/span> &lt;span style="color:#66d9ef">constexpr&lt;/span> &lt;span style="color:#66d9ef">int&lt;/span> INF &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">int&lt;/span>(&lt;span style="color:#ae81ff">1E6&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">static&lt;/span> &lt;span style="color:#66d9ef">constexpr&lt;/span> &lt;span style="color:#66d9ef">int&lt;/span> dire[&lt;span style="color:#ae81ff">4&lt;/span>][&lt;span style="color:#ae81ff">2&lt;/span>] &lt;span style="color:#f92672">=&lt;/span> {{&lt;span style="color:#f92672">-&lt;/span>&lt;span style="color:#ae81ff">1&lt;/span>, &lt;span style="color:#ae81ff">0&lt;/span>}, {&lt;span style="color:#ae81ff">1&lt;/span>, &lt;span style="color:#ae81ff">0&lt;/span>}, {&lt;span style="color:#ae81ff">0&lt;/span>, &lt;span style="color:#f92672">-&lt;/span>&lt;span style="color:#ae81ff">1&lt;/span>}, {&lt;span style="color:#ae81ff">0&lt;/span>, &lt;span style="color:#ae81ff">1&lt;/span>}};
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">int&lt;/span> dis[&lt;span style="color:#ae81ff">110&lt;/span>][&lt;span style="color:#ae81ff">110&lt;/span>];
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">int&lt;/span> &lt;span style="color:#a6e22e">Dijkstra&lt;/span>(vector&lt;span style="color:#f92672">&amp;lt;&lt;/span>vector&lt;span style="color:#f92672">&amp;lt;&lt;/span>&lt;span style="color:#66d9ef">int&lt;/span>&lt;span style="color:#f92672">&amp;gt;&amp;gt;&amp;amp;&lt;/span> grid){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">struct&lt;/span> &lt;span style="color:#a6e22e">Node&lt;/span>{
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">int&lt;/span> v, x, y;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">bool&lt;/span> &lt;span style="color:#66d9ef">operator&lt;/span> &lt;span style="color:#f92672">&amp;lt;&lt;/span> (&lt;span style="color:#66d9ef">const&lt;/span> Node&lt;span style="color:#f92672">&amp;amp;&lt;/span> test) &lt;span style="color:#66d9ef">const&lt;/span>{
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> v &lt;span style="color:#f92672">&amp;gt;&lt;/span> test.v;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> };
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> priority_queue&lt;span style="color:#f92672">&amp;lt;&lt;/span>Node&lt;span style="color:#f92672">&amp;gt;&lt;/span> q;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">int&lt;/span> n &lt;span style="color:#f92672">=&lt;/span> grid.size();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">//initialization
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> &lt;span style="color:#66d9ef">for&lt;/span>(&lt;span style="color:#66d9ef">int&lt;/span> i &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>; i &lt;span style="color:#f92672">&amp;lt;&lt;/span> n; i&lt;span style="color:#f92672">++&lt;/span>){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span>(&lt;span style="color:#66d9ef">int&lt;/span> j &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>; j &lt;span style="color:#f92672">&amp;lt;&lt;/span> n; j&lt;span style="color:#f92672">++&lt;/span>){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span>(grid[i][j]){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> dis[i][j] &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> q.push({&lt;span style="color:#ae81ff">0&lt;/span>, i, j});
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }&lt;span style="color:#66d9ef">else&lt;/span>{
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> dis[i][j] &lt;span style="color:#f92672">=&lt;/span> INF;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">while&lt;/span>(&lt;span style="color:#f92672">!&lt;/span>q.empty()){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">auto&lt;/span> top &lt;span style="color:#f92672">=&lt;/span> q.top();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">int&lt;/span> value &lt;span style="color:#f92672">=&lt;/span> top.v, x &lt;span style="color:#f92672">=&lt;/span> top.x, y &lt;span style="color:#f92672">=&lt;/span> top.y;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> q.pop();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span>(&lt;span style="color:#66d9ef">int&lt;/span> i &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>; i &lt;span style="color:#f92672">&amp;lt;&lt;/span> &lt;span style="color:#ae81ff">4&lt;/span>; i&lt;span style="color:#f92672">++&lt;/span>){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">int&lt;/span> xx &lt;span style="color:#f92672">=&lt;/span> x&lt;span style="color:#f92672">+&lt;/span>dire[i][&lt;span style="color:#ae81ff">0&lt;/span>], yy &lt;span style="color:#f92672">=&lt;/span> y&lt;span style="color:#f92672">+&lt;/span>dire[i][&lt;span style="color:#ae81ff">1&lt;/span>];
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span>(xx &lt;span style="color:#f92672">&amp;lt;&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span> &lt;span style="color:#f92672">||&lt;/span> xx &lt;span style="color:#f92672">&amp;gt;=&lt;/span> n &lt;span style="color:#f92672">||&lt;/span> yy &lt;span style="color:#f92672">&amp;lt;&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span> &lt;span style="color:#f92672">||&lt;/span> yy &lt;span style="color:#f92672">&amp;gt;=&lt;/span> n)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">continue&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span>(value&lt;span style="color:#f92672">+&lt;/span>&lt;span style="color:#ae81ff">1&lt;/span> &lt;span style="color:#f92672">&amp;lt;&lt;/span> dis[xx][yy]){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> dis[xx][yy] &lt;span style="color:#f92672">=&lt;/span> value &lt;span style="color:#f92672">+&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> q.push({dis[xx][yy], xx, yy});
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">int&lt;/span> ans &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">-&lt;/span>&lt;span style="color:#ae81ff">1&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span>(&lt;span style="color:#66d9ef">int&lt;/span> i &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>; i &lt;span style="color:#f92672">&amp;lt;&lt;/span> n; i&lt;span style="color:#f92672">++&lt;/span>){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span>(&lt;span style="color:#66d9ef">int&lt;/span> j &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>; j &lt;span style="color:#f92672">&amp;lt;&lt;/span> n; j&lt;span style="color:#f92672">++&lt;/span>){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span>(&lt;span style="color:#f92672">!&lt;/span>grid[i][j])
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ans &lt;span style="color:#f92672">=&lt;/span> max(ans, dis[i][j]);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> (ans &lt;span style="color:#f92672">==&lt;/span> INF)&lt;span style="color:#f92672">?-&lt;/span>&lt;span style="color:#ae81ff">1&lt;/span>&lt;span style="color:#f92672">:&lt;/span>ans;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h4 id="多源bfs">多源BFS&lt;/h4>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-c++" data-lang="c++">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">static&lt;/span> &lt;span style="color:#66d9ef">constexpr&lt;/span> &lt;span style="color:#66d9ef">int&lt;/span> INF &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#66d9ef">int&lt;/span>(&lt;span style="color:#ae81ff">1E6&lt;/span>);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">static&lt;/span> &lt;span style="color:#66d9ef">constexpr&lt;/span> &lt;span style="color:#66d9ef">int&lt;/span> dire[&lt;span style="color:#ae81ff">4&lt;/span>][&lt;span style="color:#ae81ff">2&lt;/span>] &lt;span style="color:#f92672">=&lt;/span> {{&lt;span style="color:#f92672">-&lt;/span>&lt;span style="color:#ae81ff">1&lt;/span>, &lt;span style="color:#ae81ff">0&lt;/span>}, {&lt;span style="color:#ae81ff">1&lt;/span>, &lt;span style="color:#ae81ff">0&lt;/span>}, {&lt;span style="color:#ae81ff">0&lt;/span>, &lt;span style="color:#f92672">-&lt;/span>&lt;span style="color:#ae81ff">1&lt;/span>}, {&lt;span style="color:#ae81ff">0&lt;/span>, &lt;span style="color:#ae81ff">1&lt;/span>}};
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">int&lt;/span> dis[&lt;span style="color:#ae81ff">110&lt;/span>][&lt;span style="color:#ae81ff">110&lt;/span>];
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">int&lt;/span> &lt;span style="color:#a6e22e">bfs&lt;/span>(vector&lt;span style="color:#f92672">&amp;lt;&lt;/span>vector&lt;span style="color:#f92672">&amp;lt;&lt;/span>&lt;span style="color:#66d9ef">int&lt;/span>&lt;span style="color:#f92672">&amp;gt;&amp;gt;&amp;amp;&lt;/span> grid){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> queue&lt;span style="color:#f92672">&amp;lt;&lt;/span>pair&lt;span style="color:#f92672">&amp;lt;&lt;/span>&lt;span style="color:#66d9ef">int&lt;/span>, &lt;span style="color:#66d9ef">int&lt;/span>&lt;span style="color:#f92672">&amp;gt;&lt;/span> &lt;span style="color:#f92672">&amp;gt;&lt;/span> q;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">int&lt;/span> n &lt;span style="color:#f92672">=&lt;/span> grid.size();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span>(&lt;span style="color:#66d9ef">int&lt;/span> i &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>; i &lt;span style="color:#f92672">&amp;lt;&lt;/span> n; i&lt;span style="color:#f92672">++&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span>(&lt;span style="color:#66d9ef">int&lt;/span> j &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>; j &lt;span style="color:#f92672">&amp;lt;&lt;/span> n; j&lt;span style="color:#f92672">++&lt;/span>){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span>(grid[i][j]){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> dis[i][j] &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> q.push(make_pair(i,j));
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">else&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> dis[i][j] &lt;span style="color:#f92672">=&lt;/span> INF;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">while&lt;/span>(&lt;span style="color:#f92672">!&lt;/span>q.empty()){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">int&lt;/span> x &lt;span style="color:#f92672">=&lt;/span> q.front().first, y &lt;span style="color:#f92672">=&lt;/span> q.front().second;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> q.pop();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span>(&lt;span style="color:#66d9ef">int&lt;/span> i &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>; i &lt;span style="color:#f92672">&amp;lt;&lt;/span> &lt;span style="color:#ae81ff">4&lt;/span>; i&lt;span style="color:#f92672">++&lt;/span>){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">int&lt;/span> xx &lt;span style="color:#f92672">=&lt;/span> x &lt;span style="color:#f92672">+&lt;/span> dire[i][&lt;span style="color:#ae81ff">0&lt;/span>], yy &lt;span style="color:#f92672">=&lt;/span> y &lt;span style="color:#f92672">+&lt;/span> dire[i][&lt;span style="color:#ae81ff">1&lt;/span>];
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span>(xx &lt;span style="color:#f92672">&amp;lt;&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span> &lt;span style="color:#f92672">||&lt;/span> xx &lt;span style="color:#f92672">&amp;gt;=&lt;/span> n &lt;span style="color:#f92672">||&lt;/span> yy &lt;span style="color:#f92672">&amp;lt;&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span> &lt;span style="color:#f92672">||&lt;/span> yy &lt;span style="color:#f92672">&amp;gt;=&lt;/span> n)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">continue&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span>(dis[xx][yy] &lt;span style="color:#f92672">&amp;gt;&lt;/span> dis[x][y] &lt;span style="color:#f92672">+&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> dis[xx][yy] &lt;span style="color:#f92672">=&lt;/span> dis[x][y] &lt;span style="color:#f92672">+&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> q.push(make_pair(xx, yy));
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">int&lt;/span> ans &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#f92672">-&lt;/span>&lt;span style="color:#ae81ff">1&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span>(&lt;span style="color:#66d9ef">int&lt;/span> i &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>; i &lt;span style="color:#f92672">&amp;lt;&lt;/span> n; i&lt;span style="color:#f92672">++&lt;/span>){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span>(&lt;span style="color:#66d9ef">int&lt;/span> j &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>; j &lt;span style="color:#f92672">&amp;lt;&lt;/span> n; j&lt;span style="color:#f92672">++&lt;/span>){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span>(&lt;span style="color:#f92672">!&lt;/span>grid[i][j])
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ans &lt;span style="color:#f92672">=&lt;/span> max(ans, dis[i][j]);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> (ans &lt;span style="color:#f92672">==&lt;/span> INF)&lt;span style="color:#f92672">?-&lt;/span>&lt;span style="color:#ae81ff">1&lt;/span>&lt;span style="color:#f92672">:&lt;/span>ans;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>观察代码你会发现，Dijkstra和BFS具有高度相似性。其实本质上只是前者将后者的队列换成了优先队列而已。&lt;/p>
+&lt;p>至于多源最短路问题和单源最短路问题相比，无非就是建立一个超级源头，把所有的源头都作为它的连通点并且权值为0。&lt;/p>
+&lt;blockquote>
+&lt;p>　思考：海洋区域和陆地区域，应该哪一个作为源点集？ 也许你分析出「我们需要找一个海洋区域，满足它到陆地的最小距离是最大」会把海洋区域作为源点集。我们可以考虑后续的实现，我们知道 Dijkstra 中一个 d 数组用来维护当前源点集到其他点的最短路，而对于源点集中的任意一个点 ss，d[s_x][s_y] = 0，这很好理解，源点到源点的最短路就是 0。如果我们把海洋区域作为源点集、陆地区域作为目标点集，假设 tt 是目标点集中的一个点，算法执行结束后 d[t_x][t_y] 就是海洋区域中的点到 tt 的最短距离，但是我们却不知道哪些 tt 是海洋区域的这些点的「最近陆地区域」，我们也不知道每个 ss 距离它的「最近陆地区域」的曼哈顿距离。考虑我们把陆地区域作为源点集、海洋区域作为目标点集，目标点集中的点 tt 对应的 d[t_x][t_y] 就是海洋区域 tt 对应的距离它的「最近陆地区域」的曼哈顿距离，正是我们需要的，所以应该把陆地区域作为源点集。&lt;/p>
+&lt;p>最终我们只需要比出 d[t_x][t_y] 的最大值即可。Dijkstra 算法在初始化 d 数组的时候，把每个元素预置为 INF，所以如果发现最终比出的最大值为 INF，那么就返回 -1。&lt;/p>
+&lt;p>由于这里的边权为 1，也可以直接使用多源 BFS，在这里每个点都只会被松弛一次。&lt;/p>
+&lt;p>－－－－leetcode官方解答&lt;/p>
+&lt;/blockquote>
+&lt;p>更多解答请参考官网。&lt;/p>
+&lt;h3 id="5370-设计地铁系统">5370. 设计地铁系统&lt;/h3>
+&lt;h4 id="思路-2">思路：&lt;/h4>
+&lt;p>利用STL缓存信息。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-c++" data-lang="c++">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">UndergroundSystem&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">public&lt;/span>&lt;span style="color:#f92672">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// startStation endStation, time, cnt
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> map&lt;span style="color:#f92672">&amp;lt;&lt;/span>pair&lt;span style="color:#f92672">&amp;lt;&lt;/span>string, string&lt;span style="color:#f92672">&amp;gt;&lt;/span>, pair&lt;span style="color:#f92672">&amp;lt;&lt;/span>&lt;span style="color:#66d9ef">int&lt;/span>, &lt;span style="color:#66d9ef">int&lt;/span>&lt;span style="color:#f92672">&amp;gt;&amp;gt;&lt;/span> record;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#75715e">// user id, startStation, startTime;
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span> map&lt;span style="color:#f92672">&amp;lt;&lt;/span>&lt;span style="color:#66d9ef">int&lt;/span>, pair&lt;span style="color:#f92672">&amp;lt;&lt;/span>string, &lt;span style="color:#66d9ef">int&lt;/span>&lt;span style="color:#f92672">&amp;gt;&lt;/span> &lt;span style="color:#f92672">&amp;gt;&lt;/span> running;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> UndergroundSystem() {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> record.clear();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> running.clear();
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">checkIn&lt;/span>(&lt;span style="color:#66d9ef">int&lt;/span> id, string stationName, &lt;span style="color:#66d9ef">int&lt;/span> t) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> running[id] &lt;span style="color:#f92672">=&lt;/span> make_pair(stationName, t);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">void&lt;/span> &lt;span style="color:#a6e22e">checkOut&lt;/span>(&lt;span style="color:#66d9ef">int&lt;/span> id, string stationName, &lt;span style="color:#66d9ef">int&lt;/span> t) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">auto&lt;/span> it &lt;span style="color:#f92672">=&lt;/span> running.find(id);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> record[make_pair(it&lt;span style="color:#f92672">-&amp;gt;&lt;/span>second.first, stationName)].first &lt;span style="color:#f92672">+=&lt;/span> (t &lt;span style="color:#f92672">-&lt;/span> it&lt;span style="color:#f92672">-&amp;gt;&lt;/span>second.second);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> record[make_pair(it&lt;span style="color:#f92672">-&amp;gt;&lt;/span>second.first, stationName)].second&lt;span style="color:#f92672">++&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> running.erase(it);
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">double&lt;/span> &lt;span style="color:#a6e22e">getAverageTime&lt;/span>(string startStation, string endStation) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">double&lt;/span> time &lt;span style="color:#f92672">=&lt;/span> (&lt;span style="color:#66d9ef">double&lt;/span>) record[make_pair(startStation, endStation)].first;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">int&lt;/span> cnt &lt;span style="color:#f92672">=&lt;/span> record[make_pair(startStation, endStation)].second;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> time &lt;span style="color:#f92672">/&lt;/span> cnt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>};
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">/**
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * Your UndergroundSystem object will be instantiated and called as such:
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * UndergroundSystem* obj = new UndergroundSystem();
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * obj-&amp;gt;checkIn(id,stationName,t);
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * obj-&amp;gt;checkOut(id,stationName,t);
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> * double param_3 = obj-&amp;gt;getAverageTime(startStation,endStation);
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"> */&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="5369-统计作战单位数">5369. 统计作战单位数&lt;/h3>
+&lt;h4 id="思路-3">思路:&lt;/h4>
+&lt;p>这道题是想求出数组中顺序三元组的个数和逆序三元组的个数；直接暴力。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-c++" data-lang="c++">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">Solution&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">public&lt;/span>&lt;span style="color:#f92672">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">int&lt;/span> numTeams(vector&lt;span style="color:#f92672">&amp;lt;&lt;/span>&lt;span style="color:#66d9ef">int&lt;/span>&lt;span style="color:#f92672">&amp;gt;&amp;amp;&lt;/span> rating) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">int&lt;/span> cnt &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span>(&lt;span style="color:#66d9ef">int&lt;/span> i &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>; i &lt;span style="color:#f92672">&amp;lt;&lt;/span> rating.size(); i&lt;span style="color:#f92672">++&lt;/span>){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span>(&lt;span style="color:#66d9ef">int&lt;/span> j &lt;span style="color:#f92672">=&lt;/span> i&lt;span style="color:#f92672">+&lt;/span>&lt;span style="color:#ae81ff">1&lt;/span>; j &lt;span style="color:#f92672">&amp;lt;&lt;/span> rating.size(); j&lt;span style="color:#f92672">++&lt;/span>){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span>(rating[j] &lt;span style="color:#f92672">&amp;gt;&lt;/span> rating[i]){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span>(&lt;span style="color:#66d9ef">int&lt;/span> k &lt;span style="color:#f92672">=&lt;/span> j&lt;span style="color:#f92672">+&lt;/span>&lt;span style="color:#ae81ff">1&lt;/span>; k &lt;span style="color:#f92672">&amp;lt;&lt;/span> rating.size();k&lt;span style="color:#f92672">++&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span>(rating[k] &lt;span style="color:#f92672">&amp;gt;&lt;/span> rating[j])
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> cnt&lt;span style="color:#f92672">++&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span>(&lt;span style="color:#66d9ef">int&lt;/span> i &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>; i &lt;span style="color:#f92672">&amp;lt;&lt;/span> rating.size(); i&lt;span style="color:#f92672">++&lt;/span>){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span>(&lt;span style="color:#66d9ef">int&lt;/span> j &lt;span style="color:#f92672">=&lt;/span> i&lt;span style="color:#f92672">+&lt;/span>&lt;span style="color:#ae81ff">1&lt;/span>; j &lt;span style="color:#f92672">&amp;lt;&lt;/span> rating.size(); j&lt;span style="color:#f92672">++&lt;/span>){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span>(rating[j] &lt;span style="color:#f92672">&amp;lt;&lt;/span> rating[i]){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span>(&lt;span style="color:#66d9ef">int&lt;/span> k &lt;span style="color:#f92672">=&lt;/span> j&lt;span style="color:#f92672">+&lt;/span>&lt;span style="color:#ae81ff">1&lt;/span>; k &lt;span style="color:#f92672">&amp;lt;&lt;/span> rating.size();k&lt;span style="color:#f92672">++&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span>(rating[k] &lt;span style="color:#f92672">&amp;lt;&lt;/span> rating[j])
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> cnt&lt;span style="color:#f92672">++&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> cnt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>};
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="5368-找出幸运数">5368. 找出幸运数&lt;/h3>
+&lt;h4 id="思路-4">思路：&lt;/h4>
+&lt;p>这道题是找出符合要求的数字。哈希即可。&lt;strong>注意局部变量的初始化。&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-c++" data-lang="c++">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">class&lt;/span> &lt;span style="color:#a6e22e">Solution&lt;/span> {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">public&lt;/span>&lt;span style="color:#f92672">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">int&lt;/span> findLucky(vector&lt;span style="color:#f92672">&amp;lt;&lt;/span>&lt;span style="color:#66d9ef">int&lt;/span>&lt;span style="color:#f92672">&amp;gt;&amp;amp;&lt;/span> arr) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">int&lt;/span> cnt[&lt;span style="color:#ae81ff">501&lt;/span>];
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> memset(cnt, &lt;span style="color:#ae81ff">0&lt;/span>, &lt;span style="color:#66d9ef">sizeof&lt;/span>(cnt));
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span>(&lt;span style="color:#66d9ef">int&lt;/span> i &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">0&lt;/span>; i &lt;span style="color:#f92672">&amp;lt;&lt;/span> arr.size(); i&lt;span style="color:#f92672">++&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> cnt[arr[i]]&lt;span style="color:#f92672">++&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">for&lt;/span>(&lt;span style="color:#66d9ef">int&lt;/span> i &lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#ae81ff">500&lt;/span>; i &lt;span style="color:#f92672">&amp;gt;=&lt;/span> &lt;span style="color:#ae81ff">1&lt;/span>; i&lt;span style="color:#f92672">--&lt;/span>){
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">if&lt;/span>(cnt[i] &lt;span style="color:#f92672">==&lt;/span> i)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> i;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#66d9ef">return&lt;/span> &lt;span style="color:#f92672">-&lt;/span>&lt;span style="color:#ae81ff">1&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> }
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>};
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item></channel></rss>
