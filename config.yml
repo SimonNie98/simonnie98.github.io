@@ -13,7 +13,7 @@ params:
   avatarURL: /images/messi.JPG
   author: Simon Nie
   authorDescription: I currently study as a Mphil student at CUHK. My research interests include storage systems and MLSys.
-  info: My blog shares some daily notes.
+  info: My blog shares some daily pieces.
   favicon: /images/messi.JPG
   options:
     showDarkMode: true
