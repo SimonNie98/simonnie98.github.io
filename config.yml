@@ -62,10 +62,10 @@ params:
   analytics:
     google:
       SiteVerificationTag: GTM-PHLCBJ4F
-    umami:
-      enable: false
-      website_id: xxx
-      url: https://xxx
+    # umami:
+    #   enable: false
+    #   website_id: xxx
+    #   url: https://xxx
   guestbook:
     title: Guestbook
     description: Leave a comment below. It could be anything -- question, appreciation, information, or even humor.
@@ -76,6 +76,9 @@ params:
       url: 'https://github.com/simonnie98/'
 languages:
   en:
+    contentDir: content/en
+    # baseURL: https://simonnie98.github.io
+    disabled: false
     languageName: EN
     menu:
       main:
@@ -95,6 +98,9 @@ languages:
           url: https://simonnie98.github.io
           weight: 5
   zh:
+    contentDir: content/zh
+    # baseURL: https://simonnie98.github.io/zh
+    disables: false
     languageName: 中
     author: Simon Nie
     authorDescription: 香港中文大学Mphil. 我的研究方向包括存储系统和MLSys.
@@ -105,10 +111,10 @@ languages:
     menu:
       main:
         - name: 文章
-          url: /blog
+          url: /blog/zh
           weight: 1
         - name: 分类
-          url: /tags
+          url: /tags/zh
           weight: 2
         - name: 历史文章
           url: /archives
