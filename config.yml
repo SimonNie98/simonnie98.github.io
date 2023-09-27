@@ -6,7 +6,7 @@ licenselink: 'https://github.com/guangzhengli/hugo-theme-ladder/blob/master/LICE
 description: 'A fast, clean Hugo theme'
 homepage: 'https://simonnie98.github.io'
 defaultContentLanguage: 'en'
-googleAnalytics: G-xxx
+googleAnalytics: G-B6PYWWVSHL
 paginate: 10
 params:
   brand: HOME
@@ -76,9 +76,9 @@ params:
       url: 'https://github.com/simonnie98/'
 languages:
   en:
-    contentDir: content/en
+    # contentDir: content/en
     # baseURL: https://simonnie98.github.io
-    disabled: false
+    # disabled: false
     languageName: EN
     menu:
       main:
@@ -98,9 +98,9 @@ languages:
           url: https://simonnie98.github.io
           weight: 5
   zh:
-    contentDir: content/zh
+    # contentDir: content/zh
     # baseURL: https://simonnie98.github.io/zh
-    disables: false
+    # disables: false
     languageName: 中
     author: Simon Nie
     authorDescription: 香港中文大学Mphil. 我的研究方向包括存储系统和MLSys.
