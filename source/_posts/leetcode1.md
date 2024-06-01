@@ -2,7 +2,7 @@
 title: leetcode1
 date: 2020-03-29 23:08:30
 tags: [leetcode]
-categories: [algorithms]
+categories: [Algorithms]
 toc: true
 comments: true
 ---
