@@ -1,9 +1,8 @@
 ---
 title: Cuda learn (1)
 date: 2023-09-06T00:40:23+08:00
-tags: []
-series: []
-featured: true
+tags: [CUDA]
+categories: [MLSys]
 toc: true
 comments: true
 ---

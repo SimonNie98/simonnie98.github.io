@@ -2,8 +2,7 @@
 title: Return-to-Libc
 date: 2020-02-27 22:56:41
 tags: [Security]
-series: [blog]
-featured: true
+categories: [Security]
 toc: true
 comments: true
 ---

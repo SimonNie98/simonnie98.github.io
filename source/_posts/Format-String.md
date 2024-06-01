@@ -2,8 +2,7 @@
 title: Format-String
 date: 2020-01-25 00:16:14
 tags: [Security]
-series: [blog]
-featured: true
+categories: [Security]
 toc: true
 comments: true
 ---

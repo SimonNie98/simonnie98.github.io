@@ -2,8 +2,7 @@
 title: leetcode1
 date: 2020-03-29 23:08:30
 tags: [leetcode]
-series: [blog]
-featured: true
+categories: [algorithms]
 toc: true
 comments: true
 ---

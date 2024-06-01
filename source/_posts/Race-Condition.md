@@ -2,8 +2,7 @@
 title: Race-Condition
 date: 2020-01-25 00:09:51
 tags: [Security]
-series: [blog]
-featured: true
+categories: [Security]
 toc: true
 comments: true
 ---

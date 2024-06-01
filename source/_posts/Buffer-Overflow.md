@@ -3,8 +3,7 @@ title: Buffer-Overflow
 date: 2020-01-24 23:30:46 
 
 tags: [Security]
-series: [blog]
-featured: true
+categories: [Security]
 toc: true
 comments: true
 ---
