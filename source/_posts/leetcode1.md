@@ -1,5 +1,5 @@
 ---
-title: leetcode1
+title: Leetcode1
 date: 2020-03-29 23:08:30
 tags: [leetcode]
 categories: [Algorithms]
