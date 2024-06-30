@@ -1,6 +1,6 @@
 ---
 title: 站点建设
-date: {{2024-06-02 06:11:12}}
+date: 2024-06-02 06:11:12
 # updates: {{date}}
 tags: [blog]
 categories: [Others]
