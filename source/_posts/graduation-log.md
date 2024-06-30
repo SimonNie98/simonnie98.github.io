@@ -2,7 +2,7 @@
 title: 毕业游记-1
 date: 2024-06-30 23:39:00
 tags: [Life]
-catetories: [Share]
+categories: [Share]
 ---
 
 这篇博客简单讲一下这个六月吧。
