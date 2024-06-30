@@ -39,4 +39,4 @@ comments: true
 访毕归家去，行人莫问愁。
 ```
 
-![](images/share/moutain.jpg)
+![](images/share/mountain.jpg)
