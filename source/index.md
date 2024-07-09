@@ -13,3 +13,6 @@ I currently study as a Mphil student at CUHK. My research interests include stor
 # Projects
 
   [ ] todo
+
+# Publications
+[1] Yingjia Wang, Lok Yin Chow, **Xirui Nie**, Yuhong Liang, and Ming-Chang Yang, "ZnH2: Augmenting ZNS-based Storage System with Host-Managed Heterogeneous Zones," ACM/IEEE International Conference on Computer-Aided Design (ICCAD), New Jersey, USA, October 27-31, 2024.
