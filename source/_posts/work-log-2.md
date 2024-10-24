@@ -1,6 +1,6 @@
 ---
-title: 工作日记-2
-tags: [Life]
+title: 一些吐槽
+tags: [Work]
 categories: [Share]
 toc: true
 comments: true

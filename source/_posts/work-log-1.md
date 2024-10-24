@@ -1,6 +1,6 @@
 ---
-title: 工作日记-1
-tags: [Life]
+title: 随想
+tags: [Work]
 categories: [Share]
 toc: true
 comments: true
