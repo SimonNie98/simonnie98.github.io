@@ -11,7 +11,7 @@ comments: true
 >
 > 洛谷OJ还没开放提交，题解下次再写（有一道第K小的数还是蛮有意思）
 
-
+<!-- more -->
 
 Table of Contents
 =================

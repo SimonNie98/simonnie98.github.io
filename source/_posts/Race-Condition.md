@@ -6,7 +6,7 @@ categories: [Security]
 toc: true
 comments: true
 ---
-
+<!-- more -->
 ![](images/Race-Condition/Platform-SEEDUbuntu16__04--32bit-green.svg)  ![](images/Race-Condition/SEED-SoftwareSecurityLab-brightgreen.svg)
 
 > This is report of SEED Lab report.

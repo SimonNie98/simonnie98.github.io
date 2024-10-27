@@ -6,7 +6,7 @@ categories: [Security]
 toc: true
 comments: true
 ---
-
+<!-- more -->
 ![](images/Race-Condition/Platform-SEEDUbuntu16__04--32bit-green.svg)  ![](images/Dirty-Cow/SEED-SoftwareSecurityLab-brightgreen.svg)
 
 > this report was written by Simon Nie when finishing the SEED Lab — Dirty Cow.

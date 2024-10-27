@@ -6,7 +6,7 @@ categories: [Security]
 toc: true
 comments: true
 ---
-
+<!-- more -->
 ![](images/Format-String/Platform-SEEDUbuntu16__04--32bit-green.svg)  ![](images/Format-String/SEED-SoftwareSecurityLab-brightgreen.svg)
 
 Table of Contents

@@ -6,7 +6,7 @@ categories: [Others]
 toc: true
 comments: true
 ---
-
+<!-- more -->
 # 1. 主题配置
 使用了[Maupassant主题](https://www.haomwei.com/technology/maupassant-hexo.html).
 

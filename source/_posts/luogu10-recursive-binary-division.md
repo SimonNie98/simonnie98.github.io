@@ -6,7 +6,7 @@ categories: [Algorithms]
 toc: true
 comments: true
 ---
-
+<!-- more -->
 Table of Contents
 =================
 

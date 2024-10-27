@@ -7,7 +7,7 @@ categories: [Security]
 toc: true
 comments: true
 ---
-
+<!-- more -->
 ![](images/Buffer-Overflow/Platform-SEEDUbuntu16__04--32bit-green-1580309680099.svg) ![](images/Buffer-Overflow/SEED-SoftwareSecurityLab-brightgreen.svg) ![](images/Buffer-Overflow/Lab--1-BufferOverflowVulnerability-yellowgreen.svg)
 
 >This is a report about SEED Software Security lab, Buffer Overflow Vulnerability Lab. 
