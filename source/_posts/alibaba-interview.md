@@ -2,7 +2,7 @@
 title: 阿里面试
 date: 2020-03-23 20:48:33
 tags: [Interview]
-categories: [Job]
+categories: [Interview]
 toc: true
 comments: true
 ---

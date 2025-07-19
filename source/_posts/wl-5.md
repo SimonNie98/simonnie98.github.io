@@ -1,7 +1,7 @@
 ---
 title: 职场沟通技巧
 tags: [Work]
-categories: [Share]
+categories: [Work]
 toc: true
 comments: true
 date: 2024-10-25 01:32:57

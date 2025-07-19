@@ -1,7 +1,7 @@
 ---
 title: 随想
 tags: [Work]
-categories: [Share]
+categories: [Work]
 toc: true
 comments: true
 date: 2024-07-13 02:41:35

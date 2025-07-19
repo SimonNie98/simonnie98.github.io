@@ -1,7 +1,7 @@
 ---
 title: 0505-0511 工作总结
-tags: []
-categories: []
+tags: [Work C++]
+categories: [Work]
 toc: true
 comments: true
 date: 2025-05-10 19:11:14
@@ -45,7 +45,9 @@ date: 2025-05-10 19:11:14
 
 8. struct的反序列化函数，如果需要给用户使用，可以放在全局或者以静态成员函数的形式（接口返回一个对象）；序列化则可以用成员函数的方式定义；
 
-9. char[]数组到std::string可能有一个implict type conversion.
+9. `char[]`数组到`std::string`可能有一个implict type conversion.
+
+10. 定义在头文件里的 `const` 和 `static` 变量，在编译时（实际上只编译 `.cc` 文件）会生成一份单独的副本，所以不要在头文件里定义这两种变量。如果一定要定义，用 `inline` 或者 `constexpr`(包含了`inline`语义)。不过 `constepxr` 
 
 
 # 三、VIM 相关的命令

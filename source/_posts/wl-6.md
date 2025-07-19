@@ -1,7 +1,7 @@
 ---
 title: 小爱同学
 tags: [Work]
-categories: [Share]
+categories: [Work]
 toc: true
 comments: true
 date: 2024-10-27 00:16:50

@@ -1,7 +1,7 @@
 ---
 title: 结构化思考
 tags: [Work]
-categories: [Share]
+categories: [Work]
 toc: true
 comments: true
 date: 2024-10-25 01:07:53

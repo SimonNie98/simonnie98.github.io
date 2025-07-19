@@ -1,7 +1,7 @@
 ---
 title: 一些吐槽
 tags: [Work]
-categories: [Share]
+categories: [Work]
 toc: true
 comments: true
 password: niexirui
